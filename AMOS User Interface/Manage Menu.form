@@ -1,0 +1,98 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "manageMenu",
+  "components": [
+    {
+      "text": "# Add Or Remove A Menu Item",
+      "type": "text",
+      "layout": {
+        "row": "Row_0muh1fg",
+        "columns": null
+      },
+      "id": "Field_0kpbmo7"
+    },
+    {
+      "label": "Item Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_12unyfj",
+        "columns": null
+      },
+      "id": "Field_108cbok1",
+      "key": "menuItemName",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Cost",
+      "type": "number",
+      "layout": {
+        "row": "Row_12unyfj",
+        "columns": null
+      },
+      "id": "Field_1gt15to1",
+      "key": "cost",
+      "decimalDigits": 2,
+      "validate": {
+        "required": true,
+        "min": "0.01",
+        "max": "200.00"
+      },
+      "defaultValue": 0.01
+    },
+    {
+      "label": "Add or Remove",
+      "values": [
+        {
+          "label": "Add",
+          "value": "add"
+        },
+        {
+          "label": "Remove",
+          "value": "remove"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_12unyfj",
+        "columns": null
+      },
+      "id": "Field_1tjaj0k",
+      "key": "addMenuItem",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Description",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0t0d790",
+        "columns": null
+      },
+      "id": "Field_0li88y71",
+      "key": "description",
+      "defaultValue": "Describe the menu item.",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "text": "{{menuItemList}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_099zn10",
+        "columns": null
+      },
+      "id": "Field_187c2ad"
+    }
+  ],
+  "type": "default"
+}

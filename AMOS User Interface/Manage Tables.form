@@ -1,0 +1,105 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "manageTables",
+  "components": [
+    {
+      "text": "{{restaurant.restaurantId}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_1hsmo81",
+        "columns": null
+      },
+      "id": "Field_10lgvay"
+    },
+    {
+      "text": "# Add Or Remove A Table",
+      "type": "text",
+      "layout": {
+        "row": "Row_0b0ervt",
+        "columns": null
+      },
+      "id": "Field_0trayab"
+    },
+    {
+      "label": "Select",
+      "values": [
+        {
+          "label": "FL",
+          "value": "FL"
+        },
+        {
+          "label": "FC",
+          "value": "FC"
+        },
+        {
+          "label": "FR",
+          "value": "FR"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_1tadbu2",
+        "columns": 4
+      },
+      "id": "Field_09dpbl3",
+      "key": "tableLocation",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Available Seating",
+      "type": "number",
+      "layout": {
+        "row": "Row_1tadbu2",
+        "columns": 4
+      },
+      "id": "Field_06utquk",
+      "key": "seatingAvailable",
+      "decimalDigits": 0,
+      "increment": "1",
+      "defaultValue": 1,
+      "validate": {
+        "required": true,
+        "min": "1",
+        "max": "12"
+      }
+    },
+    {
+      "label": "Add Or Remove",
+      "values": [
+        {
+          "label": "Add",
+          "value": "add"
+        },
+        {
+          "label": "Remove",
+          "value": "remove"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_1tadbu2",
+        "columns": null
+      },
+      "id": "Field_0m7l1ve",
+      "key": "addTable"
+    },
+    {
+      "text": "{{tableList}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_16pel71",
+        "columns": null
+      },
+      "id": "Field_035lmjr"
+    }
+  ],
+  "type": "default"
+}
