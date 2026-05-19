@@ -1,0 +1,123 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "RestaurantScreen",
+  "components": [
+    {
+      "text": "# Restaurant Layout",
+      "type": "text",
+      "layout": {
+        "row": "Row_1wmilek",
+        "columns": null
+      },
+      "id": "Field_0z97qw6"
+    },
+    {
+      "text": "=tableLocation",
+      "type": "text",
+      "layout": {
+        "row": "Row_0h5c4fh",
+        "columns": null
+      },
+      "id": "Field_0u8pfpy"
+    },
+    {
+      "text": "=tableStatus",
+      "type": "text",
+      "layout": {
+        "row": "Row_0h5c4fh",
+        "columns": null
+      },
+      "id": "Field_0aipap7"
+    },
+    {
+      "type": "separator",
+      "layout": {
+        "row": "Row_18pzyjy",
+        "columns": 11
+      },
+      "id": "Field_0fw3q5q"
+    },
+    {
+      "label": "Select Table Number",
+      "values": [
+        {
+          "label": "FL",
+          "value": "FL"
+        },
+        {
+          "label": "FC",
+          "value": "FC"
+        },
+        {
+          "label": "FR",
+          "value": "FR"
+        },
+        {
+          "label": "ML",
+          "value": "ML"
+        },
+        {
+          "label": "MC",
+          "value": "MC"
+        },
+        {
+          "label": "MR",
+          "value": "MR"
+        },
+        {
+          "label": "RL",
+          "value": "RL"
+        },
+        {
+          "label": "RC",
+          "value": "RC"
+        },
+        {
+          "label": "RR",
+          "value": "RR"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_1f4tpei",
+        "columns": 3
+      },
+      "id": "Field_1qxoego",
+      "key": "selectedTable",
+      "readonly": false
+    },
+    {
+      "label": "Close",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1kqddsv",
+        "columns": 6
+      },
+      "id": "Field_0029zpg",
+      "properties": {
+        "_closingTime": "true"
+      }
+    },
+    {
+      "label": "Open",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1kqddsv",
+        "columns": 6
+      },
+      "id": "Field_1a7icwt",
+      "properties": {
+        "_openingTime": "true"
+      }
+    }
+  ],
+  "type": "default"
+}
