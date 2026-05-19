@@ -1,0 +1,97 @@
+{
+  "components": [
+    {
+      "text": "=\"tableNumbers\"",
+      "type": "text",
+      "layout": {
+        "row": "Row_04ogeqb",
+        "columns": null
+      },
+      "id": "Field_07tvs7d"
+    },
+    {
+      "label": "Enter A Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0t9qcyk",
+        "columns": null
+      },
+      "id": "Field_1n1lj0y",
+      "key": "customerName",
+      "description": "Identifies the cusomer",
+      "properties": {
+        "tableId": "tableId"
+      },
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Order",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1jhuck7",
+        "columns": 4
+      },
+      "id": "Field_0l20pnx",
+      "properties": {
+        "placeOrder": "true",
+        "tableId": "tableId"
+      }
+    },
+    {
+      "label": "Bill",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1jhuck7",
+        "columns": 4
+      },
+      "id": "Field_1oe8rp7",
+      "properties": {
+        "payBill": "true",
+        "tableId": "tableId"
+      }
+    },
+    {
+      "label": "Enter Payment Details",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0n6dq90",
+        "columns": null
+      },
+      "id": "Field_1gwdvek",
+      "key": "paymentId",
+      "description": "Payment attributes",
+      "properties": {
+        "paymentType": "card",
+        "amount": "0",
+        "customerId": "Customer1"
+      }
+    },
+    {
+      "label": "TableAvailable",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1g8am91",
+        "columns": 4
+      },
+      "id": "Field_1xq39dz",
+      "properties": {
+        "tableAvailable": "true",
+        "tableId": "tableId"
+      }
+    }
+  ],
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.43.1"
+  },
+  "schemaVersion": 19,
+  "id": "BillScreen",
+  "type": "default"
+}

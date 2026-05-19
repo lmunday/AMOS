@@ -1,0 +1,78 @@
+{
+  "components": [
+    {
+      "label": "Table Number",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0eoq0tb",
+        "columns": null
+      },
+      "id": "Field_0601jpc",
+      "key": "tableId",
+      "readonly": true
+    },
+    {
+      "label": "Prepared Food",
+      "values": [
+        {
+          "label": "Ordered Food Name 1",
+          "value": "orderedFoodId1"
+        },
+        {
+          "label": "Ordered Food Name 2",
+          "value": "orderedFoodId2"
+        }
+      ],
+      "type": "checklist",
+      "layout": {
+        "row": "Row_0tbsnk4",
+        "columns": null
+      },
+      "id": "Field_0w1iz4n",
+      "key": "checklist_6xex1b"
+    },
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_0v3gm3y",
+        "columns": null
+      },
+      "label": "Table",
+      "dataSource": "=menuItem",
+      "rowCount": 10,
+      "id": "Field_0yt7hki",
+      "columns": [
+        {
+          "label": "ID",
+          "key": "menuItemName"
+        },
+        {
+          "label": "Name",
+          "key": "name"
+        },
+        {
+          "label": "Date",
+          "key": "date"
+        }
+      ]
+    },
+    {
+      "text": "=restaurantId",
+      "type": "text",
+      "layout": {
+        "row": "Row_0nwbqrw",
+        "columns": null
+      },
+      "id": "Field_0wt8pil"
+    }
+  ],
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.43.1"
+  },
+  "schemaVersion": 19,
+  "id": "KitchenScreen",
+  "type": "default"
+}
