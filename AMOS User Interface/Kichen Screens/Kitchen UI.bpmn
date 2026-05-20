@@ -14,17 +14,13 @@
       </bpmn:lane>
       <bpmn:lane id="updateRestaurantUIDisplay" name="Update Display">
         <bpmn:flowNodeRef>turnedOn</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>initializeKitchenUI</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1ugazpx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>initializeKitchenUI</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="turnedOn" name="Turned On Kitche UI">
       <bpmn:outgoing>Flow_0f9o9gd</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="initializeKitchenUI" name="Initialize Kitchen UI">
-      <bpmn:incoming>Flow_0f9o9gd</bpmn:incoming>
-      <bpmn:outgoing>Flow_03ynnf7</bpmn:outgoing>
-    </bpmn:task>
     <bpmn:exclusiveGateway id="Gateway_1ugazpx">
       <bpmn:incoming>Flow_03ynnf7</bpmn:incoming>
       <bpmn:incoming>Flow_1p1iucm</bpmn:incoming>
@@ -44,7 +40,7 @@
     <bpmn:sequenceFlow id="Flow_0pxwsoh" sourceRef="Gateway_1ugazpx" targetRef="enterPreparedFood" />
     <bpmn:boundaryEvent id="_displayOrderedFood" name="_displayOrderedFood" attachedToRef="enterPreparedFood">
       <bpmn:outgoing>Flow_1p1iucm</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1546hi8" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1546hi8" messageRef="Message_2kkarka" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_1p1iucm" sourceRef="_displayOrderedFood" targetRef="Gateway_1ugazpx" />
     <bpmn:sequenceFlow id="Flow_0aurao1" sourceRef="enterPreparedFood" targetRef="preparedOrderedFood" />
@@ -52,7 +48,9 @@
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
-          <zeebe:input target="messageName" />
+          <zeebe:input source="preparedOrderedFood" target="messageName" />
+          <zeebe:input source="restaurantId" target="correlationKey" />
+          <zeebe:input source="tableLocation" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -73,8 +71,20 @@
     <bpmn:endEvent id="kitchenUITurnedOff" name="Kitchen UI Turned Off">
       <bpmn:incoming>Flow_0la1d13</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:scriptTask id="initializeKitchenUI" name="Initialize Kitchen UI">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=&#34;AMOS&#34;" resultVariable="restaurantId" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0f9o9gd</bpmn:incoming>
+      <bpmn:outgoing>Flow_03ynnf7</bpmn:outgoing>
+    </bpmn:scriptTask>
   </bpmn:process>
   <bpmn:signal id="Signal_11uklj0" name="_turnOffTableUI" />
+  <bpmn:message id="Message_2kkarka" name="_displayOrderedFood">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=restaurantId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="KitchenUI">
       <bpmndi:BPMNShape id="Participant_0we9wvt_di" bpmnElement="kitchenUI" isHorizontal="true">
@@ -95,10 +105,6 @@
           <dc:Bounds x="228" y="375" width="85" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1comonv_di" bpmnElement="initializeKitchenUI">
-        <dc:Bounds x="340" y="310" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1ugazpx_di" bpmnElement="Gateway_1ugazpx" isMarkerVisible="true">
         <dc:Bounds x="495" y="325" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -115,6 +121,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="286" y="195" width="89" height="27" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0t4thel_di" bpmnElement="initializeKitchenUI">
+        <dc:Bounds x="340" y="310" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1rw14zi_di" bpmnElement="_turnOffTableUI">
         <dc:Bounds x="602" y="112" width="36" height="36" />

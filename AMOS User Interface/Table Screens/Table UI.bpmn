@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.43.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.43.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
   <bpmn:collaboration id="TableUI">
     <bpmn:participant id="tableUI" name="Table UI" processRef="tableUI-Process" />
   </bpmn:collaboration>
@@ -68,7 +68,7 @@
       <bpmn:incoming>Flow_06k0rn1</bpmn:incoming>
       <bpmn:outgoing>Flow_1f86jgn</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sendTask id="placeOrder" name="Place Order" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sendTask id="placeOrder" name="Place Order" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
@@ -106,7 +106,7 @@
       <bpmn:incoming>Flow_1g00yta</bpmn:incoming>
       <bpmn:outgoing>Flow_1fquntr</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sendTask id="assigncustomer" name="Assign Customer" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sendTask id="assigncustomer" name="Assign Customer" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
@@ -143,7 +143,7 @@
       <bpmn:incoming>Flow_1ih99fb</bpmn:incoming>
       <bpmn:outgoing>Flow_1s0x7wr</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sendTask id="enteredPayment" name="Entered Payment" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sendTask id="enteredPayment" name="Entered Payment" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
@@ -160,7 +160,7 @@
       <bpmn:incoming>Flow_1s0x7wr</bpmn:incoming>
       <bpmn:outgoing>Flow_0jamua7</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sendTask id="requestBill" name="Request Bill" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sendTask id="requestBill" name="Request Bill" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
@@ -187,12 +187,12 @@
       <bpmn:incoming>Flow_1e3ov99</bpmn:incoming>
       <bpmn:outgoing>Flow_1o5l3dv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sendTask id="copyReceipt" name="Copy Receipt" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sendTask id="copyReceipt" name="Copy Receipt" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_copyReceipt" target="messageName" />
-          <zeebe:input source="tableId" target="correlationKey" />
+          <zeebe:input source="tableLocation" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -217,7 +217,7 @@
       <bpmn:outgoing>Flow_1skyo73</bpmn:outgoing>
       <bpmn:outgoing>Flow_064nt30</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sendTask id="makeTableAvailable" name="Make Table Available" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sendTask id="makeTableAvailable" name="Make Table Available" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
@@ -278,7 +278,9 @@
     <bpmn:sequenceFlow id="Flow_0zi6a4y" sourceRef="_displayMenu" targetRef="Event_1uch29g" />
     <bpmn:sequenceFlow id="Flow_14dgw8r" sourceRef="Event_1uch29g" targetRef="_displayOrder" />
     <bpmn:sequenceFlow id="Flow_0tz2sda" sourceRef="_displayOrder" targetRef="Gateway_1ra0k8y" />
-    <bpmn:sequenceFlow id="Flow_06k0rn1" name="Order Placed" sourceRef="Gateway_1pjlt9h" targetRef="Gateway_1ra0k8y" />
+    <bpmn:sequenceFlow id="Flow_06k0rn1" name="Order Placed" sourceRef="Gateway_1pjlt9h" targetRef="Gateway_1ra0k8y">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=customerRequest="placeOrder"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1f86jgn" sourceRef="Gateway_1ra0k8y" targetRef="displayMenuAndOrder" />
     <bpmn:sequenceFlow id="Flow_03if75i" sourceRef="displayMenuAndOrder" targetRef="placeOrder" />
     <bpmn:sequenceFlow id="Flow_1ktcy4p" sourceRef="placeOrder" targetRef="_updateOrder" />
@@ -289,13 +291,19 @@
     <bpmn:sequenceFlow id="Flow_1ih99fb" sourceRef="_displayBill" targetRef="displayBill" />
     <bpmn:sequenceFlow id="Flow_1s0x7wr" sourceRef="displayBill" targetRef="enteredPayment" />
     <bpmn:sequenceFlow id="Flow_0jamua7" sourceRef="enteredPayment" targetRef="_displayReceipt" />
-    <bpmn:sequenceFlow id="Flow_1miu3nl" name="Bill Requested" sourceRef="Gateway_1pjlt9h" targetRef="requestBill" />
+    <bpmn:sequenceFlow id="Flow_1miu3nl" name="Bill Requested" sourceRef="Gateway_1pjlt9h" targetRef="requestBill">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=customerRequest="billRequested"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1e3ov99" sourceRef="_displayReceipt" targetRef="Gateway_0i30pv9" />
     <bpmn:sequenceFlow id="Flow_1uiwcc2" sourceRef="copyReceipt" targetRef="Gateway_0i30pv9" />
     <bpmn:sequenceFlow id="Flow_1o5l3dv" sourceRef="Gateway_0i30pv9" targetRef="displayReceipt" />
-    <bpmn:sequenceFlow id="Flow_064nt30" name="Copy Receipt" sourceRef="Gateway_01rwy3p" targetRef="copyReceipt" />
+    <bpmn:sequenceFlow id="Flow_064nt30" name="Copy Receipt" sourceRef="Gateway_01rwy3p" targetRef="copyReceipt">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=customerRequest="copyReceipt"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1voen8m" sourceRef="displayReceipt" targetRef="Gateway_01rwy3p" />
-    <bpmn:sequenceFlow id="Flow_1skyo73" name="Table Available" sourceRef="Gateway_01rwy3p" targetRef="makeTableAvailable" />
+    <bpmn:sequenceFlow id="Flow_1skyo73" name="Table Available" sourceRef="Gateway_01rwy3p" targetRef="makeTableAvailable">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=customerRequest="tableAvailable"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0ddfcf1" sourceRef="_turnOffTableUI" targetRef="tableUITurnedOff" />
     <bpmn:sequenceFlow id="Flow_1uemwrg" sourceRef="turnOnTableUI" targetRef="initializeTableUI" />
     <bpmn:sequenceFlow id="Flow_0gxq6k7" sourceRef="initializeTableUI" targetRef="tableUIAvailable" />
@@ -525,9 +533,8 @@
         <di:waypoint x="1300" y="226" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_03if75i_di" bpmnElement="Flow_03if75i">
-        <di:waypoint x="1400" y="226" />
-        <di:waypoint x="1420" y="226" />
-        <di:waypoint x="1420" y="361" />
+        <di:waypoint x="1360" y="266" />
+        <di:waypoint x="1360" y="361" />
         <di:waypoint x="1440" y="361" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ktcy4p_di" bpmnElement="Flow_1ktcy4p">

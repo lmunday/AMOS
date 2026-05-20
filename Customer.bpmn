@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1y2kcjw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1y2kcjw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.43.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <bpmn:collaboration id="Customer">
     <bpmn:participant id="customer" name="Customer" processRef="customerProcess">
       <bpmn:documentation>{
@@ -12,236 +12,6 @@
 }</bpmn:documentation>
     </bpmn:participant>
   </bpmn:collaboration>
-  <bpmn:message id="Message_014ddei" name="openingTime">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2d3fdtl" name="createTable">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_19tavsh" name="createMenuItem">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=menuItemId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_3jiif77" name="updateTableStatus">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_20optdd" name="selectTable">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_1nh0i7q" name="displayWelocmeScreen">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2f4tncd" name="assignCustomer">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_13p2rcj" name="_createCustomer">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2ogi38q" name="createMenu">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_3dka0ke" name="displayMenu">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_27re9mf" name="getMenuItem">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=menuItemId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_1945686" name="returnMenuItem">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_0abcbqr" name="createCustomerMenuItem">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_3c200ji" name="displayMenuItem">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_0vqeosn" name="createOrder">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_35vdeu2" name="displayOrder">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_3bcrsu9" name="placeOrder">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_1qcodvv" name="createOrderedFood">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId menuItemId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2v62rm2" name="_orderPlaced">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_1v6ucfd" name="displayOrderedFood">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_22g3s63" name="preparedOrderedFood">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=cusomerId menuItemId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_1jougk1" name="updateOrder">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_19sn04p" name="requestBill">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2dl8cc4" name="endFoodService">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_0vph6a7" name="deleteMenu">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_0qasmjl" name="displayBill">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_3ufdjdd" name="enteredPayment">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2kccrgh" name="createPayment">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_03gu62i" name="processPayment">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=paymentId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2olrfvl" name="paymentResult">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=paymentId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2mrvnfd" name="rejectedPayment">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_14ushi8" name="acceptedPayment">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_03np8kc" name="_billPaid">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_1nd0us9" name="deletePayment">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_01e5dsh" name="createReceipt">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_29ld9t4" name="displayReceipt">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_12qtj14" name="copyReceipt">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_0cbrick" name="sendDocument">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=documentId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2eas59c" name="_deleteCustomer">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_0ia6su1" name="deleteOrder">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2ej88hl" name="deleteOrderedFood">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId menuItemId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_24k9adk" name="deleteBill">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_3k7qm5u" name="deleteReceipt">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_2fjg00h" name="closingTime">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_0tb7lts" name="deleteTable">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
-  <bpmn:message id="Message_3vsk5e9" name="deleteMenuITem">
-    <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=menuItemId" />
-    </bpmn:extensionElements>
-  </bpmn:message>
   <bpmn:process id="customerProcess" name="Customer Process" isExecutable="true">
     <bpmn:startEvent id="_createCustomer" name="_createCustomer">
       <bpmn:extensionElements>
@@ -252,17 +22,12 @@
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0o8u116</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0fog8ct" messageRef="Message_13p2rcj" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0fog8ct" messageRef="Message_3jjipv5" />
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0o8u116" sourceRef="_createCustomer" targetRef="Gateway_0gdbb8y" />
     <bpmn:sequenceFlow id="Flow_1e44ior" sourceRef="Gateway_0kxf3je" targetRef="_billRequested" />
     <bpmn:sequenceFlow id="Flow_1l7yuao" sourceRef="_billRequested" targetRef="_billPaid" />
     <bpmn:sequenceFlow id="Flow_0lksa3e" sourceRef="Gateway_0kxf3je" targetRef="_orderPlaced" />
-    <bpmn:intermediateCatchEvent id="_billRequested" name="_billRequested">
-      <bpmn:incoming>Flow_1e44ior</bpmn:incoming>
-      <bpmn:outgoing>Flow_1l7yuao</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1vjgn3z" messageRef="Message_328s3qr" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:eventBasedGateway id="Gateway_0kxf3je">
       <bpmn:incoming>Flow_1vkwld7</bpmn:incoming>
       <bpmn:outgoing>Flow_1e44ior</bpmn:outgoing>
@@ -278,27 +43,48 @@
     <bpmn:intermediateCatchEvent id="_orderPlaced" name="_orderPlaced">
       <bpmn:incoming>Flow_0lksa3e</bpmn:incoming>
       <bpmn:outgoing>Flow_1czojh8</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_16j1tgo" messageRef="Message_2v62rm2" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_16j1tgo" messageRef="Message_04taf62" />
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="_billPaid" name="_billPaid">
       <bpmn:incoming>Flow_1l7yuao</bpmn:incoming>
       <bpmn:outgoing>Flow_09cpbj7</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1cwvew0" messageRef="Message_03np8kc" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1cwvew0" messageRef="Message_1ugu8s0" />
     </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="_deleteCustomer" name="_deleteCustomer">
       <bpmn:incoming>Flow_09cpbj7</bpmn:incoming>
       <bpmn:outgoing>Flow_051knyx</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1ver4ax" messageRef="Message_2eas59c" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1ver4ax" messageRef="Message_017i0pg" />
     </bpmn:intermediateCatchEvent>
     <bpmn:endEvent id="customerDeleted" name="Customer Deleted">
       <bpmn:incoming>Flow_051knyx</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_09cpbj7" sourceRef="_billPaid" targetRef="_deleteCustomer" />
     <bpmn:sequenceFlow id="Flow_051knyx" sourceRef="_deleteCustomer" targetRef="customerDeleted" />
+    <bpmn:intermediateCatchEvent id="_billRequested" name="_billRequested">
+      <bpmn:incoming>Flow_1e44ior</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l7yuao</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1vjgn3z" messageRef="Message_328s3qr" />
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
   <bpmn:message id="Message_328s3qr" name="_billRequested">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerId" />
+      <zeebe:subscription correlationKey="=customer.customerId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3jjipv5" name="_createCustomer" />
+  <bpmn:message id="Message_04taf62" name="_orderPlaced">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=customer.customerrId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1ugu8s0" name="_billPaid">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=customer.customerId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_017i0pg" name="_deleteCustomer">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=customer.customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -311,12 +97,6 @@
         <dc:Bounds x="222" y="172" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="199" y="215" width="85" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_19ec3wu_di" bpmnElement="_billRequested">
-        <dc:Bounds x="612" y="172" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="604" y="148" width="72" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1kh4ard_di" bpmnElement="Gateway_0kxf3je">
@@ -349,16 +129,22 @@
           <dc:Bounds x="886" y="215" width="89" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19ec3wu_di" bpmnElement="_billRequested">
+        <dc:Bounds x="592" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="584" y="148" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0o8u116_di" bpmnElement="Flow_0o8u116">
         <di:waypoint x="258" y="190" />
         <di:waypoint x="345" y="190" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1e44ior_di" bpmnElement="Flow_1e44ior">
         <di:waypoint x="515" y="190" />
-        <di:waypoint x="612" y="190" />
+        <di:waypoint x="592" y="190" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1l7yuao_di" bpmnElement="Flow_1l7yuao">
-        <di:waypoint x="648" y="190" />
+        <di:waypoint x="628" y="190" />
         <di:waypoint x="702" y="190" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lksa3e_di" bpmnElement="Flow_0lksa3e">
