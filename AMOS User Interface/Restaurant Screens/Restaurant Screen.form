@@ -1,12 +1,4 @@
 {
-  "executionPlatform": "Camunda Cloud",
-  "executionPlatformVersion": "8.8.0",
-  "exporter": {
-    "name": "Camunda Web Modeler",
-    "version": "69d2c1a"
-  },
-  "schemaVersion": 19,
-  "id": "RestaurantScreen",
   "components": [
     {
       "text": "# Restaurant Layout",
@@ -91,7 +83,24 @@
       "id": "Field_1qxoego",
       "key": "selectedTable",
       "readonly": false
+    },
+    {
+      "text": "Only allow the following tables to be selected.\n{{tableList}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_0zulku8",
+        "columns": null
+      },
+      "id": "Field_1yyktkj"
     }
   ],
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.43.1"
+  },
+  "schemaVersion": 19,
+  "id": "RestaurantScreen",
   "type": "default"
 }
