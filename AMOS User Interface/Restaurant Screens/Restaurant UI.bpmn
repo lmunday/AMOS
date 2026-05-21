@@ -25,7 +25,7 @@
         <zeebe:userTask />
         <zeebe:formDefinition formId="RestaurantScreen" />
         <zeebe:ioMapping>
-          <zeebe:output source="=tableLocation" target="selectedTable" />
+          <zeebe:output source="=selectedTable" target="tableLocation" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1aga161</bpmn:incoming>
@@ -86,7 +86,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_openRestaurant" target="messageName" />
-          <zeebe:input source="restaurantId" target="variables" />
+          <zeebe:input source="={&#34;restaurantId&#34;:restaurantId}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
