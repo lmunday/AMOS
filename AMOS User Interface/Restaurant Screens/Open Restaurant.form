@@ -1,4 +1,12 @@
 {
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "OpenRestaurant",
   "components": [
     {
       "label": "Open",
@@ -28,13 +36,5 @@
       }
     }
   ],
-  "executionPlatform": "Camunda Cloud",
-  "executionPlatformVersion": "8.8.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.43.1"
-  },
-  "schemaVersion": 19,
-  "id": "OpenRestaurant",
   "type": "default"
 }
