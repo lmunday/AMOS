@@ -1,0 +1,40 @@
+{
+  "components": [
+    {
+      "label": "Open",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1kqddsv",
+        "columns": 6
+      },
+      "id": "Field_1a7icwt",
+      "properties": {
+        "_openingTime": "true"
+      }
+    },
+    {
+      "label": "Restaurant Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1kqddsv",
+        "columns": null
+      },
+      "id": "Field_0u0uyrx",
+      "key": "restaurantId",
+      "defaultValue": "\"\"",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.43.1"
+  },
+  "schemaVersion": 19,
+  "id": "OpenRestaurant",
+  "type": "default"
+}
