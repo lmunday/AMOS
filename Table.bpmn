@@ -18,7 +18,7 @@
   </bpmn:message>
   <bpmn:message id="Message_0n0scru" name="_selectTable">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.tableLocation" />
+      <zeebe:subscription correlationKey="={&#34;tableLocation&#34;:table.tableLocation}" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:collaboration id="Table">
@@ -90,7 +90,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_updateTableStatus" target="messageName" />
-          <zeebe:input source="Table.restaurantId" target="correlationKey" />
+          <zeebe:input source="table.restaurantId" target="correlationKey" />
           <zeebe:input source="={&#34;tableLocation&#34;:table.tableLocation,&#34;tableStatus&#34;:table.tableStatus}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
