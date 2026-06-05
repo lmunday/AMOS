@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <bpmn:collaboration id="RestaurantUI">
+    <bpmn:participant id="restaurantUI" name="Restaturant UI" processRef="restaurantUIProces" />
+  </bpmn:collaboration>
+  <bpmn:process id="restaurantUIProces" name="Restaurant UI Process" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_12qkn7d">
+      <bpmn:lane id="updateRestaturantUIDisplay" name="Update Display">
+        <bpmn:flowNodeRef>openRestaurant</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>initializeRestaurantUI</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>updateRestaurantDisplay</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>uiTurnedOff</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>closeRestaurant</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>restaurantTurnedOn</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="monitorRestaurantUIInput" name="Monitor Input">
+        <bpmn:flowNodeRef>Gateway_0p2iry0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>selectATable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0o2ju6h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>updateTableStatus</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>informSelectedTable</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sendTask id="openRestaurant" name="Open Restaurant" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_openRestaurant" target="messageName" />
+          <zeebe:input source="={&#34;restaurantId&#34;:restaurantUi.restaurantId}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0p0cweo</bpmn:incoming>
+      <bpmn:outgoing>Flow_1t8x4xv</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:userTask id="initializeRestaurantUI" name="Initialize Restaurant UI">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="OpenRestaurant" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=restaurantId" target="restaurantUi.restaurantId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1cc7pcd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p0cweo</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0p2iry0">
+      <bpmn:incoming>Flow_0ciwabh</bpmn:incoming>
+      <bpmn:incoming>Flow_1t8x4xv</bpmn:incoming>
+      <bpmn:incoming>Flow_1r3etzn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1aga161</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="selectATable" name="Select A Table">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="RestaurantScreen" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=selectedTable" target="restaurantUi.tableLocation" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1aga161</bpmn:incoming>
+      <bpmn:outgoing>Flow_16m1nqv</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="updateRestaurantDisplay" name="Update Restaurant Display">
+      <bpmn:documentation>If the table status is available add it to the availableTableList
+Otherwise remove it from the availableTableList, if there.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="UpdateRestaurantDisplay" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04bgit9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r3etzn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="uiTurnedOff" name="UI Turned Off">
+      <bpmn:incoming>Flow_0n6i7nu</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="closeRestaurant" name="Close Restaurant" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_closingTime" target="messageName" />
+          <zeebe:input source="=restaurantUi.restaurantId" target="correlationKey" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_14nec9f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n6i7nu</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:boundaryEvent id="Event_0o2ju6h" name="Open for 8 Hours" attachedToRef="selectATable">
+      <bpmn:outgoing>Flow_14nec9f</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0snxe48">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT8H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="updateTableStatus" name="updateTableStatus" attachedToRef="selectATable">
+      <bpmn:documentation>If the table status is available, add it to the available tables list.  Otherwise remove it from the available tables list.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=tableLocation" target="restaurantUi.Table_Location" />
+          <zeebe:output source="=tableStatus" target="restaurantUi.Table_Status" />
+          <zeebe:output source="=if (tableStatus=&#34;Available&#34;) then &#10;  append(restaurantUi.availableTableList, tableLocation)&#10;else&#10;  restaurantUi.availableTableList[item != tableLocation]" target="restaurantUi.availableTableList" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_04bgit9</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_09d09y5" messageRef="Message_3v2o974" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0p0cweo" sourceRef="initializeRestaurantUI" targetRef="openRestaurant" />
+    <bpmn:sequenceFlow id="Flow_1t8x4xv" sourceRef="openRestaurant" targetRef="Gateway_0p2iry0" />
+    <bpmn:sequenceFlow id="Flow_1cc7pcd" sourceRef="restaurantTurnedOn" targetRef="initializeRestaurantUI" />
+    <bpmn:sequenceFlow id="Flow_0ciwabh" sourceRef="informSelectedTable" targetRef="Gateway_0p2iry0" />
+    <bpmn:sequenceFlow id="Flow_1r3etzn" sourceRef="updateRestaurantDisplay" targetRef="Gateway_0p2iry0" />
+    <bpmn:sequenceFlow id="Flow_1aga161" sourceRef="Gateway_0p2iry0" targetRef="selectATable" />
+    <bpmn:sequenceFlow id="Flow_16m1nqv" sourceRef="selectATable" targetRef="informSelectedTable" />
+    <bpmn:sequenceFlow id="Flow_04bgit9" sourceRef="updateTableStatus" targetRef="updateRestaurantDisplay" />
+    <bpmn:sequenceFlow id="Flow_0n6i7nu" sourceRef="closeRestaurant" targetRef="uiTurnedOff" />
+    <bpmn:sequenceFlow id="Flow_14nec9f" sourceRef="Event_0o2ju6h" targetRef="closeRestaurant" />
+    <bpmn:sendTask id="informSelectedTable" name="Inform Selected Table" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_selectTable" target="messageName" />
+          <zeebe:input source="=restaurantUi.tableLocation" target="correlationKey" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_16m1nqv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ciwabh</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:startEvent id="restaurantTurnedOn" name="Restaurant Turned On">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=[]" target="restaurantUi.availableTableList" />
+          <zeebe:output source="=&#34;&#34;" target="restaurantUi.restaurantId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1cc7pcd</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:signal id="Signal_1utck8k" name="_openingTime" />
+  <bpmn:message id="Message_3v2o974" name="_updateTableStatus">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=restaurantUi.restaurantId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:signal id="Signal_29no56f" name="_closingTime" />
+  <bpmn:message id="Message_16nev38" name="_createRestaurantUI" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="RestaurantUI">
+      <bpmndi:BPMNShape id="Participant_0n0u0ln_di" bpmnElement="restaurantUI" isHorizontal="true">
+        <dc:Bounds x="574" y="113" width="1160" height="420" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0qyvzdm_di" bpmnElement="monitorRestaurantUIInput" isHorizontal="true">
+        <dc:Bounds x="604" y="113" width="1130" height="230" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1cqwy9r_di" bpmnElement="updateRestaturantUIDisplay" isHorizontal="true">
+        <dc:Bounds x="604" y="343" width="1130" height="190" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ej22iv_di" bpmnElement="openRestaurant">
+        <dc:Bounds x="916" y="383" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wfzf9k_di" bpmnElement="initializeRestaurantUI">
+        <dc:Bounds x="749" y="383" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0p2iry0_di" bpmnElement="Gateway_0p2iry0" isMarkerVisible="true">
+        <dc:Bounds x="1076" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t6c2yi_di" bpmnElement="selectATable">
+        <dc:Bounds x="1320" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0as5bjo_di" bpmnElement="updateRestaurantDisplay">
+        <dc:Bounds x="1155" y="383" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tr0oxc_di" bpmnElement="uiTurnedOff">
+        <dc:Bounds x="1613" y="405" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1598" y="448" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d33302_di" bpmnElement="closeRestaurant">
+        <dc:Bounds x="1457" y="383" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01al89h_di" bpmnElement="informSelectedTable">
+        <dc:Bounds x="1510" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1oczs62_di" bpmnElement="restaurantTurnedOn">
+        <dc:Bounds x="656" y="405" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="648" y="448" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1koyi72_di" bpmnElement="updateTableStatus">
+        <dc:Bounds x="1316" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1265" y="316" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0uy7t3i_di" bpmnElement="Event_0o2ju6h">
+        <dc:Bounds x="1386" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1363" y="325" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0p0cweo_di" bpmnElement="Flow_0p0cweo">
+        <di:waypoint x="849" y="423" />
+        <di:waypoint x="916" y="423" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t8x4xv_di" bpmnElement="Flow_1t8x4xv">
+        <di:waypoint x="986" y="383" />
+        <di:waypoint x="986" y="260" />
+        <di:waypoint x="1076" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cc7pcd_di" bpmnElement="Flow_1cc7pcd">
+        <di:waypoint x="692" y="423" />
+        <di:waypoint x="749" y="423" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ciwabh_di" bpmnElement="Flow_0ciwabh">
+        <di:waypoint x="1560" y="220" />
+        <di:waypoint x="1560" y="156" />
+        <di:waypoint x="1101" y="156" />
+        <di:waypoint x="1101" y="235" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r3etzn_di" bpmnElement="Flow_1r3etzn">
+        <di:waypoint x="1155" y="423" />
+        <di:waypoint x="1101" y="423" />
+        <di:waypoint x="1101" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1aga161_di" bpmnElement="Flow_1aga161">
+        <di:waypoint x="1126" y="260" />
+        <di:waypoint x="1320" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16m1nqv_di" bpmnElement="Flow_16m1nqv">
+        <di:waypoint x="1420" y="260" />
+        <di:waypoint x="1510" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04bgit9_di" bpmnElement="Flow_04bgit9">
+        <di:waypoint x="1334" y="318" />
+        <di:waypoint x="1334" y="423" />
+        <di:waypoint x="1255" y="423" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0n6i7nu_di" bpmnElement="Flow_0n6i7nu">
+        <di:waypoint x="1557" y="423" />
+        <di:waypoint x="1613" y="423" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14nec9f_di" bpmnElement="Flow_14nec9f">
+        <di:waypoint x="1404" y="318" />
+        <di:waypoint x="1404" y="423" />
+        <di:waypoint x="1457" y="423" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

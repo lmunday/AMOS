@@ -1,4 +1,12 @@
 {
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "RestaurantScreen",
   "components": [
     {
       "text": "# Restaurant Layout",
@@ -10,28 +18,10 @@
       "id": "Field_0z97qw6"
     },
     {
-      "text": "=tableLocation",
-      "type": "text",
-      "layout": {
-        "row": "Row_0h5c4fh",
-        "columns": null
-      },
-      "id": "Field_0u8pfpy"
-    },
-    {
-      "text": "=tableStatus",
-      "type": "text",
-      "layout": {
-        "row": "Row_0h5c4fh",
-        "columns": null
-      },
-      "id": "Field_0aipap7"
-    },
-    {
       "type": "separator",
       "layout": {
         "row": "Row_18pzyjy",
-        "columns": 11
+        "columns": null
       },
       "id": "Field_0fw3q5q"
     },
@@ -94,22 +84,14 @@
       "id": "Field_1yyktkj"
     },
     {
-      "text": "{{tableList}}",
+      "text": "{{restaurantUi.availableTableList}}",
       "type": "text",
       "layout": {
-        "row": "Row_02m2zwi",
+        "row": "Row_052sn3q",
         "columns": null
       },
-      "id": "Field_1eo6upr"
+      "id": "Field_1wq6fhn"
     }
   ],
-  "executionPlatform": "Camunda Cloud",
-  "executionPlatformVersion": "8.8.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.43.1"
-  },
-  "schemaVersion": 19,
-  "id": "RestaurantScreen",
   "type": "default"
 }

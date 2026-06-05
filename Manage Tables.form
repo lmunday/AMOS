@@ -1,4 +1,12 @@
 {
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "manageTables",
   "components": [
     {
       "text": "{{restaurant.restaurantId}}",
@@ -32,6 +40,30 @@
         {
           "label": "FR",
           "value": "FR"
+        },
+        {
+          "label": "ML",
+          "value": "ML"
+        },
+        {
+          "label": "MC",
+          "value": "MC"
+        },
+        {
+          "label": "MR",
+          "value": "MR"
+        },
+        {
+          "label": "RL",
+          "value": "RL"
+        },
+        {
+          "label": "RM",
+          "value": "RM"
+        },
+        {
+          "label": "RR",
+          "value": "RR"
         }
       ],
       "type": "select",
@@ -40,7 +72,7 @@
         "columns": 4
       },
       "id": "Field_09dpbl3",
-      "key": "tableLocation",
+      "key": "location",
       "validate": {
         "required": true
       }
@@ -81,10 +113,13 @@
         "columns": null
       },
       "id": "Field_0m7l1ve",
-      "key": "addTable"
+      "key": "addTable",
+      "validate": {
+        "required": true
+      }
     },
     {
-      "text": "{{tableList}}",
+      "text": "{{restaurantUi.Table_List}}",
       "type": "text",
       "layout": {
         "row": "Row_16pel71",
@@ -100,15 +135,16 @@
         "columns": null
       },
       "id": "Field_199u1ka"
+    },
+    {
+      "text": "{{restaurant.Table_List}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_0zraulg",
+        "columns": null
+      },
+      "id": "Field_13abtke"
     }
   ],
-  "executionPlatform": "Camunda Cloud",
-  "executionPlatformVersion": "8.8.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.43.1"
-  },
-  "schemaVersion": 19,
-  "id": "manageTables",
   "type": "default"
 }
