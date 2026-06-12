@@ -182,7 +182,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_displayMenu" target="messageName" />
-          <zeebe:input source="=menu.customerId" target="correlationKey" />
+          <zeebe:input source="=menu.location" target="correlationKey" />
           <zeebe:input source="={&#34;customerId&#34;:menu.customerId, &#34;location&#34;:menu.location}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
@@ -368,14 +368,14 @@
         <di:waypoint x="1090" y="205" />
         <di:waypoint x="1152" y="205" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_06a4tmf_di" bpmnElement="Association_06a4tmf">
-        <di:waypoint x="1076" y="165" />
-        <di:waypoint x="1091" y="149" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0z640r9_di" bpmnElement="TextAnnotation_0z640r9">
         <dc:Bounds x="1090" y="80" width="110" height="69" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_06a4tmf_di" bpmnElement="Association_06a4tmf">
+        <di:waypoint x="1076" y="165" />
+        <di:waypoint x="1091" y="149" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

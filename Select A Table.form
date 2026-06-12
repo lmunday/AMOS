@@ -27,44 +27,6 @@
     },
     {
       "label": "Select Table Number",
-      "values": [
-        {
-          "label": "FL",
-          "value": "FL"
-        },
-        {
-          "label": "FC",
-          "value": "FC"
-        },
-        {
-          "label": "FR",
-          "value": "FR"
-        },
-        {
-          "label": "ML",
-          "value": "ML"
-        },
-        {
-          "label": "MC",
-          "value": "MC"
-        },
-        {
-          "label": "MR",
-          "value": "MR"
-        },
-        {
-          "label": "RL",
-          "value": "RL"
-        },
-        {
-          "label": "RC",
-          "value": "RC"
-        },
-        {
-          "label": "RR",
-          "value": "RR"
-        }
-      ],
       "type": "select",
       "layout": {
         "row": "Row_1f4tpei",
@@ -72,7 +34,8 @@
       },
       "id": "Field_1qxoego",
       "key": "selectedTable",
-      "readonly": false
+      "readonly": false,
+      "valuesKey": "tableList"
     },
     {
       "text": "Only allow the following tables to be selected.",

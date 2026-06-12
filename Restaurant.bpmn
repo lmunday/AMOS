@@ -18,12 +18,12 @@
         <bpmn:flowNodeRef>closeRestaurantDisplay</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>restaurantClosed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>cleanupRestaurant</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>openRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>closeRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>maintainRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>updateTableStatusClosing</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>closingTime</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>deleteMenuItems</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>openRestaurant</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="Gateway_16lkzm5">
@@ -61,24 +61,6 @@ Otherwise send an event to the restaurant UI, containing the table status of the
       <bpmn:incoming>Flow_1j4m27c</bpmn:incoming>
       <bpmn:outgoing>Flow_16wyxz0</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:startEvent id="openRestaurant" name="openRestaurant">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=restaurantId" target="restaurant.restaurantId" />
-          <zeebe:output source="=[]" target="restaurant.Table_List" />
-          <zeebe:output source="=[]" target="restaurant.Menu_Item_List" />
-          <zeebe:output source="=&#34;&#34;" target="restaurant.Table_Location" />
-          <zeebe:output source="=0" target="restaurant.Table_Seating" />
-          <zeebe:output source="=false" target="restaurant.Table_Update" />
-          <zeebe:output source="=&#34;&#34;" target="restaurant.Menu_Item_Name" />
-          <zeebe:output source="=0" target="restaurant.Menu_Item_Cost" />
-          <zeebe:output source="=&#34;&#34;" target="restaurant.Menu_Item_Description" />
-          <zeebe:output source="=false" target="restaurant.Menu_Item_Update" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:outgoing>Flow_1nq9bk7</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_16jmatj" messageRef="Message_2nmjfkr" />
-    </bpmn:startEvent>
     <bpmn:task id="closeRestaurant" name="Close Restaurant">
       <bpmn:documentation>If all table instances deleted  then exit to cleanup restaurant.</bpmn:documentation>
       <bpmn:incoming>Flow_1tohjnh</bpmn:incoming>
@@ -92,7 +74,7 @@ Otherwise send an event to the restaurant UI, containing the table status of the
           <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
           <zeebe:ioMapping>
             <zeebe:input source="_createMenuItem" target="messageName" />
-            <zeebe:input source="={&#34;name&#34;:restaurant.Menu_Item_Name, &#34;description&#34;:restaurant.Menu_Item_Description, &#34;cost&#34;:restaurant.Menu_Item_Cost}" target="variables" />
+            <zeebe:input source="={&#34;name&#34;:restaurant.Menu_Item_Name, &#34;description&#34;:restaurant.Menu_Item_Description, &#34;cost&#34;:restaurant.Menu_Item_Cost, &#34;category&#34;:restaurant.Menu_Item_Category}" target="variables" />
             <zeebe:input source="publish" target="correlationType.type" />
           </zeebe:ioMapping>
           <zeebe:taskHeaders>
@@ -225,6 +207,7 @@ Otherwise send an event to the restaurant UI, containing the table status of the
             <zeebe:output source="=cost" target="restaurant.Menu_Item_Cost" />
             <zeebe:output source="=description" target="restaurant.Menu_Item_Description" />
             <zeebe:output source="=addMenuItem" target="restaurant.Menu_Update" />
+            <zeebe:output source="=category" target="restaurant.Menu_Item_Category" />
           </zeebe:ioMapping>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1bnvfkr</bpmn:incoming>
@@ -439,6 +422,25 @@ Otherwise send an event to the restaurant UI, containing the table status of the
       <bpmn:incoming>Flow_0786blo</bpmn:incoming>
       <bpmn:outgoing>Flow_1blbs3n</bpmn:outgoing>
     </bpmn:task>
+    <bpmn:startEvent id="openRestaurant" name="openRestaurant">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=restaurantId" target="restaurant.restaurantId" />
+          <zeebe:output source="=[]" target="restaurant.Table_List" />
+          <zeebe:output source="=[]" target="restaurant.Menu_Item_List" />
+          <zeebe:output source="=&#34;&#34;" target="restaurant.Table_Location" />
+          <zeebe:output source="=0" target="restaurant.Table_Seating" />
+          <zeebe:output source="=false" target="restaurant.Table_Update" />
+          <zeebe:output source="=&#34;&#34;" target="restaurant.Menu_Item_Name" />
+          <zeebe:output source="=0" target="restaurant.Menu_Item_Cost" />
+          <zeebe:output source="=&#34;&#34;" target="restaurant.Menu_Item_Description" />
+          <zeebe:output source="=false" target="restaurant.Menu_Item_Update" />
+          <zeebe:output source="=&#34;&#34;" target="restaurant.Menu_Item_Category" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1nq9bk7</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_16jmatj" messageRef="Message_2nmjfkr" />
+    </bpmn:startEvent>
   </bpmn:process>
   <bpmn:message id="Message_3jiif77" name="_updateTableStatus">
     <bpmn:extensionElements>

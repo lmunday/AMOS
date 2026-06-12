@@ -48,15 +48,19 @@
       "defaultValue": 0.01
     },
     {
-      "label": "Add or Remove",
+      "label": "Category",
       "values": [
         {
-          "label": "Update",
-          "value": "add"
+          "label": "Starter",
+          "value": "starter"
         },
         {
-          "label": "Remove",
-          "value": "remove"
+          "label": "Main",
+          "value": "main"
+        },
+        {
+          "label": "Dessert",
+          "value": "dessert"
         }
       ],
       "type": "select",
@@ -64,8 +68,8 @@
         "row": "Row_12unyfj",
         "columns": null
       },
-      "id": "Field_1tjaj0k",
-      "key": "addMenuItem",
+      "id": "Field_0pbogt3",
+      "key": "category",
       "validate": {
         "required": true
       }
@@ -85,10 +89,33 @@
       }
     },
     {
+      "label": "Add or Remove",
+      "values": [
+        {
+          "label": "Update",
+          "value": "add"
+        },
+        {
+          "label": "Remove",
+          "value": "remove"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_0oedkgw",
+        "columns": 4
+      },
+      "id": "Field_1tjaj0k",
+      "key": "addMenuItem",
+      "validate": {
+        "required": true
+      }
+    },
+    {
       "text": "{{restaurant.Menu_Item_List}}",
       "type": "text",
       "layout": {
-        "row": "Row_099zn10",
+        "row": "Row_0oedkgw",
         "columns": null
       },
       "id": "Field_187c2ad"

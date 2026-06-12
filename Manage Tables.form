@@ -137,7 +137,7 @@
       "id": "Field_199u1ka"
     },
     {
-      "text": "{{restaurant.Table_List}}",
+      "text": "=restaurant.Table_List",
       "type": "text",
       "layout": {
         "row": "Row_0zraulg",

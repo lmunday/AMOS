@@ -11,6 +11,10 @@
 		}
 }</bpmn:documentation>
     </bpmn:participant>
+    <bpmn:textAnnotation id="TextAnnotation_03h7ws2">
+      <bpmn:text>Populate a customer menu item</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_13w9kb2" associationDirection="None" sourceRef="returnMenuItem" targetRef="TextAnnotation_03h7ws2" />
   </bpmn:collaboration>
   <bpmn:process id="menuItemProcess" name="Menu Item Process" isExecutable="true">
     <bpmn:startEvent id="createMenuItem" name="createMenuItem">
@@ -20,6 +24,7 @@
           <zeebe:output source="=description" target="menuItem.description" />
           <zeebe:output source="=cost" target="menuItem.cost" />
           <zeebe:output source="=&#34;&#34;" target="menuItem.Customer_Menu_Item_Id" />
+          <zeebe:output source="=category" target="menuItem.category" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0x2dkra</bpmn:outgoing>
@@ -62,7 +67,7 @@
         <zeebe:ioMapping>
           <zeebe:input source="_returnMenuItem" target="messageName" />
           <zeebe:input source="=menuItem.Customer_Menu_Item_Id" target="correlationKey" />
-          <zeebe:input source="={&#34;menuITemDescription&#34;:menuItem.description, &#34;menuItemCost&#34;:menuItem.cost}" target="variables" />
+          <zeebe:input source="={&#34;menuItemDescription&#34;:menuItem.description, &#34;menuItemCost&#34;:menuItem.cost, &#34;menuItemCategory&#34;:menuItem.category}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -160,6 +165,14 @@
         <di:waypoint x="540" y="320" />
         <di:waypoint x="190" y="320" />
         <di:waypoint x="190" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_03h7ws2_di" bpmnElement="TextAnnotation_03h7ws2">
+        <dc:Bounds x="550" y="350" width="100" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_13w9kb2_di" bpmnElement="Association_13w9kb2">
+        <di:waypoint x="559" y="280" />
+        <di:waypoint x="593" y="350" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

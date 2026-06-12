@@ -6,7 +6,7 @@
     "version": "69d2c1a"
   },
   "schemaVersion": 19,
-  "id": "display-receipt-13k1xyu",
+  "id": "DisplayReceipt",
   "components": [
     {
       "text": "# Display Receipt",
@@ -46,6 +46,26 @@
         "columns": null
       },
       "id": "Field_13eb3x2"
+    },
+    {
+      "label": "Copy Receipt",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0079cas",
+        "columns": null
+      },
+      "id": "Field_145oo11",
+      "key": "copyReceipt"
+    },
+    {
+      "label": "Table Available",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0079cas",
+        "columns": null
+      },
+      "id": "Field_0p0n2bm",
+      "key": "tableAvailable"
     }
   ],
   "type": "default"

@@ -344,27 +344,15 @@
     <bpmn:sequenceFlow id="Flow_1q6gvs4" sourceRef="deleteMenu" targetRef="endFoodService" />
     <bpmn:sequenceFlow id="Flow_1o9gq3o" sourceRef="billRequested" targetRef="deleteMenu" />
     <bpmn:intermediateCatchEvent id="billRequested" name="billRequested">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Bill Requested&#34;" target="table.status" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0lr8qao</bpmn:incoming>
       <bpmn:outgoing>Flow_1o9gq3o</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1myd1fh" messageRef="Message_3sgaci8" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="deleteMenu" name="Delete Menu" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_deleteMenu" target="messageName" />
-          <zeebe:input source="=table.CustomerId" target="correlationKey" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1o9gq3o</bpmn:incoming>
-      <bpmn:outgoing>Flow_1q6gvs4</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_0ywuwdh" sourceRef="Gateway_1dnyyv6" targetRef="Gateway_1j0i5n7" />
     <bpmn:sequenceFlow id="Flow_1gct2nm" sourceRef="deleteCustomer" targetRef="Gateway_1dnyyv6" />
     <bpmn:sequenceFlow id="Flow_0i0z8cy" sourceRef="deleteOrder" targetRef="Gateway_1dnyyv6" />
@@ -414,6 +402,23 @@
       <bpmn:incoming>Flow_0i0z8cy</bpmn:incoming>
       <bpmn:outgoing>Flow_0ywuwdh</bpmn:outgoing>
     </bpmn:parallelGateway>
+    <bpmn:sendTask id="deleteMenu" name="Delete Menu" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_deleteMenu" target="messageName" />
+          <zeebe:input source="=table.CustomerId" target="correlationKey" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1o9gq3o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q6gvs4</bpmn:outgoing>
+    </bpmn:sendTask>
   </bpmn:process>
   <bpmn:message id="Message_1kit3br" name="_tableAvailable">
     <bpmn:extensionElements>
@@ -433,7 +438,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Table">
       <bpmndi:BPMNShape id="Participant_0mu1d72_di" bpmnElement="table" isHorizontal="true">
-        <dc:Bounds x="-170" y="0" width="2470" height="600" />
+        <dc:Bounds x="-170" y="110" width="2470" height="490" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0jr9d4b_di" bpmnElement="createOrder">

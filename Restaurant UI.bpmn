@@ -60,6 +60,7 @@
         <zeebe:userTask />
         <zeebe:formDefinition formId="RestaurantScreen" />
         <zeebe:ioMapping>
+          <zeebe:input source="=restaurantUi.availableTableList" target="tableList" />
           <zeebe:output source="=selectedTable" target="restaurantUi.tableLocation" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
