@@ -119,7 +119,20 @@
       }
     },
     {
+<<<<<<<< HEAD:Administration Screens/Manage Tables.form
       "text": "Instructions\nOnly allow these tables to be removed.\nAvailable tables is needed by Restaurant.",
+========
+      "text": "{{restaurantUi.Table_List}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_16pel71",
+        "columns": null
+      },
+      "id": "Field_035lmjr"
+    },
+    {
+      "text": "Instructions\nOnly allow displayed tables to be removed.",
+>>>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec:Manage Tables.form
       "type": "text",
       "layout": {
         "row": "Row_12l0s4t",
@@ -128,7 +141,11 @@
       "id": "Field_199u1ka"
     },
     {
+<<<<<<<< HEAD:Administration Screens/Manage Tables.form
       "text": "=restaurant.tableList",
+========
+      "text": "=restaurant.Table_List",
+>>>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec:Manage Tables.form
       "type": "text",
       "layout": {
         "row": "Row_0zraulg",
