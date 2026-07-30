@@ -1,34 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1y2kcjw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.43.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
-  <bpmn:collaboration id="Collaboration_1k4fnnm">
-    <bpmn:participant id="customerMenuItem" name="Customer Menu Item" processRef="customerMeuItemProcess">
-      <bpmn:documentation>{
-"customerMenuItem" : 
-		{
-		"customerId": "",
-		"menuItemId": ""
-		}
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
+  <bpmn:message id="Message_26dc6hd" name="_createCustomerMenuItem" />
+  <bpmn:message id="Message_3ku7p2f" name="_returnMenuItem">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=customerMenuItem.id" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:collaboration id="CustomerMenuItem" name="Customer Menu Item">
+    <bpmn:documentation>{"customerMenuItem":{
+	"name": "Elephant",
+	"description": "",
+	"restaurantId": "AMOS",
+	"customerId": "BaldrickFL",
+	"id": "BaldrickFLElephant",
+	"cost": 0,
+	"category": ""
 }</bpmn:documentation>
-    </bpmn:participant>
+    <bpmn:participant id="customerMenuItem" name="Customer Menu Item" processRef="customerMenuItemProcess" />
+    <bpmn:textAnnotation id="TextAnnotation_0pzaq4z">
+      <bpmn:text>Return the customer menu item information to the Menu</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_17w9dd2">
+      <bpmn:text>To menu item</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_15qso6s" associationDirection="None" sourceRef="returnCustomerMenuItemName" targetRef="TextAnnotation_0pzaq4z" />
+    <bpmn:association id="Association_1czdpur" associationDirection="None" sourceRef="getMenuItem" targetRef="TextAnnotation_17w9dd2" />
+    <bpmn:textAnnotation id="TextAnnotation_1yjgk9f">
+      <bpmn:text>From menu item</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0cb78ch" associationDirection="None" sourceRef="returnMenuItem" targetRef="TextAnnotation_1yjgk9f" />
+    <bpmn:textAnnotation id="TextAnnotation_02zhcej">
+      <bpmn:text>Not used</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0ifjaob" associationDirection="None" sourceRef="getMenuItemCost" targetRef="TextAnnotation_02zhcej" />
+    <bpmn:textAnnotation id="TextAnnotation_1qhh7in">
+      <bpmn:text>Displayed to the table</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1g1whlf" associationDirection="None" sourceRef="displayMenuItem" targetRef="TextAnnotation_1qhh7in" />
   </bpmn:collaboration>
-  <bpmn:process id="customerMeuItemProcess" name="Customer Meu Item Process" isExecutable="true">
-    <bpmn:startEvent id="_createCustomerMenuItem" name="_createCustomerMenuItem">
+  <bpmn:process id="customerMenuItemProcess" name="Customer Menu Item Process" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_0dvb71p" sourceRef="createCustomerMenuItem" targetRef="getMenuItem" />
+    <bpmn:startEvent id="createCustomerMenuItem" name="createCustomerMenuItem">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:output source="=customerId" target="customerMenuItem.customerId" />
-          <zeebe:output source="=name" target="customerMenuItem.name" />
-          <zeebe:output source="=tableId" target="customerMenuItem.tableId" />
+          <zeebe:output source="=menuItemName" target="customerMenuItem.name" />
+          <zeebe:output source="=restaurantId" target="customerMenuItem.restaurantId" />
+          <zeebe:output source="=customerId+menuItemName" target="customerMenuItem.id" />
+          <zeebe:output source="=&#34;&#34;" target="customerMenuItem.description" />
+          <zeebe:output source="=0" target="customerMenuItem.cost" />
+          <zeebe:output source="=&#34;&#34;" target="customerMenuItem.category" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
-      <bpmn:outgoing>Flow_19rb3c9</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_159cz2i" messageRef="Message_158top7" />
+      <bpmn:outgoing>Flow_0dvb71p</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1hs8u86" messageRef="Message_26dc6hd" />
     </bpmn:startEvent>
-    <bpmn:sendTask id="displayCustomerMenuItem" name="Display Customer Menu Item" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sequenceFlow id="Flow_0lkhwsh" sourceRef="getMenuItemCost" targetRef="returnCustomerMenuItemCost" />
+    <bpmn:sequenceFlow id="Flow_0xtd836" sourceRef="Gateway_1m8qe6e" targetRef="getMenuItemCost" />
+    <bpmn:sequenceFlow id="Flow_047zdzl" sourceRef="Gateway_1m8qe6e" targetRef="deleteCustomerMenuItem" />
+    <bpmn:sequenceFlow id="Flow_1u7qdk1" sourceRef="Gateway_1c3twaq" targetRef="Gateway_1m8qe6e" />
+    <bpmn:sequenceFlow id="Flow_1ejbqj4" sourceRef="returnCustomerMenuItemCost" targetRef="Gateway_1c3twaq" />
+    <bpmn:sequenceFlow id="Flow_17w36t4" sourceRef="deleteCustomerMenuItem" targetRef="customerMenuItemDeleted" />
+    <bpmn:sequenceFlow id="Flow_100a9bc" sourceRef="displayMenuItem" targetRef="Gateway_1c3twaq" />
+    <bpmn:sendTask id="returnCustomerMenuItemCost" name="Return Customer Menu Item Cost" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
-          <zeebe:input source="_displayMenuItem" target="messageName" />
-          <zeebe:input source="customerMenuItem.tableId" target="correlationKey" />
+          <zeebe:input source="_returnCustomerMenuItemCost" target="messageName" />
+          <zeebe:input source="=customerMenuItem.customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;cost&#34;:customerMenuItem.cost}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -37,66 +77,253 @@
           <zeebe:header key="retryBackoff" value="PT0S" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_19rb3c9</bpmn:incoming>
-      <bpmn:outgoing>Flow_0ibtmr7</bpmn:outgoing>
+      <bpmn:incoming>Flow_0lkhwsh</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ejbqj4</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:intermediateCatchEvent id="_deleteCustomerMenuITem" name="_deleteCustomerMenuITem">
-      <bpmn:incoming>Flow_0ibtmr7</bpmn:incoming>
-      <bpmn:outgoing>Flow_0dnyvw1</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_11kyeac" messageRef="Message_25ib09e" />
+    <bpmn:intermediateCatchEvent id="getMenuItemCost" name="Get Menu Item Cost">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_0xtd836</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lkhwsh</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1fe5vry" messageRef="Message_3c1alcn" />
     </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="deleteCustomerMenuItem" name="deleteCustomerMenuItem">
+      <bpmn:incoming>Flow_047zdzl</bpmn:incoming>
+      <bpmn:outgoing>Flow_17w36t4</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1ujrvh1" messageRef="Message_1p89o4r" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:eventBasedGateway id="Gateway_1m8qe6e">
+      <bpmn:incoming>Flow_1u7qdk1</bpmn:incoming>
+      <bpmn:outgoing>Flow_047zdzl</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0xtd836</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:exclusiveGateway id="Gateway_1c3twaq">
+      <bpmn:incoming>Flow_100a9bc</bpmn:incoming>
+      <bpmn:incoming>Flow_1ejbqj4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1u7qdk1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="displayMenuItem" name="Display Menu Item" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_displayMenuItem" target="messageName" />
+          <zeebe:input source="=customerMenuItem.customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;menuItemName&#34;:customerMenuItem.name, &#34;menuItemDescription&#34;:customerMenuItem.description, &#34;menuItemCost&#34;:customerMenuItem.cost, &#34;menuItemCategory&#34;:customerMenuItem.category}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10egkvc</bpmn:incoming>
+      <bpmn:outgoing>Flow_100a9bc</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="getMenuItem" name="Get Menu Item" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_getMenuItem" target="messageName" />
+          <zeebe:input source="=customerMenuItem.name" target="correlationKey" />
+          <zeebe:input source="={&#34;customerMenuItemId&#34;:customerMenuItem.id}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dvb71p</bpmn:incoming>
+      <bpmn:outgoing>Flow_1w6d8ix</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="returnCustomerMenuItemName" name="Return Customer Menu Item" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_returnCustomerMenuItem" target="messageName" />
+          <zeebe:input source="=customerMenuItem.customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;customerMenuItemId&#34;:customerMenuItem.id}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0bd19ou</bpmn:incoming>
+      <bpmn:outgoing>Flow_10egkvc</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_10egkvc" sourceRef="returnCustomerMenuItemName" targetRef="displayMenuItem" />
+    <bpmn:intermediateCatchEvent id="returnMenuItem" name="returnMenuItem">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=menuItemDescription" target="customerMenuItem.description" />
+          <zeebe:output source="=menuItemCost" target="customerMenuItem.cost" />
+          <zeebe:output source="=menuItemCategory" target="customerMenuItem.category" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1w6d8ix</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bd19ou</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_00xw8z7" messageRef="Message_3ku7p2f" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0bd19ou" sourceRef="returnMenuItem" targetRef="returnCustomerMenuItemName" />
+    <bpmn:sequenceFlow id="Flow_1w6d8ix" sourceRef="getMenuItem" targetRef="returnMenuItem" />
     <bpmn:endEvent id="customerMenuItemDeleted" name="Customer Menu Item Deleted">
-      <bpmn:incoming>Flow_0dnyvw1</bpmn:incoming>
+      <bpmn:incoming>Flow_17w36t4</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_19rb3c9" sourceRef="_createCustomerMenuItem" targetRef="displayCustomerMenuItem" />
-    <bpmn:sequenceFlow id="Flow_0ibtmr7" sourceRef="displayCustomerMenuItem" targetRef="_deleteCustomerMenuITem" />
-    <bpmn:sequenceFlow id="Flow_0dnyvw1" sourceRef="_deleteCustomerMenuITem" targetRef="customerMenuItemDeleted" />
   </bpmn:process>
-  <bpmn:message id="Message_158top7" name="_createCustomerMenuItem" />
-  <bpmn:message id="Message_25ib09e" name="_deleteCustomerMenuItem">
+  <bpmn:message id="Message_1p89o4r" name="_deleteCustomerMenuItem">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerMenuItem.customerId+customerMenuItem.name" />
+      <zeebe:subscription correlationKey="=customerMenuItem.id" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3c1alcn" name="_getCost">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=customerMenuItem.id" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1k4fnnm">
-      <bpmndi:BPMNShape id="Participant_1qtphah_di" bpmnElement="customerMenuItem" isHorizontal="true">
-        <dc:Bounds x="160" y="60" width="730" height="190" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="CustomerMenuItem">
+      <bpmndi:BPMNShape id="Participant_0h68e1i_di" bpmnElement="customerMenuItem" isHorizontal="true">
+        <dc:Bounds x="130" y="52" width="1206" height="268" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1r83etc_di" bpmnElement="_createCustomerMenuItem">
-        <dc:Bounds x="232" y="122" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_1kkm4be_di" bpmnElement="createCustomerMenuItem">
+        <dc:Bounds x="212" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="209" y="165" width="85" height="27" />
+          <dc:Bounds x="190" y="265" width="80" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1w8oqw7_di" bpmnElement="displayCustomerMenuItem">
-        <dc:Bounds x="410" y="100" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0e3qu7m_di" bpmnElement="returnCustomerMenuItemCost">
+        <dc:Bounds x="890" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1ublu5d_di" bpmnElement="_deleteCustomerMenuITem">
-        <dc:Bounds x="622" y="122" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_1c165fi_di" bpmnElement="getMenuItemCost">
+        <dc:Bounds x="1067" y="112" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="600" y="85" width="80" height="27" />
+          <dc:Bounds x="1113" y="116" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_02vlkhk_di" bpmnElement="customerMenuItemDeleted">
-        <dc:Bounds x="762" y="122" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_05i5rxk_di" bpmnElement="deleteCustomerMenuItem">
+        <dc:Bounds x="1165" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="742" y="165" width="79" height="27" />
+          <dc:Bounds x="1140" y="265" width="88" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_19rb3c9_di" bpmnElement="Flow_19rb3c9">
-        <di:waypoint x="268" y="140" />
-        <di:waypoint x="410" y="140" />
+      <bpmndi:BPMNShape id="Gateway_132sfpu_di" bpmnElement="Gateway_1m8qe6e">
+        <dc:Bounds x="1060" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1c3twaq_di" bpmnElement="Gateway_1c3twaq" isMarkerVisible="true">
+        <dc:Bounds x="915" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qeh8te_di" bpmnElement="displayMenuItem">
+        <dc:Bounds x="769" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dxh8ow_di" bpmnElement="getMenuItem">
+        <dc:Bounds x="310" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hi1pkk_di" bpmnElement="returnCustomerMenuItemName">
+        <dc:Bounds x="590" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yzijop_di" bpmnElement="returnMenuItem">
+        <dc:Bounds x="472" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="451" y="268" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0c76k88_di" bpmnElement="customerMenuItemDeleted">
+        <dc:Bounds x="1265" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1249" y="265" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0dvb71p_di" bpmnElement="Flow_0dvb71p">
+        <di:waypoint x="248" y="240" />
+        <di:waypoint x="310" y="240" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ibtmr7_di" bpmnElement="Flow_0ibtmr7">
-        <di:waypoint x="510" y="140" />
-        <di:waypoint x="622" y="140" />
+      <bpmndi:BPMNEdge id="Flow_0lkhwsh_di" bpmnElement="Flow_0lkhwsh">
+        <di:waypoint x="1067" y="130" />
+        <di:waypoint x="990" y="130" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0dnyvw1_di" bpmnElement="Flow_0dnyvw1">
-        <di:waypoint x="658" y="140" />
-        <di:waypoint x="762" y="140" />
+      <bpmndi:BPMNEdge id="Flow_0xtd836_di" bpmnElement="Flow_0xtd836">
+        <di:waypoint x="1085" y="215" />
+        <di:waypoint x="1085" y="148" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_047zdzl_di" bpmnElement="Flow_047zdzl">
+        <di:waypoint x="1110" y="240" />
+        <di:waypoint x="1165" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u7qdk1_di" bpmnElement="Flow_1u7qdk1">
+        <di:waypoint x="965" y="240" />
+        <di:waypoint x="1060" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ejbqj4_di" bpmnElement="Flow_1ejbqj4">
+        <di:waypoint x="940" y="170" />
+        <di:waypoint x="940" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17w36t4_di" bpmnElement="Flow_17w36t4">
+        <di:waypoint x="1201" y="240" />
+        <di:waypoint x="1265" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_100a9bc_di" bpmnElement="Flow_100a9bc">
+        <di:waypoint x="869" y="240" />
+        <di:waypoint x="915" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10egkvc_di" bpmnElement="Flow_10egkvc">
+        <di:waypoint x="690" y="240" />
+        <di:waypoint x="769" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bd19ou_di" bpmnElement="Flow_0bd19ou">
+        <di:waypoint x="508" y="240" />
+        <di:waypoint x="590" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w6d8ix_di" bpmnElement="Flow_1w6d8ix">
+        <di:waypoint x="410" y="240" />
+        <di:waypoint x="472" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0ifjaob_di" bpmnElement="Association_0ifjaob">
+        <di:waypoint x="1087" y="112" />
+        <di:waypoint x="1089" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1g1whlf_di" bpmnElement="Association_1g1whlf">
+        <di:waypoint x="815" y="200" />
+        <di:waypoint x="812" y="166" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_15qso6s_di" bpmnElement="Association_15qso6s">
+        <di:waypoint x="626" y="200" />
+        <di:waypoint x="614" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1czdpur_di" bpmnElement="Association_1czdpur">
+        <di:waypoint x="360" y="200" />
+        <di:waypoint x="360" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1yjgk9f_di" bpmnElement="TextAnnotation_1yjgk9f">
+        <dc:Bounds x="440" y="124" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0cb78ch_di" bpmnElement="Association_0cb78ch">
+        <di:waypoint x="490" y="222" />
+        <di:waypoint x="490" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_02zhcej_di" bpmnElement="TextAnnotation_02zhcej">
+        <dc:Bounds x="1040" y="60" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1qhh7in_di" bpmnElement="TextAnnotation_1qhh7in">
+        <dc:Bounds x="760" y="125" width="100" height="40.99609375" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0pzaq4z_di" bpmnElement="TextAnnotation_0pzaq4z">
+        <dc:Bounds x="555" y="120" width="170" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_17w9dd2_di" bpmnElement="TextAnnotation_17w9dd2">
+        <dc:Bounds x="310" y="130" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -1,56 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0zs2njz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
-  <bpmn:collaboration id="KitchenUI">
-    <bpmn:participant id="kitchenUI" name="Kitchen UI" processRef="kitchenUIProcess" />
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
+  <bpmn:collaboration id="kitchenUI">
+    <bpmn:participant id="kitchenUi" name="Kitchen UI" processRef="kitchenUiProcess" />
+    <bpmn:textAnnotation id="TextAnnotation_0szd8d0">
+      <bpmn:text>outputs
+kitchenUi.preparedItemsList
+[x, z, y]</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_1vvhqzm">
+      <bpmn:text>get the xth item ID from kitchenUi.orderedItems</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_158olam" associationDirection="None" sourceRef="displayOrderdFood" targetRef="TextAnnotation_0szd8d0" />
+    <bpmn:textAnnotation id="TextAnnotation_0oeiobw">
+      <bpmn:text>An empty orderedItemId = [], so set it to null</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_170h71y" associationDirection="None" sourceRef="TextAnnotation_1vvhqzm" targetRef="getThePreparedOrderedFoodId" />
+    <bpmn:association id="Association_0wlh0n0" associationDirection="None" sourceRef="TextAnnotation_0oeiobw" targetRef="getThePreparedOrderedFoodId" />
+    <bpmn:textAnnotation id="TextAnnotation_0n4ksz1">
+      <bpmn:text>Because of UI restrictions, it is possible for a selected item ID to be null</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1wpse66" associationDirection="None" sourceRef="Flow_0tj66ad" targetRef="TextAnnotation_0n4ksz1" />
   </bpmn:collaboration>
-  <bpmn:process id="kitchenUIProcess" name="Kitchen UI" isExecutable="true">
-    <bpmn:laneSet id="LaneSet_1xjwnso">
-      <bpmn:lane id="monitorKitchenUIInput" name="Monitor Input">
-        <bpmn:flowNodeRef>enterPreparedFood</bpmn:flowNodeRef>
+  <bpmn:process id="kitchenUiProcess" name="Kitchen UI Process" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1x4ghpi">
+      <bpmn:lane id="Lane_0y5fnwe" name="Update Display">
+        <bpmn:flowNodeRef>createKitchenUi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1wi7l65</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>updateOrderedItems</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>kitchenUIDeleted</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>displayOrderdFood</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1ud2r0d</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1sc4lxv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>getThePreparedOrderedFoodId</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>createPreparedItemIndex</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>preparedOrderedFood</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>kitchenUITurnedOff</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>_displayOrderedFood</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>_turnOffTableUI</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="updateRestaurantUIDisplay" name="Update Display">
-        <bpmn:flowNodeRef>turnedOn</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_1ugazpx</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>initializeKitchenUI</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1y8tzu7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>removeFromPreparedItems</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>removeFoodFromOrderedItems</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1e6xowz</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>displayOrderedFood</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>deleteKitchenUi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0sd793q</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="turnedOn" name="Turned On Kitche UI">
-      <bpmn:outgoing>Flow_0f9o9gd</bpmn:outgoing>
+    <bpmn:startEvent id="createKitchenUi" name="createKitchenUi">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=restaurantId" target="kitchenUi.restaurantId" />
+          <zeebe:output source="=[]" target="kitchenUi.orderedItems" />
+          <zeebe:output source="=[]" target="kitchenUi.preparedItems" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_05v5zx6</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1100ltv" messageRef="Message_3nq22bt" />
     </bpmn:startEvent>
-    <bpmn:exclusiveGateway id="Gateway_1ugazpx">
-      <bpmn:incoming>Flow_03ynnf7</bpmn:incoming>
-      <bpmn:incoming>Flow_1p1iucm</bpmn:incoming>
-      <bpmn:incoming>Flow_1a8jvfo</bpmn:incoming>
-      <bpmn:outgoing>Flow_0pxwsoh</bpmn:outgoing>
+    <bpmn:exclusiveGateway id="Gateway_1wi7l65">
+      <bpmn:incoming>noMorePrepared</bpmn:incoming>
+      <bpmn:incoming>Flow_15xnhw5</bpmn:incoming>
+      <bpmn:incoming>Flow_05v5zx6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1y1zxg9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="enterPreparedFood" name="Enter Prepared Food">
+    <bpmn:scriptTask id="updateOrderedItems" name="Update Ordered Items">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=concatenate(orderedItems, orderedItem)" resultVariable="orderedItems" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=kitchenUi.orderedItems" target="orderedItems" />
+          <zeebe:output source="=orderedItems" target="kitchenUi.orderedItems" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0fhpz7p</bpmn:incoming>
+      <bpmn:outgoing>Flow_15xnhw5</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="kitchenUIDeleted" name="Kitchen UI Deleted">
+      <bpmn:incoming>Flow_1n2nmfd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="displayOrderdFood" name="Display Ordered Food">
+      <bpmn:documentation>Displays 
+kitchenUi.orderedItems
+Returns
+preparedItems,</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
-        <zeebe:formDefinition formId="KitchenScreen" />
+        <zeebe:formDefinition formId="kitchenUi" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=[]" target="preparedItems" />
+          <zeebe:output source="=preparedItems" target="kitchenUi.preparedItems" />
+        </zeebe:ioMapping>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0pxwsoh</bpmn:incoming>
-      <bpmn:outgoing>Flow_0aurao1</bpmn:outgoing>
+      <bpmn:incoming>Flow_1y1zxg9</bpmn:incoming>
+      <bpmn:outgoing>Flow_12tpmfv</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0f9o9gd" sourceRef="turnedOn" targetRef="initializeKitchenUI" />
-    <bpmn:sequenceFlow id="Flow_03ynnf7" sourceRef="initializeKitchenUI" targetRef="Gateway_1ugazpx" />
-    <bpmn:sequenceFlow id="Flow_0pxwsoh" sourceRef="Gateway_1ugazpx" targetRef="enterPreparedFood" />
-    <bpmn:boundaryEvent id="_displayOrderedFood" name="_displayOrderedFood" attachedToRef="enterPreparedFood">
-      <bpmn:outgoing>Flow_1p1iucm</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1546hi8" messageRef="Message_2kkarka" />
+    <bpmn:exclusiveGateway id="Gateway_1ud2r0d">
+      <bpmn:incoming>Flow_12tpmfv</bpmn:incoming>
+      <bpmn:incoming>Flow_1nfin3w</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wg2luw</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:boundaryEvent id="deleteKitchenUi" name="deleteKitchenUi" attachedToRef="displayOrderdFood">
+      <bpmn:outgoing>Flow_1n2nmfd</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1a2aot0" messageRef="Message_3lftq39" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_1p1iucm" sourceRef="_displayOrderedFood" targetRef="Gateway_1ugazpx" />
-    <bpmn:sequenceFlow id="Flow_0aurao1" sourceRef="enterPreparedFood" targetRef="preparedOrderedFood" />
+    <bpmn:boundaryEvent id="displayOrderedFood" name="displayOrderedFood" attachedToRef="displayOrderdFood">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="={&#34;id&#34;:id, &#34;name&#34;:name, &#34;numberOrdered&#34;:numberOrdered, &#34;tableLocation&#34;:tableLocation, &#34;instructions&#34;:instructions, &#34;prepared&#34;:false}" target="orderedItem" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0fhpz7p</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_19v2oph" messageRef="Message_19ckb64" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_05v5zx6" sourceRef="createKitchenUi" targetRef="Gateway_1wi7l65" />
+    <bpmn:sequenceFlow id="noMorePrepared" name="no" sourceRef="Gateway_1sc4lxv" targetRef="Gateway_1wi7l65">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=count(kitchenUi.preparedItems)=0</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_15xnhw5" sourceRef="updateOrderedItems" targetRef="Gateway_1wi7l65" />
+    <bpmn:sequenceFlow id="Flow_1y1zxg9" sourceRef="Gateway_1wi7l65" targetRef="displayOrderdFood" />
+    <bpmn:sequenceFlow id="Flow_0fhpz7p" sourceRef="displayOrderedFood" targetRef="updateOrderedItems" />
+    <bpmn:sequenceFlow id="Flow_1n2nmfd" sourceRef="deleteKitchenUi" targetRef="kitchenUIDeleted" />
+    <bpmn:sequenceFlow id="Flow_12tpmfv" sourceRef="displayOrderdFood" targetRef="Gateway_1ud2r0d" />
+    <bpmn:sequenceFlow id="Flow_0vkk0c5" sourceRef="removeFoodFromOrderedItems" targetRef="Gateway_1e6xowz" />
+    <bpmn:sequenceFlow id="morePreparedItems" name="yes" sourceRef="Gateway_1sc4lxv" targetRef="createPreparedItemIndex">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=count(kitchenUi.preparedItems)&gt;0</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="id" name="yes" sourceRef="Gateway_1y8tzu7" targetRef="preparedOrderedFood" />
+    <bpmn:sequenceFlow id="Flow_1jpg5n0" sourceRef="preparedOrderedFood" targetRef="removeFoodFromOrderedItems" />
+    <bpmn:sequenceFlow id="Flow_1wg2luw" sourceRef="Gateway_1ud2r0d" targetRef="Gateway_1sc4lxv" />
+    <bpmn:exclusiveGateway id="Gateway_1sc4lxv" name="Prepared Items&#62;0?">
+      <bpmn:incoming>Flow_1wg2luw</bpmn:incoming>
+      <bpmn:outgoing>morePreparedItems</bpmn:outgoing>
+      <bpmn:outgoing>noMorePrepared</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:scriptTask id="getThePreparedOrderedFoodId" name="Get The Prepared Ordered Food ID">
+      <bpmn:documentation>For each prepared item index received from the UI.
+Find the ordered food ID at the location given by the value of that index, in the ordered food list.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=orderedItems[preparedItemIndex].id" resultVariable="orderedItemId" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=kitchenUi.orderedItems" target="orderedItems" />
+          <zeebe:input source="=kitchenUi.preparedItems" target="preparedItems" />
+          <zeebe:output source="=if orderedItemId=[]&#10;then null&#10;else orderedItemId" target="orderedItemId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1kawcdk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0knf72i</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="createPreparedItemIndex" name="Create Prepared Item Index">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=number(kitchenUi.preparedItems[1])" resultVariable="preparedItemIndex" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>morePreparedItems</bpmn:incoming>
+      <bpmn:outgoing>Flow_1kawcdk</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1kawcdk" sourceRef="createPreparedItemIndex" targetRef="getThePreparedOrderedFoodId" />
+    <bpmn:sequenceFlow id="Flow_1nfin3w" sourceRef="removeFromPreparedItems" targetRef="Gateway_1ud2r0d" />
     <bpmn:sendTask id="preparedOrderedFood" name="Prepared Ordered Food" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
-          <zeebe:input source="preparedOrderedFood" target="messageName" />
-          <zeebe:input source="restaurantId" target="correlationKey" />
-          <zeebe:input source="tableLocation" target="variables" />
+          <zeebe:input source="_preparedOrderedFood" target="messageName" />
+          <zeebe:input source="=orderedItemId" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -59,117 +166,278 @@
           <zeebe:header key="retryBackoff" value="PT0S" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0aurao1</bpmn:incoming>
-      <bpmn:outgoing>Flow_1a8jvfo</bpmn:outgoing>
+      <bpmn:incoming>id</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jpg5n0</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_1a8jvfo" sourceRef="preparedOrderedFood" targetRef="Gateway_1ugazpx" />
-    <bpmn:boundaryEvent id="_turnOffTableUI" name="_turnOffTableUI" attachedToRef="enterPreparedFood">
-      <bpmn:outgoing>Flow_0la1d13</bpmn:outgoing>
-      <bpmn:signalEventDefinition id="SignalEventDefinition_0bfl7x3" signalRef="Signal_11uklj0" />
-    </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_0la1d13" sourceRef="_turnOffTableUI" targetRef="kitchenUITurnedOff" />
-    <bpmn:endEvent id="kitchenUITurnedOff" name="Kitchen UI Turned Off">
-      <bpmn:incoming>Flow_0la1d13</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:scriptTask id="initializeKitchenUI" name="Initialize Kitchen UI">
+    <bpmn:sequenceFlow id="Flow_0knf72i" sourceRef="getThePreparedOrderedFoodId" targetRef="Gateway_1y8tzu7" />
+    <bpmn:exclusiveGateway id="Gateway_1y8tzu7" name="Ordered Item ID?" default="id">
+      <bpmn:incoming>Flow_0knf72i</bpmn:incoming>
+      <bpmn:outgoing>id</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tj66ad</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0tj66ad" name="null" sourceRef="Gateway_1y8tzu7" targetRef="Activity_0sd793q">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=orderedItemId=null</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:scriptTask id="removeFromPreparedItems" name="Remove From Prepared Items List">
       <bpmn:extensionElements>
-        <zeebe:script expression="=&#34;AMOS&#34;" resultVariable="restaurantId" />
+        <zeebe:script expression="=remove(preparedItems, 1)" resultVariable="preparedItems" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=kitchenUi.preparedItems" target="preparedItems" />
+          <zeebe:output source="=preparedItems" target="kitchenUi.preparedItems" />
+        </zeebe:ioMapping>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0f9o9gd</bpmn:incoming>
-      <bpmn:outgoing>Flow_03ynnf7</bpmn:outgoing>
+      <bpmn:incoming>Flow_04ivwuf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nfin3w</bpmn:outgoing>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_04ivwuf" sourceRef="Gateway_1e6xowz" targetRef="removeFromPreparedItems" />
+    <bpmn:scriptTask id="removeFoodFromOrderedItems" name="Remove From Ordered Items">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=remove(orderedItems, preparedItemIndex)" resultVariable="orderedItems" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=kitchenUi.orderedItems" target="orderedItems" />
+          <zeebe:output source="=orderedItems" target="kitchenUi.orderedItems" />
+          <zeebe:output source="=index+1" target="index" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1jpg5n0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vkk0c5</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_1e6xowz">
+      <bpmn:incoming>Flow_0vkk0c5</bpmn:incoming>
+      <bpmn:incoming>Flow_1rxi132</bpmn:incoming>
+      <bpmn:outgoing>Flow_04ivwuf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1rxi132" sourceRef="Activity_0sd793q" targetRef="Gateway_1e6xowz" />
+    <bpmn:userTask id="Activity_0sd793q" name="Pause">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="waitABit" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0tj66ad</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rxi132</bpmn:outgoing>
+    </bpmn:userTask>
   </bpmn:process>
-  <bpmn:signal id="Signal_11uklj0" name="_turnOffTableUI" />
-  <bpmn:message id="Message_2kkarka" name="_displayOrderedFood">
+  <bpmn:message id="Message_2bcpu7r" name="Message_2bcpu7r" />
+  <bpmn:message id="Message_19ckb64" name="_displayOrderedFood">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantId" />
+      <zeebe:subscription correlationKey="=kitchenUi.restaurantId" />
     </bpmn:extensionElements>
   </bpmn:message>
+  <bpmn:message id="Message_3lftq39" name="_deleteKitchenUi">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=kitchenUi.restaurantId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3nq22bt" name="_createKitchen" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="KitchenUI">
-      <bpmndi:BPMNShape id="Participant_0we9wvt_di" bpmnElement="kitchenUI" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="840" height="350" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="kitchenUI">
+      <bpmndi:BPMNShape id="Participant_14e333u_di" bpmnElement="kitchenUi" isHorizontal="true">
+        <dc:Bounds x="180" y="100" width="1390" height="452" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1vm4tqg_di" bpmnElement="updateRestaurantUIDisplay" isHorizontal="true">
-        <dc:Bounds x="190" y="260" width="810" height="170" />
+      <bpmndi:BPMNShape id="Lane_0y5fnwe_di" bpmnElement="Lane_0y5fnwe" isHorizontal="true">
+        <dc:Bounds x="210" y="100" width="1360" height="452" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0euogbk_di" bpmnElement="monitorKitchenUIInput" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="810" height="180" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="turnedOn">
-        <dc:Bounds x="252" y="332" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_166w9yv_di" bpmnElement="createKitchenUi">
+        <dc:Bounds x="262" y="254" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="228" y="375" width="85" height="27" />
+          <dc:Bounds x="241" y="230" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1ugazpx_di" bpmnElement="Gateway_1ugazpx" isMarkerVisible="true">
-        <dc:Bounds x="495" y="325" width="50" height="50" />
+      <bpmndi:BPMNShape id="Gateway_1wi7l65_di" bpmnElement="Gateway_1wi7l65" isMarkerVisible="true">
+        <dc:Bounds x="360" y="247" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ucrbd6_di" bpmnElement="enterPreparedFood">
-        <dc:Bounds x="570" y="130" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1dthsom_di" bpmnElement="updateOrderedItems">
+        <dc:Bounds x="427" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cqqqn7_di" bpmnElement="kitchenUIDeleted">
+        <dc:Bounds x="439" y="364" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="433" y="407" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1aqn6wr_di" bpmnElement="displayOrderdFood">
+        <dc:Bounds x="587" y="232" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0wgnm0h_di" bpmnElement="preparedOrderedFood">
-        <dc:Bounds x="760" y="130" width="100" height="80" />
+      <bpmndi:BPMNShape id="Gateway_1ud2r0d_di" bpmnElement="Gateway_1ud2r0d" isMarkerVisible="true">
+        <dc:Bounds x="752" y="247" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1sc4lxv_di" bpmnElement="Gateway_1sc4lxv" isMarkerVisible="true">
+        <dc:Bounds x="752" y="367" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="759" y="433" width="46" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tuo7zw_di" bpmnElement="getThePreparedOrderedFoodId">
+        <dc:Bounds x="1060" y="352" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0epnmxo_di" bpmnElement="kitchenUITurnedOff">
-        <dc:Bounds x="312" y="152" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_15r3m4j_di" bpmnElement="createPreparedItemIndex">
+        <dc:Bounds x="880" y="352" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0aolzqo_di" bpmnElement="preparedOrderedFood">
+        <dc:Bounds x="1300" y="232" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1y8tzu7_di" bpmnElement="Gateway_1y8tzu7" isMarkerVisible="true">
+        <dc:Bounds x="1225" y="367" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="286" y="195" width="89" height="27" />
+          <dc:Bounds x="1207" y="343" width="86" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0t4thel_di" bpmnElement="initializeKitchenUI">
-        <dc:Bounds x="340" y="310" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1bocjx0_di" bpmnElement="removeFromPreparedItems">
+        <dc:Bounds x="866" y="232" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1rw14zi_di" bpmnElement="_turnOffTableUI">
-        <dc:Bounds x="602" y="112" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_0ecsdnr_di" bpmnElement="removeFoodFromOrderedItems">
+        <dc:Bounds x="1116" y="232" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1e6xowz_di" bpmnElement="Gateway_1e6xowz" isMarkerVisible="true">
+        <dc:Bounds x="1011" y="247" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_046sjaf_di" bpmnElement="Activity_0sd793q">
+        <dc:Bounds x="1430" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0caaypp_di" bpmnElement="displayOrderedFood">
+        <dc:Bounds x="619" y="214" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="622" y="103" width="76" height="14" />
+          <dc:Bounds x="586" y="178" width="83" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0qui99x_di" bpmnElement="_displayOrderedFood">
-        <dc:Bounds x="612" y="192" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_0g1cp9u_di" bpmnElement="deleteKitchenUi">
+        <dc:Bounds x="619" y="294" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="590" y="235" width="80" height="27" />
+          <dc:Bounds x="599" y="337" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0f9o9gd_di" bpmnElement="Flow_0f9o9gd">
-        <di:waypoint x="288" y="350" />
-        <di:waypoint x="340" y="350" />
+      <bpmndi:BPMNEdge id="Flow_05v5zx6_di" bpmnElement="Flow_05v5zx6">
+        <di:waypoint x="298" y="272" />
+        <di:waypoint x="360" y="272" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_03ynnf7_di" bpmnElement="Flow_03ynnf7">
-        <di:waypoint x="440" y="350" />
-        <di:waypoint x="495" y="350" />
+      <bpmndi:BPMNEdge id="Flow_1h0tf4e_di" bpmnElement="noMorePrepared">
+        <di:waypoint x="777" y="417" />
+        <di:waypoint x="777" y="512" />
+        <di:waypoint x="385" y="512" />
+        <di:waypoint x="385" y="297" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="759" y="494" width="13" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pxwsoh_di" bpmnElement="Flow_0pxwsoh">
-        <di:waypoint x="520" y="325" />
-        <di:waypoint x="520" y="170" />
-        <di:waypoint x="570" y="170" />
+      <bpmndi:BPMNEdge id="Flow_15xnhw5_di" bpmnElement="Flow_15xnhw5">
+        <di:waypoint x="427" y="160" />
+        <di:waypoint x="385" y="160" />
+        <di:waypoint x="385" y="247" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1p1iucm_di" bpmnElement="Flow_1p1iucm">
-        <di:waypoint x="630" y="228" />
-        <di:waypoint x="630" y="350" />
-        <di:waypoint x="545" y="350" />
+      <bpmndi:BPMNEdge id="Flow_1y1zxg9_di" bpmnElement="Flow_1y1zxg9">
+        <di:waypoint x="410" y="272" />
+        <di:waypoint x="587" y="272" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0aurao1_di" bpmnElement="Flow_0aurao1">
-        <di:waypoint x="670" y="170" />
-        <di:waypoint x="760" y="170" />
+      <bpmndi:BPMNEdge id="Flow_0fhpz7p_di" bpmnElement="Flow_0fhpz7p">
+        <di:waypoint x="637" y="214" />
+        <di:waypoint x="637" y="160" />
+        <di:waypoint x="527" y="160" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1a8jvfo_di" bpmnElement="Flow_1a8jvfo">
-        <di:waypoint x="810" y="210" />
-        <di:waypoint x="810" y="410" />
-        <di:waypoint x="520" y="410" />
-        <di:waypoint x="520" y="375" />
+      <bpmndi:BPMNEdge id="Flow_1n2nmfd_di" bpmnElement="Flow_1n2nmfd">
+        <di:waypoint x="637" y="330" />
+        <di:waypoint x="637" y="382" />
+        <di:waypoint x="475" y="382" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0la1d13_di" bpmnElement="Flow_0la1d13">
-        <di:waypoint x="620" y="112" />
-        <di:waypoint x="620" y="92" />
-        <di:waypoint x="330" y="92" />
-        <di:waypoint x="330" y="152" />
+      <bpmndi:BPMNEdge id="Flow_12tpmfv_di" bpmnElement="Flow_12tpmfv">
+        <di:waypoint x="687" y="272" />
+        <di:waypoint x="752" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vkk0c5_di" bpmnElement="Flow_0vkk0c5">
+        <di:waypoint x="1116" y="272" />
+        <di:waypoint x="1061" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1626kg7_di" bpmnElement="morePreparedItems">
+        <di:waypoint x="802" y="392" />
+        <di:waypoint x="880" y="392" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="833" y="374" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0urme14_di" bpmnElement="id">
+        <di:waypoint x="1275" y="392" />
+        <di:waypoint x="1350" y="392" />
+        <di:waypoint x="1350" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1304" y="374" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jpg5n0_di" bpmnElement="Flow_1jpg5n0">
+        <di:waypoint x="1300" y="272" />
+        <di:waypoint x="1216" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wg2luw_di" bpmnElement="Flow_1wg2luw">
+        <di:waypoint x="777" y="297" />
+        <di:waypoint x="777" y="367" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kawcdk_di" bpmnElement="Flow_1kawcdk">
+        <di:waypoint x="980" y="392" />
+        <di:waypoint x="1060" y="392" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nfin3w_di" bpmnElement="Flow_1nfin3w">
+        <di:waypoint x="866" y="272" />
+        <di:waypoint x="802" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0knf72i_di" bpmnElement="Flow_0knf72i">
+        <di:waypoint x="1160" y="392" />
+        <di:waypoint x="1225" y="392" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tj66ad_di" bpmnElement="Flow_0tj66ad">
+        <di:waypoint x="1250" y="417" />
+        <di:waypoint x="1250" y="470" />
+        <di:waypoint x="1500" y="470" />
+        <di:waypoint x="1500" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1506" y="351" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04ivwuf_di" bpmnElement="Flow_04ivwuf">
+        <di:waypoint x="1011" y="272" />
+        <di:waypoint x="966" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rxi132_di" bpmnElement="Flow_1rxi132">
+        <di:waypoint x="1430" y="200" />
+        <di:waypoint x="1036" y="200" />
+        <di:waypoint x="1036" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0szd8d0_di" bpmnElement="TextAnnotation_0szd8d0">
+        <dc:Bounds x="717" y="140" width="190" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1vvhqzm_di" bpmnElement="TextAnnotation_1vvhqzm">
+        <dc:Bounds x="880" y="470" width="170" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0oeiobw_di" bpmnElement="TextAnnotation_0oeiobw">
+        <dc:Bounds x="1060" y="467" width="150" height="46" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0n4ksz1_di" bpmnElement="TextAnnotation_0n4ksz1">
+        <dc:Bounds x="1360" y="380" width="100" height="83.984375" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_158olam_di" bpmnElement="Association_158olam">
+        <di:waypoint x="684" y="235" />
+        <di:waypoint x="731" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_170h71y_di" bpmnElement="Association_170h71y">
+        <di:waypoint x="995" y="470" />
+        <di:waypoint x="1061" y="424" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0wlh0n0_di" bpmnElement="Association_0wlh0n0">
+        <di:waypoint x="1130" y="467" />
+        <di:waypoint x="1121" y="432" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1wpse66_di" bpmnElement="Association_1wpse66">
+        <di:waypoint x="1434" y="240" />
+        <di:waypoint x="1407" y="380" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

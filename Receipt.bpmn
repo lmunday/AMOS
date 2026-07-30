@@ -1,16 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1y2kcjw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.43.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1y2kcjw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <bpmn:collaboration id="receiptDiagram">
     <bpmn:participant id="receipt" name="Receipt" processRef="receiptProcess" />
   </bpmn:collaboration>
   <bpmn:process id="receiptProcess" name="Receipt Process" isExecutable="true">
-    <bpmn:sendTask id="_displayReceipt" name="Display Receipt" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:exclusiveGateway id="Gateway_0phiw7m">
+      <bpmn:incoming>Flow_0pudlua</bpmn:incoming>
+      <bpmn:incoming>Flow_1jjsvox</bpmn:incoming>
+      <bpmn:incoming>Flow_0ob8jqs</bpmn:incoming>
+      <bpmn:incoming>Flow_0jr6pgs</bpmn:incoming>
+      <bpmn:outgoing>Flow_0257ryr</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="deleteReceipt" name="deleteReceipt">
+      <bpmn:incoming>Flow_1ty33f4</bpmn:incoming>
+      <bpmn:outgoing>Flow_046x77z</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1bdxny3" messageRef="Message_006s9ak" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:eventBasedGateway id="Gateway_01uimqs">
+      <bpmn:incoming>Flow_0257ryr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ty33f4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_01dgjml</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1gp8xny</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1o083le</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="textReceipt" name="textReceipt">
+      <bpmn:incoming>Flow_01dgjml</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qw1crm</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1gzxeiv" messageRef="Message_1q9uqgo" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0qw1crm" sourceRef="textReceipt" targetRef="sendReceiptToPhone" />
+    <bpmn:sequenceFlow id="Flow_0pudlua" sourceRef="sendReceiptToPhone" targetRef="Gateway_0phiw7m" />
+    <bpmn:sequenceFlow id="Flow_046x77z" sourceRef="deleteReceipt" targetRef="receiptDeleted" />
+    <bpmn:sequenceFlow id="Flow_1ty33f4" sourceRef="Gateway_01uimqs" targetRef="deleteReceipt" />
+    <bpmn:sequenceFlow id="Flow_01dgjml" sourceRef="Gateway_01uimqs" targetRef="textReceipt" />
+    <bpmn:endEvent id="receiptDeleted" name="deleted">
+      <bpmn:incoming>Flow_046x77z</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1gp8xny" sourceRef="Gateway_01uimqs" targetRef="emailReceipt" />
+    <bpmn:sequenceFlow id="Flow_14ttts2" sourceRef="emailReceipt" targetRef="sendReceiptToEmail" />
+    <bpmn:sequenceFlow id="Flow_1jjsvox" sourceRef="sendReceiptToEmail" targetRef="Gateway_0phiw7m" />
+    <bpmn:sendTask id="displayReceipt" name="Display Receipt" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_displayReceipt" target="messageName" />
-          <zeebe:input source="tableLocation" target="correlationKey" />
-          <zeebe:input source="receipt.amount" target="variables" />
+          <zeebe:input source="=receipt.tableLocation" target="correlationKey" />
+          <zeebe:input source="={&#34;cost&#34;:receipt.cost, &#34;tax&#34;:receipt.tax, &#34;paymentMethod&#34;:receipt.paymentMethod}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -19,10 +54,50 @@
           <zeebe:header key="retryBackoff" value="PT0S" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1mwm3sb</bpmn:incoming>
-      <bpmn:outgoing>Flow_0xsiiq5</bpmn:outgoing>
+      <bpmn:incoming>Flow_0d5gkyn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ob8jqs</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sendTask id="sendReceipt" name="Send Receipt" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sequenceFlow id="Flow_0ob8jqs" sourceRef="displayReceipt" targetRef="Gateway_0phiw7m" />
+    <bpmn:sequenceFlow id="Flow_0d5gkyn" sourceRef="createReceipt" targetRef="displayReceipt" />
+    <bpmn:startEvent id="createReceipt" name="createReceipt">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=customerId" target="receipt.customerId" />
+          <zeebe:output source="=cost" target="receipt.cost" />
+          <zeebe:output source="=tableLocation" target="receipt.tableLocation" />
+          <zeebe:output source="=tax" target="receipt.tax" />
+          <zeebe:output source="=paymentMethod" target="receipt.paymentMethod" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0d5gkyn</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0dh0odd" messageRef="Message_1uri8f5" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0257ryr" sourceRef="Gateway_0phiw7m" targetRef="Gateway_01uimqs" />
+    <bpmn:sequenceFlow id="Flow_1o083le" sourceRef="Gateway_01uimqs" targetRef="printReceipt" />
+    <bpmn:intermediateCatchEvent id="printReceipt" name="printReceipt">
+      <bpmn:incoming>Flow_1o083le</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wg68g6</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0gci7qi" messageRef="Message_3b9ktsp" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1wg68g6" sourceRef="printReceipt" targetRef="Activity_1tc4207" />
+    <bpmn:sequenceFlow id="Flow_0jr6pgs" sourceRef="Activity_1tc4207" targetRef="Gateway_0phiw7m" />
+    <bpmn:sendTask id="Activity_1tc4207" name="Send Receipt To Printer" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_sendReceipt" target="messageName" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1wg68g6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jr6pgs</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="sendReceiptToPhone" name="Send Receipt To Phone" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
@@ -38,52 +113,31 @@
       <bpmn:incoming>Flow_0qw1crm</bpmn:incoming>
       <bpmn:outgoing>Flow_0pudlua</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:exclusiveGateway id="Gateway_0phiw7m">
-      <bpmn:incoming>Flow_0pudlua</bpmn:incoming>
-      <bpmn:incoming>Flow_0d5gkyn</bpmn:incoming>
-      <bpmn:outgoing>Flow_1mwm3sb</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:startEvent id="_createReceipt" name="_createReceipt">
+    <bpmn:sendTask id="sendReceiptToEmail" name="Send Receipt To Email" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
-          <zeebe:output source="=customerId" target="receipt.customerId" />
-          <zeebe:output source="=amount" target="receipt.amount" />
-          <zeebe:output source="=tableLocation" target="tableLocation" />
+          <zeebe:input source="_sendReceipt" target="messageName" />
+          <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
       </bpmn:extensionElements>
-      <bpmn:outgoing>Flow_0d5gkyn</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0dh0odd" messageRef="Message_1uri8f5" />
-    </bpmn:startEvent>
-    <bpmn:intermediateCatchEvent id="_deleteReceipt" name="_deleteReceipt">
-      <bpmn:incoming>Flow_1ty33f4</bpmn:incoming>
-      <bpmn:outgoing>Flow_046x77z</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1bdxny3" messageRef="Message_006s9ak" />
+      <bpmn:incoming>Flow_14ttts2</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jjsvox</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="emailReceipt" name="emailReceipt">
+      <bpmn:incoming>Flow_1gp8xny</bpmn:incoming>
+      <bpmn:outgoing>Flow_14ttts2</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0i3s49z" messageRef="Message_2bf5d89" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:eventBasedGateway id="Gateway_01uimqs">
-      <bpmn:incoming>Flow_0xsiiq5</bpmn:incoming>
-      <bpmn:outgoing>Flow_1ty33f4</bpmn:outgoing>
-      <bpmn:outgoing>Flow_01dgjml</bpmn:outgoing>
-    </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="_copyReceipt" name="_copyReceipt">
-      <bpmn:incoming>Flow_01dgjml</bpmn:incoming>
-      <bpmn:outgoing>Flow_0qw1crm</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1gzxeiv" messageRef="Message_1q9uqgo" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_1mwm3sb" sourceRef="Gateway_0phiw7m" targetRef="_displayReceipt" />
-    <bpmn:sequenceFlow id="Flow_0xsiiq5" sourceRef="_displayReceipt" targetRef="Gateway_01uimqs" />
-    <bpmn:sequenceFlow id="Flow_0qw1crm" sourceRef="_copyReceipt" targetRef="sendReceipt" />
-    <bpmn:sequenceFlow id="Flow_0pudlua" sourceRef="sendReceipt" targetRef="Gateway_0phiw7m" />
-    <bpmn:sequenceFlow id="Flow_0d5gkyn" sourceRef="_createReceipt" targetRef="Gateway_0phiw7m" />
-    <bpmn:sequenceFlow id="Flow_046x77z" sourceRef="_deleteReceipt" targetRef="receiptDeleted" />
-    <bpmn:sequenceFlow id="Flow_1ty33f4" sourceRef="Gateway_01uimqs" targetRef="_deleteReceipt" />
-    <bpmn:sequenceFlow id="Flow_01dgjml" sourceRef="Gateway_01uimqs" targetRef="_copyReceipt" />
-    <bpmn:endEvent id="receiptDeleted" name="Receipt Deleted">
-      <bpmn:incoming>Flow_046x77z</bpmn:incoming>
-    </bpmn:endEvent>
   </bpmn:process>
-  <bpmn:message id="Message_2bf5d89" name="tableAvailable">
+  <bpmn:message id="Message_2bf5d89" name="_emailReceipt">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableId" />
+      <zeebe:subscription correlationKey="=receipt.customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_1uri8f5" name="_createReceipt" />
@@ -92,73 +146,85 @@
       <zeebe:subscription correlationKey="=receipt.customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
-  <bpmn:message id="Message_1q9uqgo" name="_copyReceipt">
+  <bpmn:message id="Message_1q9uqgo" name="_textReceipt">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=tableLocation" />
+      <zeebe:subscription correlationKey="=receipt.customerId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_3b9ktsp" name="_printReceipt">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=receipt.customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="receiptDiagram">
       <bpmndi:BPMNShape id="Participant_1qtphah_di" bpmnElement="receipt" isHorizontal="true">
-        <dc:Bounds x="160" y="90" width="830" height="255" />
+        <dc:Bounds x="-10" y="-10" width="1010" height="430" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1xwfabo_di" bpmnElement="_displayReceipt">
-        <dc:Bounds x="500" y="110" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1x0htiq_di" bpmnElement="sendReceipt">
-        <dc:Bounds x="390" y="190" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0phiw7m_di" bpmnElement="Gateway_0phiw7m" isMarkerVisible="true">
         <dc:Bounds x="305" y="125" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_046x4ca" bpmnElement="_createReceipt">
-        <dc:Bounds x="212" y="132" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="198" y="175" width="74" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1szqagw_di" bpmnElement="_deleteReceipt">
+      <bpmndi:BPMNShape id="Event_1szqagw_di" bpmnElement="deleteReceipt">
         <dc:Bounds x="812" y="132" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="733" y="133" width="74" height="14" />
+          <dc:Bounds x="786" y="113" width="68" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1x56nhb_di" bpmnElement="Gateway_01uimqs">
         <dc:Bounds x="665" y="125" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_079bdvx_di" bpmnElement="_copyReceipt">
+      <bpmndi:BPMNShape id="Event_079bdvx_di" bpmnElement="textReceipt">
         <dc:Bounds x="602" y="212" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="656" y="193" width="67" height="14" />
+          <dc:Bounds x="592" y="203" width="55" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_040uyke_di" bpmnElement="receiptDeleted">
         <dc:Bounds x="920" y="132" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="900" y="175" width="79" height="14" />
+          <dc:Bounds x="921" y="175" width="37" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1mwm3sb_di" bpmnElement="Flow_1mwm3sb">
-        <di:waypoint x="355" y="150" />
-        <di:waypoint x="500" y="150" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0xsiiq5_di" bpmnElement="Flow_0xsiiq5">
-        <di:waypoint x="600" y="150" />
-        <di:waypoint x="665" y="150" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1xwfabo_di" bpmnElement="displayReceipt">
+        <dc:Bounds x="150" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_046x4ca" bpmnElement="createReceipt">
+        <dc:Bounds x="52" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="41" y="175" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rcy5ff_di" bpmnElement="printReceipt">
+        <dc:Bounds x="612" y="322" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="600" y="365" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_09lpz0g_di" bpmnElement="Activity_1tc4207">
+        <dc:Bounds x="430" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1x0htiq_di" bpmnElement="sendReceiptToPhone">
+        <dc:Bounds x="420" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08ziag4_di" bpmnElement="sendReceiptToEmail">
+        <dc:Bounds x="410" y="20" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18g00jd_di" bpmnElement="emailReceipt">
+        <dc:Bounds x="602" y="42" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="589" y="85" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0qw1crm_di" bpmnElement="Flow_0qw1crm">
         <di:waypoint x="602" y="230" />
-        <di:waypoint x="490" y="230" />
+        <di:waypoint x="520" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0pudlua_di" bpmnElement="Flow_0pudlua">
-        <di:waypoint x="390" y="230" />
+        <di:waypoint x="420" y="230" />
         <di:waypoint x="330" y="230" />
         <di:waypoint x="330" y="175" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_01rbrz7" bpmnElement="Flow_0d5gkyn">
-        <di:waypoint x="248" y="150" />
-        <di:waypoint x="305" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_046x77z_di" bpmnElement="Flow_046x77z">
         <di:waypoint x="848" y="150" />
@@ -172,6 +238,46 @@
         <di:waypoint x="690" y="175" />
         <di:waypoint x="690" y="230" />
         <di:waypoint x="638" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gp8xny_di" bpmnElement="Flow_1gp8xny">
+        <di:waypoint x="690" y="125" />
+        <di:waypoint x="690" y="60" />
+        <di:waypoint x="638" y="60" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14ttts2_di" bpmnElement="Flow_14ttts2">
+        <di:waypoint x="602" y="60" />
+        <di:waypoint x="510" y="60" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jjsvox_di" bpmnElement="Flow_1jjsvox">
+        <di:waypoint x="410" y="60" />
+        <di:waypoint x="330" y="60" />
+        <di:waypoint x="330" y="125" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ob8jqs_di" bpmnElement="Flow_0ob8jqs">
+        <di:waypoint x="250" y="150" />
+        <di:waypoint x="305" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_01rbrz7" bpmnElement="Flow_0d5gkyn">
+        <di:waypoint x="88" y="150" />
+        <di:waypoint x="150" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0257ryr_di" bpmnElement="Flow_0257ryr">
+        <di:waypoint x="355" y="150" />
+        <di:waypoint x="665" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o083le_di" bpmnElement="Flow_1o083le">
+        <di:waypoint x="690" y="175" />
+        <di:waypoint x="690" y="340" />
+        <di:waypoint x="648" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wg68g6_di" bpmnElement="Flow_1wg68g6">
+        <di:waypoint x="612" y="340" />
+        <di:waypoint x="530" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jr6pgs_di" bpmnElement="Flow_0jr6pgs">
+        <di:waypoint x="430" y="340" />
+        <di:waypoint x="330" y="340" />
+        <di:waypoint x="330" y="175" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

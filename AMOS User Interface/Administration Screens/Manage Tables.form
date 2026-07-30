@@ -1,16 +1,24 @@
 {
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "manageTables",
   "components": [
     {
-      "text": "{{restaurant.restaurantId}}",
+      "text": "# Administration Display",
       "type": "text",
       "layout": {
         "row": "Row_1hsmo81",
         "columns": null
       },
-      "id": "Field_10lgvay"
+      "id": "Field_1mv31wu"
     },
     {
-      "text": "# Add Or Remove A Table",
+      "text": "Add and Remove Tables",
       "type": "text",
       "layout": {
         "row": "Row_0b0ervt",
@@ -32,6 +40,30 @@
         {
           "label": "FR",
           "value": "FR"
+        },
+        {
+          "label": "ML",
+          "value": "ML"
+        },
+        {
+          "label": "MC",
+          "value": "MC"
+        },
+        {
+          "label": "MR",
+          "value": "MR"
+        },
+        {
+          "label": "RL",
+          "value": "RL"
+        },
+        {
+          "label": "RM",
+          "value": "RM"
+        },
+        {
+          "label": "RR",
+          "value": "RR"
         }
       ],
       "type": "select",
@@ -40,7 +72,7 @@
         "columns": 4
       },
       "id": "Field_09dpbl3",
-      "key": "tableLocation",
+      "key": "location",
       "validate": {
         "required": true
       }
@@ -81,34 +113,29 @@
         "columns": null
       },
       "id": "Field_0m7l1ve",
-      "key": "addTable"
+      "key": "addTable",
+      "validate": {
+        "required": true
+      }
     },
     {
-      "text": "{{tableList}}",
-      "type": "text",
-      "layout": {
-        "row": "Row_16pel71",
-        "columns": null
-      },
-      "id": "Field_035lmjr"
-    },
-    {
-      "text": "Instructions\nOnly allow displayed tables to be removed.",
+      "text": "Instructions\nOnly allow these tables to be removed.\nAvailable tables is needed by Restaurant.",
       "type": "text",
       "layout": {
         "row": "Row_12l0s4t",
         "columns": null
       },
       "id": "Field_199u1ka"
+    },
+    {
+      "text": "=restaurant.tableList",
+      "type": "text",
+      "layout": {
+        "row": "Row_0zraulg",
+        "columns": null
+      },
+      "id": "Field_13abtke"
     }
   ],
-  "executionPlatform": "Camunda Cloud",
-  "executionPlatformVersion": "8.8.0",
-  "exporter": {
-    "name": "Camunda Modeler",
-    "version": "5.43.1"
-  },
-  "schemaVersion": 19,
-  "id": "manageTables",
   "type": "default"
 }

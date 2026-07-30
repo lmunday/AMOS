@@ -1,0 +1,119 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "RestaurantScreen",
+  "components": [
+    {
+      "text": "# Restaurant Display",
+      "type": "text",
+      "layout": {
+        "row": "Row_1wmilek",
+        "columns": null
+      },
+      "id": "Field_0z97qw6"
+    },
+    {
+      "text": "Available Tables",
+      "type": "text",
+      "layout": {
+        "row": "Row_18pzyjy",
+        "columns": null
+      },
+      "id": "Field_1cjav7l"
+    },
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_18pzyjy",
+        "columns": 11
+      },
+      "label": "Table",
+      "dataSource": "=restaurantUi.tableSeating",
+      "rowCount": 10,
+      "id": "Field_00lu3y4",
+      "columns": [
+        {
+          "label": "Location",
+          "key": "name"
+        },
+        {
+          "label": "Seating",
+          "key": "seating"
+        },
+        {
+          "key": "status",
+          "label": "Availability"
+        }
+      ]
+    },
+    {
+      "text": "The last table to send an update",
+      "type": "text",
+      "layout": {
+        "row": "Row_0d37c9f",
+        "columns": null
+      },
+      "id": "Field_1ssiqub"
+    },
+    {
+      "text": "=tableLocation",
+      "type": "text",
+      "layout": {
+        "row": "Row_0d37c9f",
+        "columns": null
+      },
+      "id": "Field_05e4nuu"
+    },
+    {
+      "type": "separator",
+      "layout": {
+        "row": "Row_14ozt83",
+        "columns": null
+      },
+      "id": "Field_0fw3q5q"
+    },
+    {
+      "label": "Select Table",
+      "type": "select",
+      "layout": {
+        "row": "Row_1f4tpei",
+        "columns": 5
+      },
+      "id": "Field_1qxoego",
+      "key": "selectedTable",
+      "readonly": false,
+      "valuesKey": "tableList",
+      "conditional": {
+        "hide": "=close=true"
+      }
+    },
+    {
+      "label": "Close The Restaurant",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0njoalt",
+        "columns": null
+      },
+      "id": "Field_0wyd9wc",
+      "key": "close"
+    },
+    {
+      "text": "{\"restaurantUi\":{\"tableSeating\":[{\"name\":\"Location\",\"seating\":0,\"status\":\"Not Available\"}]}\n}",
+      "type": "text",
+      "layout": {
+        "row": "Row_145kjq1",
+        "columns": null
+      },
+      "id": "Field_053qf2w",
+      "conditional": {
+        "hide": "=true"
+      }
+    }
+  ],
+  "type": "default"
+}

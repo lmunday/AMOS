@@ -7,6 +7,56 @@
   },
   "schemaVersion": 19,
   "id": "WelcomeScreen",
-  "components": [],
+  "components": [
+    {
+      "text": "# Table Display",
+      "type": "text",
+      "layout": {
+        "row": "Row_19gdzlg",
+        "columns": null
+      },
+      "id": "Field_1nfy2e1"
+    },
+    {
+      "text": "Welcome Screen",
+      "type": "text",
+      "layout": {
+        "row": "Row_0jms2ka",
+        "columns": null
+      },
+      "id": "Field_05oswdd"
+    },
+    {
+      "label": "Table",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0jms2ka",
+        "columns": null
+      },
+      "id": "Field_1vm4vnd",
+      "key": "tableUi.location",
+      "readonly": true
+    },
+    {
+      "label": "Customer Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0qkfaho",
+        "columns": null
+      },
+      "id": "Field_0xp43qn",
+      "key": "customerName"
+    },
+    {
+      "label": "Customer Information",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_16hnrte",
+        "columns": null
+      },
+      "id": "Field_0tfislt",
+      "key": "customerInfo"
+    }
+  ],
   "type": "default"
 }
