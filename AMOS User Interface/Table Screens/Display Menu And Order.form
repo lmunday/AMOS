@@ -1,0 +1,216 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "DisplayMenuAndOrder",
+  "components": [
+    {
+      "text": "# Table Display",
+      "type": "text",
+      "layout": {
+        "row": "Row_17jzbws",
+        "columns": null
+      },
+      "id": "Field_10snxe7"
+    },
+    {
+      "label": "Customer",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1ciqvwl",
+        "columns": null
+      },
+      "id": "Field_0sml2st",
+      "key": "tableUi.customerId",
+      "readonly": true
+    },
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_1eir2lm",
+        "columns": null
+      },
+      "label": "Menu",
+      "dataSource": "=menuItems",
+      "rowCount": 10,
+      "id": "Field_1i3izp8",
+      "columns": [
+        {
+          "label": "Name",
+          "key": "name"
+        },
+        {
+          "label": "Description",
+          "key": "description"
+        },
+        {
+          "label": "Cost",
+          "key": "cost"
+        },
+        {
+          "label": "Category",
+          "key": "category"
+        },
+        {
+          "label": "# Selected",
+          "key": "numberOrdered"
+        }
+      ]
+    },
+    {
+      "label": "Select Items To Order",
+      "components": [
+        {
+          "label": "Select Item To Order",
+          "type": "radio",
+          "layout": {
+            "row": "Row_0n5onqh",
+            "columns": 4
+          },
+          "id": "Field_1cxityb",
+          "key": "selectedItem",
+          "valuesKey": "displayedNames",
+          "validate": {
+            "required": false
+          },
+          "conditional": {
+            "hide": "=placeMyOrder=true or iWantMyBill=true\n"
+          }
+        },
+        {
+          "label": "Number To Order",
+          "type": "number",
+          "layout": {
+            "row": "Row_0n5onqh",
+            "columns": 3
+          },
+          "id": "Field_0pzyptl",
+          "key": "numberOrdered",
+          "defaultValue": 0,
+          "validate": {
+            "required": true,
+            "max": 99,
+            "min": "0"
+          },
+          "conditional": {
+            "hide": "=placeMyOrder=true or iWantMyBill=true"
+          }
+        },
+        {
+          "label": "Instructions For The Kitchen",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0n5onqh",
+            "columns": null
+          },
+          "id": "Field_1h5szu4",
+          "key": "instructions",
+          "conditional": {
+            "hide": "=placeMyOrder=true or iWantMyBill=true"
+          }
+        },
+        {
+          "label": "Place My Order",
+          "type": "checkbox",
+          "layout": {
+            "row": "Row_1onuhrd",
+            "columns": null
+          },
+          "id": "Field_0x4w11b",
+          "key": "placeMyOrder"
+        },
+        {
+          "label": "Total Cost",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_1onuhrd",
+            "columns": null
+          },
+          "id": "Field_1pg5vlc",
+          "key": "displayedCost",
+          "defaultValue": "0",
+          "validate": {
+            "required": false
+          },
+          "readonly": true
+        },
+        {
+          "label": "I Want My Bill",
+          "type": "checkbox",
+          "layout": {
+            "row": "Row_1onuhrd",
+            "columns": null
+          },
+          "id": "Field_06zsevb",
+          "key": "iWantMyBill"
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_14qmxxr",
+        "columns": null
+      },
+      "id": "Field_1pj6ze8"
+    },
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_1b2dofd",
+        "columns": null
+      },
+      "label": "Prepared Items",
+      "dataSource": "=preparedItems",
+      "rowCount": 10,
+      "id": "Field_02q4jq3",
+      "columns": [
+        {
+          "label": "Name",
+          "key": "name"
+        },
+        {
+          "label": "Number Prepared",
+          "key": "number"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_1cvggma",
+        "columns": null
+      },
+      "label": "Ordered Items",
+      "dataSource": "=orderedItems",
+      "rowCount": 10,
+      "id": "Field_0650k92",
+      "columns": [
+        {
+          "label": "Name",
+          "key": "name"
+        },
+        {
+          "label": "Number Ordered",
+          "key": "numberOrdered"
+        }
+      ]
+    },
+    {
+      "text": "{\n  {\n  \"tableUi\": {\n    \"customerId\": \"Leslie\"\n  },\n  \"menuItems\": [\n    {\n      \"name\": \"A\",\n      \"description\": \"A description\",\n      \"cost\": \"20.00\",\n      \"category\": \"starter\",\n      \"numberOrdered\": 1\n    },\n    {\n      \"name\": \"B\",\n      \"description\": \"B description\",\n      \"cost\": \"120.00\",\n      \"category\": \"main\",\n      \"numberOrdered\": 2\n    },\n    {\n      \"name\": \"C\",\n      \"description\": \"C description\",\n      \"cost\": \"50.00\",\n      \"category\": \"dessert\",\n      \"numberOrdered\": 0\n    }\n  ],\n  \"orderNames\": [\n    \"A\",\n    \"B\",\n    \"C\"\n  ],\n  \"preparedItems\": [\n    {\n      \"name\": \"A\",\n      \"number\": 1\n    },\n    {\n      \"name\": \"B\",\n      \"number\": 2\n    },\n    {\n      \"name\": \"C\",\n      \"number\": 0\n    }\n  ],\n  \"orderCost\": 0,\n  \"orderedItems\": [\n    {\n      \"numberOrdered\": \"5\",\n      \"name\": \"Cd\"\n    },\n    {\n      \"numberOrdered\": \"4\",\n      \"name\": \"Ef\"\n    },\n    {\n      \"name\": \"Ab\",\n      \"numberOrdered\": 3\n    }\n  ]\n},\n\"preparedItems\":[[\"Bu\",2],[\"Gi\",5]]\n}",
+      "type": "text",
+      "layout": {
+        "row": "Row_1hkff40",
+        "columns": null
+      },
+      "id": "Field_0twj5dv",
+      "conditional": {
+        "hide": "=true"
+      }
+    }
+  ],
+  "type": "default"
+}

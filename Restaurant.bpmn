@@ -609,7 +609,7 @@
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1xmwcue</bpmn:incoming>
         <bpmn:outgoing>Flow_1o4x2a2</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_0zo5ix7" messageRef="Message_0csbrjs" />
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0zo5ix7" messageRef="Message_3jiif77" />
       </bpmn:intermediateCatchEvent>
       <bpmn:sequenceFlow id="Flow_1xmwcue" sourceRef="Gateway_1k09c80" targetRef="updateTableStatus" />
       <bpmn:exclusiveGateway id="isTableAvailable" name="Is Table Available?" default="Flow_142n8ai">
@@ -769,12 +769,6 @@
           <dc:Bounds x="222" y="176" width="79" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1v7tq8c_di" bpmnElement="Event_08tk3j4">
-        <dc:Bounds x="659" y="268" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="641" y="311" width="74" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1cahc2x_di" bpmnElement="maintainRestaurant">
         <dc:Bounds x="437" y="111" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -816,6 +810,12 @@
       <bpmndi:BPMNShape id="Activity_1a1jfbp_di" bpmnElement="deleteAllTables">
         <dc:Bounds x="661" y="111" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1v7tq8c_di" bpmnElement="Event_08tk3j4">
+        <dc:Bounds x="659" y="268" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="641" y="311" width="74" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0d2yyvx_di" bpmnElement="closingTime">
         <dc:Bounds x="519" y="133" width="36" height="36" />

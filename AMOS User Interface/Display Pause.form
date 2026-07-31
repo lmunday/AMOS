@@ -1,0 +1,22 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "waitABit",
+  "components": [
+    {
+      "text": "# Pause",
+      "type": "text",
+      "layout": {
+        "row": "Row_04dncvv",
+        "columns": null
+      },
+      "id": "Field_0fpnf6r"
+    }
+  ],
+  "type": "default"
+}

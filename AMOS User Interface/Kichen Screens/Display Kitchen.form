@@ -1,0 +1,140 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "kitchenUi",
+  "components": [
+    {
+      "text": "# Kitchen Display",
+      "type": "text",
+      "layout": {
+        "row": "Row_17m2ofa",
+        "columns": null
+      },
+      "id": "Field_04r6ils"
+    },
+    {
+      "label": "Text field",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0aocjen",
+        "columns": null
+      },
+      "id": "Field_0uv9n3x",
+      "key": "textfield_3auqbw"
+    },
+    {
+      "label": "Restaurant Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0aocjen",
+        "columns": null
+      },
+      "id": "Field_0bvg24d",
+      "key": "kitchenUi.restaurantId",
+      "readonly": true
+    },
+    {
+      "label": "Prepared",
+      "values": [
+        {
+          "label": "Select",
+          "value": "0"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[1].name}}",
+          "value": "1"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[2].name}}",
+          "value": "2"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[3].name}}",
+          "value": "3"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[4].name}}",
+          "value": "4"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[5].name}}",
+          "value": "5"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[6].name}}",
+          "value": "6"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[7].name}}",
+          "value": "7"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[8].name}}",
+          "value": "8"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[9].name}}",
+          "value": "9"
+        },
+        {
+          "label": "{{kitchenUi.orderedItems[10].name}}",
+          "value": "10"
+        }
+      ],
+      "type": "checklist",
+      "layout": {
+        "row": "Row_0sea386",
+        "columns": 3
+      },
+      "id": "Field_0fp8lgp",
+      "key": "preparedItems"
+    },
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_0sea386",
+        "columns": 13
+      },
+      "label": "Table",
+      "dataSource": "=kitchenUi.orderedItems",
+      "rowCount": 10,
+      "id": "Field_0e9wjlm",
+      "columns": [
+        {
+          "label": "Menu Item",
+          "key": "name"
+        },
+        {
+          "label": "Number",
+          "key": "numberOrdered"
+        },
+        {
+          "label": "Table",
+          "key": "tableLocation"
+        },
+        {
+          "label": "Instructions",
+          "key": "instructions"
+        }
+      ]
+    },
+    {
+      "text": "{\"kitchenUi\":\n{\"orderedItems\": [\n\t{\n\t\t\t\"id\": \"BaldrickElephant1\",\n\t\t\t\"name\": \"Elephant\",\n\t\t\t\"numberOrdered\": 1,\n\t\t\t\"tableLocation\": \"FL\",\n\t\t\t\"instructions\": \"Do nothing\",\n\t\t\t\"prepared\": false\n\t},\n\t{\n\t\t\t\"id\": \"BaldrickGiraffe2\",\n\t\t\t\"name\": \"Giraffe\",\n\t\t\t\"numberOrdered\": 1,\n\t\t\t\"tableLocation\": \"FL\",\n\t\t\t\"instructions\": \"None\",\n\t\t\t\"prepared\": false\n\t}\n\t],\n\t\"restaurantId\": \"AMOS\",\n\t\"orderedItemId\": []\n}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_1636g6w",
+        "columns": null
+      },
+      "id": "Field_1w2mn49",
+      "conditional": {
+        "hide": "=true"
+      }
+    }
+  ],
+  "type": "default"
+}

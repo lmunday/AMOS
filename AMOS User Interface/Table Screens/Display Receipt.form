@@ -1,0 +1,160 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "DisplayReceipt",
+  "components": [
+    {
+      "text": "# Table Display",
+      "type": "text",
+      "layout": {
+        "row": "Row_04ogeqb",
+        "columns": null
+      },
+      "id": "Field_1wou4on"
+    },
+    {
+      "label": "Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0t9qcyk",
+        "columns": null
+      },
+      "id": "Field_1n1lj0y",
+      "key": "tableUi.customerName",
+      "description": "As entered by the cusomer",
+      "properties": {
+        "tableId": "tableId"
+      },
+      "validate": {
+        "required": false
+      },
+      "readonly": true
+    },
+    {
+      "label": "Bill",
+      "components": [
+        {
+          "label": "Cost",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0pulzvt",
+            "columns": null
+          },
+          "id": "Field_159fbf9",
+          "key": "tableUi.billAmount",
+          "readonly": true
+        },
+        {
+          "label": "Tax",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0pulzvt",
+            "columns": null
+          },
+          "id": "Field_1ctf7g9",
+          "key": "tableUi.billTax",
+          "readonly": true
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_1pxjhvf",
+        "columns": null
+      },
+      "id": "Field_0rxj7kq"
+    },
+    {
+      "label": "Payment Method ",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0cdbv5f",
+        "columns": null
+      },
+      "id": "Field_0daghhk",
+      "key": "tableUi.paymentMethod",
+      "readonly": true
+    },
+    {
+      "label": "Print",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0smnvdv",
+        "columns": null
+      },
+      "id": "Field_1dyd384",
+      "key": "print",
+      "conditional": {
+        "hide": "=available=true"
+      }
+    },
+    {
+      "label": "Email",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0smnvdv",
+        "columns": null
+      },
+      "id": "Field_0cwo1z0",
+      "key": "email",
+      "conditional": {
+        "hide": "=available=true"
+      }
+    },
+    {
+      "label": "Text",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_0smnvdv",
+        "columns": null
+      },
+      "id": "Field_04nvfxv",
+      "key": "text",
+      "conditional": {
+        "hide": "=available=true"
+      }
+    },
+    {
+      "label": "Phone Number",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1x7on8i",
+        "columns": null
+      },
+      "id": "Field_1hiiemh",
+      "key": "textfield_465ik",
+      "conditional": {
+        "hide": "=text=false or available=true"
+      }
+    },
+    {
+      "label": "Email Address",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1l0z3w1",
+        "columns": null
+      },
+      "id": "Field_1x3gmny",
+      "key": "textfield_728luf",
+      "conditional": {
+        "hide": "=email=false or available=true"
+      }
+    },
+    {
+      "label": "Make Table Available",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_06qjmb4",
+        "columns": null
+      },
+      "id": "Field_0rqlhrv",
+      "key": "available"
+    }
+  ],
+  "type": "default"
+}

@@ -1,0 +1,89 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "verifyPayment",
+  "components": [
+    {
+      "text": "# Payment Processing System",
+      "type": "text",
+      "layout": {
+        "row": "Row_1rscxgm",
+        "columns": null
+      },
+      "id": "Field_02rymus"
+    },
+    {
+      "text": "Verify Payment",
+      "type": "text",
+      "layout": {
+        "row": "Row_0y9mvzy",
+        "columns": null
+      },
+      "id": "Field_09qlh6u"
+    },
+    {
+      "label": "Customer name and pament information",
+      "components": [
+        {
+          "text": "{{payment.method}}",
+          "type": "text",
+          "layout": {
+            "row": "Row_1aujoan",
+            "columns": null
+          },
+          "id": "Field_0cv1rq9"
+        },
+        {
+          "text": "{{payment.customerId}}",
+          "type": "text",
+          "layout": {
+            "row": "Row_1aujoan",
+            "columns": null
+          },
+          "id": "Field_1qhj75c"
+        },
+        {
+          "text": "{{payment.amount}}",
+          "type": "text",
+          "layout": {
+            "row": "Row_1n938az",
+            "columns": null
+          },
+          "id": "Field_0neckus"
+        },
+        {
+          "text": "{{payment.information}}",
+          "type": "text",
+          "layout": {
+            "row": "Row_1n938az",
+            "columns": 9
+          },
+          "id": "Field_0x76kg3"
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_1o4af2v",
+        "columns": null
+      },
+      "id": "Field_1xv6yh3"
+    },
+    {
+      "label": "Accepted",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1xf3yig",
+        "columns": null
+      },
+      "id": "Field_0nc72uw",
+      "key": "accepted"
+    }
+  ],
+  "type": "default"
+}

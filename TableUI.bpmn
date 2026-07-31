@@ -434,6 +434,7 @@
             <zeebe:output source="=iWantMyBill" target="billRequested" />
             <zeebe:output source="=if (placeMyOrder or iWantMyBill) then selectedItems else append(selectedItems, {&#34;name&#34;:selectedItem, &#34;numberOrdered&#34;:numberOrdered})&#10;  " target="selectedItems" />
             <zeebe:output source="=if (placeMyOrder or iWantMyBill) then selectedItem = null else selectedItem" target="selectedItem" />
+            <zeebe:output source="=instructions" target="instructions" />
           </zeebe:ioMapping>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0r8k2hk</bpmn:incoming>
@@ -538,7 +539,7 @@
 //Get the position in the order list of the orderedFoodName</bpmn:documentation>
         <bpmn:extensionElements>
           <zeebe:ioMapping>
-            <zeebe:output source="=append(preparedItems, {&#34;name&#34;:name, &#34;number&#34;:number})" target="preparedItems" />
+            <zeebe:output source="=append(preparedItems, {&#34;name&#34;:name, &#34;number&#34;:number, &#34;instructions&#34;:instructions})" target="preparedItems" />
           </zeebe:ioMapping>
         </bpmn:extensionElements>
         <bpmn:outgoing>Flow_1ignvmr</bpmn:outgoing>
@@ -563,9 +564,12 @@ Set number ordered to 0, order prepared to empty</bpmn:documentation>
       <bpmn:scriptTask id="Activity_14vajal" name="Add Item To Selected Items List">
         <bpmn:documentation>Add the selected item name and numberOrdered to ther list of selectedItems.</bpmn:documentation>
         <bpmn:extensionElements>
-          <zeebe:script expression="=if numberOrdered &#62;0 then&#10;append(selectedItems, {&#34;name&#34;:selectedItem, &#34;numberOrdered&#34;:numberOrdered})&#10;else&#10;selectedItems" resultVariable="selectedItems" />
+          <zeebe:script expression="=if numberOrdered &#62;0 then&#10;append(selectedItems, {&#34;name&#34;:selectedItem, &#34;numberOrdered&#34;:numberOrdered,&#34;instructions&#34;:instructions})&#10;else&#10;selectedItems" resultVariable="selectedItems" />
           <zeebe:ioMapping>
             <zeebe:output source="=selectedItems" target="selectedItems" />
+            <zeebe:output source="=&#34;&#34;" target="selectedItem" />
+            <zeebe:output source="=1" target="numberOrdered" />
+            <zeebe:output source="=&#34;&#34;" target="instructions" />
           </zeebe:ioMapping>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1jnacjm</bpmn:incoming>

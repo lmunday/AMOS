@@ -30,46 +30,21 @@
           <zeebe:output source="=name" target="menuItem.name" />
           <zeebe:output source="=description" target="menuItem.description" />
           <zeebe:output source="=cost" target="menuItem.cost" />
-<<<<<<< HEAD
-=======
-          <zeebe:output source="=&#34;&#34;" target="menuItem.Customer_Menu_Item_Id" />
->>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec
           <zeebe:output source="=category" target="menuItem.category" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0x2dkra</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_10dr5lx" messageRef="Message_0rr62hd" />
     </bpmn:startEvent>
-<<<<<<< HEAD
-=======
-    <bpmn:sequenceFlow id="Flow_0x2dkra" sourceRef="createMenuItem" targetRef="Gateway_1aok6lb" />
-    <bpmn:sequenceFlow id="Flow_03j0g15" sourceRef="_deleteMenuItem" targetRef="deletedMenuItem" />
-    <bpmn:sequenceFlow id="Flow_1jtjpgb" sourceRef="Gateway_10x6i2h" targetRef="_deleteMenuItem" />
-    <bpmn:sequenceFlow id="Flow_141ebxb" sourceRef="_getMenuItem" targetRef="returnMenuItem" />
-    <bpmn:sequenceFlow id="Flow_0unn717" sourceRef="Gateway_1aok6lb" targetRef="Gateway_10x6i2h" />
->>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec
     <bpmn:exclusiveGateway id="Gateway_1aok6lb">
       <bpmn:incoming>Flow_0x2dkra</bpmn:incoming>
       <bpmn:incoming>Flow_17lif44</bpmn:incoming>
       <bpmn:outgoing>Flow_0unn717</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-<<<<<<< HEAD
     <bpmn:intermediateCatchEvent id="_getMenuItem" name="_getMenuItem">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:output source="=customerMenuItemId" target="customerMenuItemId" />
-=======
-    <bpmn:sequenceFlow id="Flow_12wxbzh" sourceRef="Gateway_10x6i2h" targetRef="_getMenuItem" />
-    <bpmn:eventBasedGateway id="Gateway_10x6i2h">
-      <bpmn:incoming>Flow_0unn717</bpmn:incoming>
-      <bpmn:outgoing>Flow_12wxbzh</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1jtjpgb</bpmn:outgoing>
-    </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="_getMenuItem" name="_getMenuItem">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=customerMenuItemId" target="menuItem.Customer_Menu_Item_Id" />
->>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_12wxbzh</bpmn:incoming>
@@ -86,11 +61,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_returnMenuItem" target="messageName" />
-<<<<<<< HEAD
           <zeebe:input source="=customerMenuItemId" target="correlationKey" />
-=======
-          <zeebe:input source="=menuItem.Customer_Menu_Item_Id" target="correlationKey" />
->>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec
           <zeebe:input source="={&#34;menuItemDescription&#34;:menuItem.description, &#34;menuItemCost&#34;:menuItem.cost, &#34;menuItemCategory&#34;:menuItem.category}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
@@ -103,7 +74,6 @@
       <bpmn:incoming>Flow_141ebxb</bpmn:incoming>
       <bpmn:outgoing>Flow_17lif44</bpmn:outgoing>
     </bpmn:sendTask>
-<<<<<<< HEAD
     <bpmn:endEvent id="deletedMenuItem" name="deleted">
       <bpmn:incoming>Flow_03j0g15</bpmn:incoming>
     </bpmn:endEvent>
@@ -119,12 +89,6 @@
       <bpmn:outgoing>Flow_1jtjpgb</bpmn:outgoing>
       <bpmn:outgoing>Flow_12wxbzh</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-=======
-    <bpmn:sequenceFlow id="Flow_17lif44" sourceRef="returnMenuItem" targetRef="Gateway_1aok6lb" />
-    <bpmn:endEvent id="deletedMenuItem" name="deleted">
-      <bpmn:incoming>Flow_03j0g15</bpmn:incoming>
-    </bpmn:endEvent>
->>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec
   </bpmn:process>
   <bpmn:message id="Message_36tt7cd" name="_deleteMenuItem">
     <bpmn:extensionElements>
@@ -140,7 +104,6 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MenuItem">
       <bpmndi:BPMNShape id="Participant_0h7ds0m_di" bpmnElement="menuItem" isHorizontal="true">
-<<<<<<< HEAD
         <dc:Bounds x="180" y="120" width="690" height="290" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -212,83 +175,6 @@
       <bpmndi:BPMNEdge id="Association_13w9kb2_di" bpmnElement="Association_13w9kb2">
         <di:waypoint x="705" y="280" />
         <di:waypoint x="713" y="340" />
-=======
-        <dc:Bounds x="20" y="120" width="690" height="290" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0qmw6c2_di" bpmnElement="createMenuItem">
-        <dc:Bounds x="81" y="222" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="63" y="265" width="81" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1aok6lb_di" bpmnElement="Gateway_1aok6lb" isMarkerVisible="true">
-        <dc:Bounds x="165" y="215" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0ylz2ne_di" bpmnElement="Gateway_10x6i2h">
-        <dc:Bounds x="255" y="215" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1eik4pt_di" bpmnElement="_getMenuItem">
-        <dc:Bounds x="382" y="222" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="355" y="203" width="70" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0ezckgh_di" bpmnElement="_deleteMenuItem">
-        <dc:Bounds x="442" y="152" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="487" y="143" width="85" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02udxf4_di" bpmnElement="returnMenuItem">
-        <dc:Bounds x="490" y="200" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0pp4rop_di" bpmnElement="deletedMenuItem">
-        <dc:Bounds x="651" y="222" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="651" y="265" width="37" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0x2dkra_di" bpmnElement="Flow_0x2dkra">
-        <di:waypoint x="117" y="240" />
-        <di:waypoint x="165" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_03j0g15_di" bpmnElement="Flow_03j0g15">
-        <di:waypoint x="478" y="170" />
-        <di:waypoint x="669" y="170" />
-        <di:waypoint x="669" y="222" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1jtjpgb_di" bpmnElement="Flow_1jtjpgb">
-        <di:waypoint x="280" y="215" />
-        <di:waypoint x="280" y="170" />
-        <di:waypoint x="442" y="170" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_141ebxb_di" bpmnElement="Flow_141ebxb">
-        <di:waypoint x="418" y="240" />
-        <di:waypoint x="490" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0unn717_di" bpmnElement="Flow_0unn717">
-        <di:waypoint x="215" y="240" />
-        <di:waypoint x="255" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_12wxbzh_di" bpmnElement="Flow_12wxbzh">
-        <di:waypoint x="305" y="240" />
-        <di:waypoint x="382" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_17lif44_di" bpmnElement="Flow_17lif44">
-        <di:waypoint x="540" y="280" />
-        <di:waypoint x="540" y="320" />
-        <di:waypoint x="190" y="320" />
-        <di:waypoint x="190" y="265" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_03h7ws2_di" bpmnElement="TextAnnotation_03h7ws2">
-        <dc:Bounds x="550" y="350" width="100" height="55" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_13w9kb2_di" bpmnElement="Association_13w9kb2">
-        <di:waypoint x="559" y="280" />
-        <di:waypoint x="593" y="350" />
->>>>>>> c26d4f3a0aedcfd39422b4448f054a7ec7cd86ec
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_03h7ws2_di" bpmnElement="TextAnnotation_03h7ws2">
         <dc:Bounds x="660" y="340" width="130" height="40" />

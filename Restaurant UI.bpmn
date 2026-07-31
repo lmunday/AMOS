@@ -7,7 +7,7 @@
     <bpmn:laneSet id="LaneSet_12qkn7d">
       <bpmn:lane id="updateRestaturantUIDisplay" name="Update Display">
         <bpmn:flowNodeRef>openRestaurant</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>initializeRestaurantUI</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>initializeRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>turnOnKitchenUi</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>deleteKitchenUI</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>allTablesDeleted</bpmn:flowNodeRef>
@@ -43,7 +43,7 @@
       <bpmn:incoming>Flow_00sdjbq</bpmn:incoming>
       <bpmn:outgoing>Flow_1t8x4xv</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:userTask id="initializeRestaurantUI" name="Initialize Restaurant UI">
+    <bpmn:userTask id="initializeRestaurant" name="Initialize Restaurant">
       <bpmn:extensionElements>
         <zeebe:userTask />
         <zeebe:formDefinition formId="OpenRestaurant" />
@@ -80,8 +80,8 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=restaurantUi.close=true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_008wcor" sourceRef="closeRestaurant" targetRef="allTablesDeleted" />
-    <bpmn:sequenceFlow id="Flow_1cc7pcd" sourceRef="restaurantTurnedOn" targetRef="initializeRestaurantUI" />
-    <bpmn:sequenceFlow id="Flow_0p0cweo" sourceRef="initializeRestaurantUI" targetRef="turnOnKitchenUi" />
+    <bpmn:sequenceFlow id="Flow_1cc7pcd" sourceRef="restaurantTurnedOn" targetRef="initializeRestaurant" />
+    <bpmn:sequenceFlow id="Flow_0p0cweo" sourceRef="initializeRestaurant" targetRef="turnOnKitchenUi" />
     <bpmn:sequenceFlow id="Flow_1r7ukfw" sourceRef="deleteRestaurant" targetRef="restaurantClosed" />
     <bpmn:sequenceFlow id="Flow_0cwaodt" sourceRef="allTablesDeleted" targetRef="deleteKitchenUI" />
     <bpmn:sequenceFlow id="Flow_18jhuky" sourceRef="deleteKitchenUI" targetRef="deleteRestaurant" />
@@ -274,7 +274,7 @@ Otherwise remove it from the availableTableList, if there.</bpmn:documentation>
       <bpmndi:BPMNShape id="Activity_0ej22iv_di" bpmnElement="openRestaurant">
         <dc:Bounds x="662" y="383" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0wfzf9k_di" bpmnElement="initializeRestaurantUI">
+      <bpmndi:BPMNShape id="Activity_0wfzf9k_di" bpmnElement="initializeRestaurant">
         <dc:Bounds x="340" y="383" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
