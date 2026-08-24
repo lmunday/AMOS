@@ -16,6 +16,15 @@
         "columns": null
       },
       "id": "Field_0fpnf6r"
+    },
+    {
+      "text": "A prepared item was selected that wasn't ordered.",
+      "type": "text",
+      "layout": {
+        "row": "Row_1x9uv79",
+        "columns": null
+      },
+      "id": "Field_0papd0e"
     }
   ],
   "type": "default"

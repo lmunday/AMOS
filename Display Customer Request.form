@@ -1,0 +1,52 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "displayCustomerRequest",
+  "components": [
+    {
+      "text": "# Table Display",
+      "type": "text",
+      "layout": {
+        "row": "Row_1hsmo81",
+        "columns": null
+      },
+      "id": "Field_1mv31wu"
+    },
+    {
+      "text": "Table {{tableLocation}} Assistance Request",
+      "type": "text",
+      "layout": {
+        "row": "Row_0b0ervt",
+        "columns": 13
+      },
+      "id": "Field_0trayab"
+    },
+    {
+      "text": "Complete this task to request  assistance.",
+      "type": "text",
+      "layout": {
+        "row": "Row_1c43ube",
+        "columns": null
+      },
+      "id": "Field_01ee87k"
+    },
+    {
+      "text": "{\"tableUi\":{\"Location\":\"FL\"}}",
+      "type": "text",
+      "layout": {
+        "row": "Row_1pogvgk",
+        "columns": null
+      },
+      "id": "Field_0illftd",
+      "conditional": {
+        "hide": "=true"
+      }
+    }
+  ],
+  "type": "default"
+}

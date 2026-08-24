@@ -18,14 +18,36 @@
       "id": "Field_10snxe7"
     },
     {
+      "label": "Assistance Requested",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_17jzbws",
+        "columns": 6
+      },
+      "id": "Field_188s9oz",
+      "key": "tableUi.requestStatus",
+      "readonly": true
+    },
+    {
       "label": "Customer",
       "type": "textfield",
       "layout": {
         "row": "Row_1ciqvwl",
-        "columns": null
+        "columns": 13
       },
       "id": "Field_0sml2st",
       "key": "tableUi.customerId",
+      "readonly": true
+    },
+    {
+      "label": "Table",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1ciqvwl",
+        "columns": 3
+      },
+      "id": "Field_08qz24x",
+      "key": "tableUi.location",
       "readonly": true
     },
     {
@@ -36,7 +58,6 @@
       },
       "label": "Menu",
       "dataSource": "=menuItems",
-      "rowCount": 10,
       "id": "Field_1i3izp8",
       "columns": [
         {
@@ -200,7 +221,7 @@
       ]
     },
     {
-      "text": "{\n  {\n  \"tableUi\": {\n    \"customerId\": \"Leslie\"\n  },\n  \"menuItems\": [\n    {\n      \"name\": \"A\",\n      \"description\": \"A description\",\n      \"cost\": \"20.00\",\n      \"category\": \"starter\",\n      \"numberOrdered\": 1\n    },\n    {\n      \"name\": \"B\",\n      \"description\": \"B description\",\n      \"cost\": \"120.00\",\n      \"category\": \"main\",\n      \"numberOrdered\": 2\n    },\n    {\n      \"name\": \"C\",\n      \"description\": \"C description\",\n      \"cost\": \"50.00\",\n      \"category\": \"dessert\",\n      \"numberOrdered\": 0\n    }\n  ],\n  \"orderNames\": [\n    \"A\",\n    \"B\",\n    \"C\"\n  ],\n  \"preparedItems\": [\n    {\n      \"name\": \"A\",\n      \"number\": 1\n    },\n    {\n      \"name\": \"B\",\n      \"number\": 2\n    },\n    {\n      \"name\": \"C\",\n      \"number\": 0\n    }\n  ],\n  \"orderCost\": 0,\n  \"orderedItems\": [\n    {\n      \"numberOrdered\": \"5\",\n      \"name\": \"Cd\"\n    },\n    {\n      \"numberOrdered\": \"4\",\n      \"name\": \"Ef\"\n    },\n    {\n      \"name\": \"Ab\",\n      \"numberOrdered\": 3\n    }\n  ]\n},\n\"preparedItems\":[[\"Bu\",2],[\"Gi\",5]]\n}",
+      "text": "{  \"tableUi\": {\n    \"customerId\": \"Leslie\",\n    \"requestStatus\":true\n  },\n  \"menuItems\": [\n    {\n      \"name\": \"A\",\n      \"description\": \"A description\",\n      \"cost\": \"20.00\",\n      \"category\": \"starter\",\n      \"numberOrdered\": 1\n    },\n    {\n      \"name\": \"B\",\n      \"description\": \"B description\",\n      \"cost\": \"120.00\",\n      \"category\": \"main\",\n      \"numberOrdered\": 2\n    },\n    {\n      \"name\": \"C\",\n      \"description\": \"C description\",\n      \"cost\": \"50.00\",\n      \"category\": \"dessert\",\n      \"numberOrdered\": 0\n    }\n  ],\n  \"orderNames\": [\n    \"A\",\n    \"B\",\n    \"C\"\n  ],\n  \"preparedItems\": [\n    {\n      \"name\": \"A\",\n      \"number\": 1\n    },\n    {\n      \"name\": \"B\",\n      \"number\": 2\n    },\n    {\n      \"name\": \"C\",\n      \"number\": 0\n    }\n  ],\n  \"orderCost\": 0,\n  \"orderedItems\": [\n    {\n      \"numberOrdered\": \"5\",\n      \"name\": \"Cd\"\n    },\n    {\n      \"numberOrdered\": \"4\",\n      \"name\": \"Ef\"\n    },\n    {\n      \"name\": \"Ab\",\n      \"numberOrdered\": 3\n    }\n  ]\n}",
       "type": "text",
       "layout": {
         "row": "Row_1hkff40",

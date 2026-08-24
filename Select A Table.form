@@ -18,23 +18,13 @@
       "id": "Field_0z97qw6"
     },
     {
-      "text": "Available Tables",
-      "type": "text",
-      "layout": {
-        "row": "Row_18pzyjy",
-        "columns": null
-      },
-      "id": "Field_1cjav7l"
-    },
-    {
       "type": "table",
       "layout": {
         "row": "Row_18pzyjy",
-        "columns": 11
+        "columns": 16
       },
-      "label": "Table",
+      "label": "Table Availability",
       "dataSource": "=restaurantUi.tableSeating",
-      "rowCount": 10,
       "id": "Field_00lu3y4",
       "columns": [
         {
@@ -52,22 +42,19 @@
       ]
     },
     {
-      "text": "The last table to send an update",
-      "type": "text",
+      "label": "Select Table",
+      "type": "select",
       "layout": {
-        "row": "Row_0d37c9f",
-        "columns": null
+        "row": "Row_11pii33",
+        "columns": 5
       },
-      "id": "Field_1ssiqub"
-    },
-    {
-      "text": "=tableLocation",
-      "type": "text",
-      "layout": {
-        "row": "Row_0d37c9f",
-        "columns": null
-      },
-      "id": "Field_05e4nuu"
+      "id": "Field_1qxoego",
+      "key": "selectedTable",
+      "readonly": false,
+      "valuesKey": "tableList",
+      "conditional": {
+        "hide": "=close=true"
+      }
     },
     {
       "type": "separator",
@@ -78,19 +65,22 @@
       "id": "Field_0fw3q5q"
     },
     {
-      "label": "Select Table",
-      "type": "select",
+      "text": "The last table to send an update",
+      "type": "text",
       "layout": {
         "row": "Row_1f4tpei",
-        "columns": 5
+        "columns": null
       },
-      "id": "Field_1qxoego",
-      "key": "selectedTable",
-      "readonly": false,
-      "valuesKey": "tableList",
-      "conditional": {
-        "hide": "=close=true"
-      }
+      "id": "Field_1ssiqub"
+    },
+    {
+      "text": "=tableLocation",
+      "type": "text",
+      "layout": {
+        "row": "Row_1f4tpei",
+        "columns": null
+      },
+      "id": "Field_05e4nuu"
     },
     {
       "label": "Close The Restaurant",

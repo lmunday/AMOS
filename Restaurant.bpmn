@@ -23,7 +23,7 @@
 	],
 	"tableSeating": 7}
 }</bpmn:documentation>
-    <bpmn:participant id="restauran" name="Restaurant" processRef="restaurantProcess">
+    <bpmn:participant id="restaurant" name="Restaurant" processRef="restaurantProcess">
       <bpmn:documentation>{
 "restaurant" : 
 		{
@@ -31,6 +31,10 @@
 		}
 }</bpmn:documentation>
     </bpmn:participant>
+    <bpmn:textAnnotation id="TextAnnotation_159fs3r">
+      <bpmn:text>Have to keep menu items until all tables have been deleted.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0qfkrfo" associationDirection="None" sourceRef="deleteMenuItems" targetRef="TextAnnotation_159fs3r" />
   </bpmn:collaboration>
   <bpmn:process id="restaurantProcess" name="Restaurant Process" isExecutable="true">
     <bpmn:laneSet id="LaneSet_12ne97h">
@@ -755,7 +759,7 @@
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="RestaurantProcess">
-      <bpmndi:BPMNShape id="Participant_0jjqq0w_di" bpmnElement="restauran" isHorizontal="true">
+      <bpmndi:BPMNShape id="Participant_0jjqq0w_di" bpmnElement="restaurant" isHorizontal="true">
         <dc:Bounds x="160" y="60" width="1280" height="350" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -889,6 +893,14 @@
       <bpmndi:BPMNEdge id="Flow_0a69bi6_di" bpmnElement="Flow_0a69bi6">
         <di:waypoint x="465" y="286" />
         <di:waypoint x="545" y="286" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_159fs3r_di" bpmnElement="TextAnnotation_159fs3r">
+        <dc:Bounds x="847" y="10" width="180" height="44" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0qfkrfo_di" bpmnElement="Association_0qfkrfo">
+        <di:waypoint x="925" y="111" />
+        <di:waypoint x="908" y="54" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

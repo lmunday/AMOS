@@ -18,7 +18,18 @@
       "id": "Field_1wou4on"
     },
     {
-      "label": "Name",
+      "label": "Assistance Requested",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_04ogeqb",
+        "columns": 6
+      },
+      "id": "Field_13b6fkd",
+      "key": "tableUi.requestStatus",
+      "readonly": true
+    },
+    {
+      "label": "Customer",
       "type": "textfield",
       "layout": {
         "row": "Row_0t9qcyk",
@@ -26,7 +37,6 @@
       },
       "id": "Field_1n1lj0y",
       "key": "tableUi.customerName",
-      "description": "As entered by the cusomer",
       "properties": {
         "tableId": "tableId"
       },
@@ -36,7 +46,18 @@
       "readonly": true
     },
     {
-      "label": "Bill",
+      "label": "Table",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0t9qcyk",
+        "columns": 3
+      },
+      "id": "Field_0xgjtz6",
+      "key": "tableUi.location",
+      "readonly": true
+    },
+    {
+      "label": "Receipt",
       "components": [
         {
           "label": "Cost",
@@ -59,6 +80,17 @@
           "id": "Field_1ctf7g9",
           "key": "tableUi.billTax",
           "readonly": true
+        },
+        {
+          "label": "Payment Method ",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0m4weu7",
+            "columns": null
+          },
+          "id": "Field_0daghhk",
+          "key": "tableUi.paymentMethod",
+          "readonly": true
         }
       ],
       "showOutline": true,
@@ -68,17 +100,6 @@
         "columns": null
       },
       "id": "Field_0rxj7kq"
-    },
-    {
-      "label": "Payment Method ",
-      "type": "textfield",
-      "layout": {
-        "row": "Row_0cdbv5f",
-        "columns": null
-      },
-      "id": "Field_0daghhk",
-      "key": "tableUi.paymentMethod",
-      "readonly": true
     },
     {
       "label": "Print",
