@@ -145,7 +145,8 @@
             "columns": null
           },
           "id": "Field_0rrs3ks",
-          "key": "paymentInformation"
+          "key": "paymentInformation",
+          "defaultValue": "Contains payment account information depending on the method used."
         }
       ],
       "showOutline": true,
