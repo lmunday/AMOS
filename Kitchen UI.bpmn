@@ -8,7 +8,7 @@ kitchenUi.preparedItemsList
 [x, z, y]</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_1vvhqzm">
-      <bpmn:text>get the xth item ID from kitchenUi.orderedItems</bpmn:text>
+      <bpmn:text>get the xth item ID from orderedItems</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_158olam" associationDirection="None" sourceRef="displayOrderdFood" targetRef="TextAnnotation_0szd8d0" />
     <bpmn:textAnnotation id="TextAnnotation_0oeiobw">
@@ -51,9 +51,9 @@ kitchenUi.preparedItemsList
     <bpmn:startEvent id="createKitchenUi" name="createKitchenUi">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=restaurantId" target="kitchenUi.restaurantId" />
-          <zeebe:output source="=[]" target="kitchenUi.orderedItems" />
-          <zeebe:output source="=[]" target="kitchenUi.preparedItems" />
+          <zeebe:output source="=restaurantId" target="restaurantId" />
+          <zeebe:output source="=[]" target="orderedItems" />
+          <zeebe:output source="=[]" target="preparedItems" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_05v5zx6</bpmn:outgoing>
@@ -69,8 +69,8 @@ kitchenUi.preparedItemsList
       <bpmn:extensionElements>
         <zeebe:script expression="=concatenate(orderedItems, orderedItem)" resultVariable="orderedItems" />
         <zeebe:ioMapping>
-          <zeebe:input source="=kitchenUi.orderedItems" target="orderedItems" />
-          <zeebe:output source="=orderedItems" target="kitchenUi.orderedItems" />
+          <zeebe:input source="=orderedItems" target="orderedItems" />
+          <zeebe:output source="=orderedItems" target="orderedItems" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0fhpz7p</bpmn:incoming>
@@ -81,7 +81,7 @@ kitchenUi.preparedItemsList
     </bpmn:endEvent>
     <bpmn:userTask id="displayOrderdFood" name="Display Ordered Food">
       <bpmn:documentation>Displays 
-kitchenUi.orderedItems
+orderedItems
 Returns
 preparedItems sorted from highest to lowest.</bpmn:documentation>
       <bpmn:extensionElements>
@@ -89,7 +89,7 @@ preparedItems sorted from highest to lowest.</bpmn:documentation>
         <zeebe:formDefinition formId="kitchenUi" />
         <zeebe:ioMapping>
           <zeebe:input source="=[]" target="preparedItems" />
-          <zeebe:output source="=sort(preparedItems, function(x, y) x &#62; y)" target="kitchenUi.preparedItems" />
+          <zeebe:output source="=sort(preparedItems, function(x, y) x &#62; y)" target="preparedItems" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1y1zxg9</bpmn:incoming>
@@ -115,7 +115,7 @@ preparedItems sorted from highest to lowest.</bpmn:documentation>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_05v5zx6" sourceRef="createKitchenUi" targetRef="Gateway_1wi7l65" />
     <bpmn:sequenceFlow id="noMorePrepared" name="no" sourceRef="Gateway_1sc4lxv" targetRef="Gateway_1wi7l65">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=count(kitchenUi.preparedItems)=0</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=count(preparedItems)=0</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_15xnhw5" sourceRef="updateOrderedItems" targetRef="Gateway_1wi7l65" />
     <bpmn:sequenceFlow id="Flow_1y1zxg9" sourceRef="Gateway_1wi7l65" targetRef="displayOrderdFood" />
@@ -124,7 +124,7 @@ preparedItems sorted from highest to lowest.</bpmn:documentation>
     <bpmn:sequenceFlow id="Flow_12tpmfv" sourceRef="displayOrderdFood" targetRef="Gateway_1ud2r0d" />
     <bpmn:sequenceFlow id="Flow_0vkk0c5" sourceRef="removeFoodFromOrderedItems" targetRef="Gateway_1e6xowz" />
     <bpmn:sequenceFlow id="morePreparedItems" name="yes" sourceRef="Gateway_1sc4lxv" targetRef="createPreparedItemIndex">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=count(kitchenUi.preparedItems)&gt;0</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=count(preparedItems)&gt;0</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="id" name="yes" sourceRef="Gateway_1y8tzu7" targetRef="preparedOrderedFood" />
     <bpmn:sequenceFlow id="Flow_1jpg5n0" sourceRef="preparedOrderedFood" targetRef="removeFoodFromOrderedItems" />
@@ -140,8 +140,8 @@ Find the ordered food ID at the location given by the value of that index, in th
       <bpmn:extensionElements>
         <zeebe:script expression="=orderedItems[preparedItemIndex].id" resultVariable="orderedItemId" />
         <zeebe:ioMapping>
-          <zeebe:input source="=kitchenUi.orderedItems" target="orderedItems" />
-          <zeebe:input source="=kitchenUi.preparedItems" target="preparedItems" />
+          <zeebe:input source="=orderedItems" target="orderedItems" />
+          <zeebe:input source="=preparedItems" target="preparedItems" />
           <zeebe:output source="=if orderedItemId=[]&#10;then null&#10;else orderedItemId" target="orderedItemId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
@@ -150,7 +150,7 @@ Find the ordered food ID at the location given by the value of that index, in th
     </bpmn:scriptTask>
     <bpmn:scriptTask id="createPreparedItemIndex" name="Create Prepared Item Index">
       <bpmn:extensionElements>
-        <zeebe:script expression="=number(kitchenUi.preparedItems[1])" resultVariable="preparedItemIndex" />
+        <zeebe:script expression="=number(preparedItems[1])" resultVariable="preparedItemIndex" />
       </bpmn:extensionElements>
       <bpmn:incoming>morePreparedItems</bpmn:incoming>
       <bpmn:outgoing>Flow_1kawcdk</bpmn:outgoing>
@@ -187,8 +187,8 @@ Find the ordered food ID at the location given by the value of that index, in th
       <bpmn:extensionElements>
         <zeebe:script expression="=remove(preparedItems, 1)" resultVariable="preparedItems" />
         <zeebe:ioMapping>
-          <zeebe:input source="=kitchenUi.preparedItems" target="preparedItems" />
-          <zeebe:output source="=preparedItems" target="kitchenUi.preparedItems" />
+          <zeebe:input source="=preparedItems" target="preparedItems" />
+          <zeebe:output source="=preparedItems" target="preparedItems" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_04ivwuf</bpmn:incoming>
@@ -199,8 +199,8 @@ Find the ordered food ID at the location given by the value of that index, in th
       <bpmn:extensionElements>
         <zeebe:script expression="=remove(orderedItems, preparedItemIndex)" resultVariable="orderedItems" />
         <zeebe:ioMapping>
-          <zeebe:input source="=kitchenUi.orderedItems" target="orderedItems" />
-          <zeebe:output source="=orderedItems" target="kitchenUi.orderedItems" />
+          <zeebe:input source="=orderedItems" target="orderedItems" />
+          <zeebe:output source="=orderedItems" target="orderedItems" />
           <zeebe:output source="=index+1" target="index" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
@@ -225,12 +225,12 @@ Find the ordered food ID at the location given by the value of that index, in th
   <bpmn:message id="Message_2bcpu7r" name="Message_2bcpu7r" />
   <bpmn:message id="Message_19ckb64" name="_displayOrderedFood">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=kitchenUi.restaurantId" />
+      <zeebe:subscription correlationKey="=restaurantId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3lftq39" name="_deleteKitchenUi">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=kitchenUi.restaurantId" />
+      <zeebe:subscription correlationKey="=restaurantId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3nq22bt" name="_createKitchen" />
@@ -412,28 +412,24 @@ Find the ordered food ID at the location given by the value of that index, in th
         <di:waypoint x="1036" y="200" />
         <di:waypoint x="1036" y="247" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1v3alwi_di" bpmnElement="Association_1v3alwi">
-        <di:waypoint x="941" y="232" />
-        <di:waypoint x="975" y="175" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0ejs4pt_di" bpmnElement="Association_0ejs4pt">
-        <di:waypoint x="1044" y="175" />
-        <di:waypoint x="1137" y="232" />
+      <bpmndi:BPMNEdge id="Association_1wpse66_di" bpmnElement="Association_1wpse66">
+        <di:waypoint x="1390" y="470" />
+        <di:waypoint x="1395" y="454" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0szd8d0_di" bpmnElement="TextAnnotation_0szd8d0">
         <dc:Bounds x="717" y="140" width="190" height="55" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1vvhqzm_di" bpmnElement="TextAnnotation_1vvhqzm">
-        <dc:Bounds x="880" y="470" width="170" height="40" />
+        <dc:Bounds x="880" y="470" width="170" height="39" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0oeiobw_di" bpmnElement="TextAnnotation_0oeiobw">
         <dc:Bounds x="1060" y="467" width="150" height="46" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0n4ksz1_di" bpmnElement="TextAnnotation_0n4ksz1">
-        <dc:Bounds x="1360" y="380" width="100" height="83.984375" />
+      <bpmndi:BPMNShape id="TextAnnotation_15epopx_di" bpmnElement="TextAnnotation_15epopx">
+        <dc:Bounds x="950" y="120" width="100" height="55" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_158olam_di" bpmnElement="Association_158olam">
@@ -448,12 +444,16 @@ Find the ordered food ID at the location given by the value of that index, in th
         <di:waypoint x="1130" y="467" />
         <di:waypoint x="1121" y="432" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1wpse66_di" bpmnElement="Association_1wpse66">
-        <di:waypoint x="1434" y="240" />
-        <di:waypoint x="1407" y="380" />
+      <bpmndi:BPMNEdge id="Association_1v3alwi_di" bpmnElement="Association_1v3alwi">
+        <di:waypoint x="941" y="232" />
+        <di:waypoint x="975" y="175" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_15epopx_di" bpmnElement="TextAnnotation_15epopx">
-        <dc:Bounds x="950" y="120" width="100" height="55" />
+      <bpmndi:BPMNEdge id="Association_0ejs4pt_di" bpmnElement="Association_0ejs4pt">
+        <di:waypoint x="1044" y="175" />
+        <di:waypoint x="1137" y="232" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0n4ksz1_di" bpmnElement="TextAnnotation_0n4ksz1">
+        <dc:Bounds x="1370" y="370" width="100" height="84" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

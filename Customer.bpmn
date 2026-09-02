@@ -22,76 +22,23 @@
     <bpmn:startEvent id="_createCustomer" name="_createCustomer">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=customerId" target="customer.customerId" />
-          <zeebe:output source="=tableLocation" target="customer.tableLocation" />
-          <zeebe:output source="=&#34;&#34;" target="customer.customerInfo" />
-          <zeebe:output source="=&#34;Ordering&#34;" target="customer.state" />
-          <zeebe:output source="=restaurantId" target="customer.restaurantId" />
+          <zeebe:output source="=customerId" target="customerId" />
+          <zeebe:output source="=tableLocation" target="tableLocation" />
+          <zeebe:output source="=&#34;&#34;" target="customerInfo" />
+          <zeebe:output source="=&#34;Ordering&#34;" target="state" />
+          <zeebe:output source="=restaurantId" target="restaurantId" />
+          <zeebe:output source="=0" target="seatingNeeds" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0o8u116</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0fog8ct" messageRef="Message_3jjipv5" />
     </bpmn:startEvent>
-    <bpmn:eventBasedGateway id="customerAction" name="Customer Action?">
-      <bpmn:incoming>Flow_1vkwld7</bpmn:incoming>
-      <bpmn:outgoing>Flow_1e44ior</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0lksa3e</bpmn:outgoing>
-      <bpmn:outgoing>Flow_1l7yuao</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0urxl1s</bpmn:outgoing>
-    </bpmn:eventBasedGateway>
-    <bpmn:exclusiveGateway id="Gateway_0gdbb8y">
-      <bpmn:incoming>Flow_1czojh8</bpmn:incoming>
-      <bpmn:incoming>Flow_053y7ec</bpmn:incoming>
-      <bpmn:incoming>Flow_09cpbj7</bpmn:incoming>
-      <bpmn:incoming>Flow_0ixmq0c</bpmn:incoming>
-      <bpmn:outgoing>Flow_1vkwld7</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:intermediateCatchEvent id="_billRequested" name="_billRequested">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Bill Requested&#34;" target="customer.state" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1e44ior</bpmn:incoming>
-      <bpmn:outgoing>Flow_053y7ec</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1vjgn3z" messageRef="Message_328s3qr" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="_orderPlaced" name="_orderPlaced">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Bill Paid&#34;" target="customer.state" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0lksa3e</bpmn:incoming>
-      <bpmn:outgoing>Flow_1czojh8</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_16j1tgo" messageRef="Message_04taf62" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="_billPaid" name="_billPaid">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Bill Paid&#34;" target="customer.state" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1l7yuao</bpmn:incoming>
-      <bpmn:outgoing>Flow_09cpbj7</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1cwvew0" messageRef="Message_1ugu8s0" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="_deleteCustomer" name="_deleteCustomer">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Deleted&#34;" target="customer.state" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0urxl1s</bpmn:incoming>
-      <bpmn:outgoing>Flow_051knyx</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1ver4ax" messageRef="Message_017i0pg" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:sendTask id="createCustomerRequest" name="Create Customer Request" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_createCustomerRequest" target="messageName" />
-          <zeebe:input source="={&#34;tableLocation&#34;:customer.tableLocation, &#34;restaurantId&#34;:customer.restaurantId}" target="variables" />
+          <zeebe:input source="={&#34;tableLocation&#34;:tableLocation, &#34;restaurantId&#34;:restaurantId}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -111,7 +58,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_deleteCustomerRequest" target="messageName" />
-          <zeebe:input source="=customer.tableLocation" target="correlationKey" />
+          <zeebe:input source="=tableLocation" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -124,76 +71,80 @@
       <bpmn:outgoing>Flow_0o69cdr</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_0o8u116" sourceRef="_createCustomer" targetRef="createCustomerRequest" />
-    <bpmn:sequenceFlow id="Flow_1vkwld7" sourceRef="Gateway_0gdbb8y" targetRef="customerAction" />
-    <bpmn:sequenceFlow id="Flow_1e44ior" sourceRef="customerAction" targetRef="_billRequested" />
-    <bpmn:sequenceFlow id="Flow_1l7yuao" sourceRef="customerAction" targetRef="_billPaid" />
-    <bpmn:sequenceFlow id="Flow_0lksa3e" sourceRef="customerAction" targetRef="_orderPlaced" />
-    <bpmn:sequenceFlow id="Flow_0urxl1s" sourceRef="customerAction" targetRef="_deleteCustomer" />
-    <bpmn:sequenceFlow id="Flow_1czojh8" sourceRef="_orderPlaced" targetRef="Gateway_0gdbb8y" />
-    <bpmn:sequenceFlow id="Flow_09cpbj7" sourceRef="_billPaid" targetRef="Gateway_0gdbb8y" />
-    <bpmn:sequenceFlow id="Flow_053y7ec" sourceRef="_billRequested" targetRef="Gateway_0gdbb8y" />
-    <bpmn:sequenceFlow id="Flow_0ixmq0c" sourceRef="createCustomerRequest" targetRef="Gateway_0gdbb8y" />
+    <bpmn:sequenceFlow id="Flow_1vkwld7" sourceRef="Gateway_0gdbb8y" targetRef="_deleteCustomer" />
+    <bpmn:sequenceFlow id="Flow_0ixmq0c" sourceRef="createCustomerRequest" targetRef="Gateway_0i5wuoh" />
     <bpmn:sequenceFlow id="Flow_051knyx" sourceRef="_deleteCustomer" targetRef="_deleteCustomerRequest" />
     <bpmn:sequenceFlow id="Flow_0o69cdr" sourceRef="_deleteCustomerRequest" targetRef="customerDeleted" />
+    <bpmn:intermediateCatchEvent id="_deleteCustomer" name="_deleteCustomer">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Deleted&#34;" target="state" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vkwld7</bpmn:incoming>
+      <bpmn:outgoing>Flow_051knyx</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1ver4ax" messageRef="Message_017i0pg" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:eventBasedGateway id="Gateway_0gdbb8y">
+      <bpmn:incoming>Flow_1uoedsj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vkwld7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_10591jt</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:sequenceFlow id="Flow_10591jt" sourceRef="Gateway_0gdbb8y" targetRef="updateCustomerStatus" />
+    <bpmn:intermediateCatchEvent id="updateCustomerStatus" name="updateCustomerStatus">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=customerStatus" target="state" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10591jt</bpmn:incoming>
+      <bpmn:outgoing>Flow_17a4k2n</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_152ffsf" messageRef="Message_2j1qfom" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_17a4k2n" sourceRef="updateCustomerStatus" targetRef="Gateway_0i5wuoh" />
+    <bpmn:exclusiveGateway id="Gateway_0i5wuoh">
+      <bpmn:incoming>Flow_17a4k2n</bpmn:incoming>
+      <bpmn:incoming>Flow_0ixmq0c</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uoedsj</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1uoedsj" sourceRef="Gateway_0i5wuoh" targetRef="Gateway_0gdbb8y" />
   </bpmn:process>
   <bpmn:message id="Message_328s3qr" name="_billRequested">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customer.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3jjipv5" name="_createCustomer" />
   <bpmn:message id="Message_04taf62" name="_orderPlaced">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customer.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_1ugu8s0" name="_billPaid">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customer.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_017i0pg" name="_deleteCustomer">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customer.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_2j1qfom" name="_updateCustomerStatus">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Customer">
       <bpmndi:BPMNShape id="Participant_039api5_di" bpmnElement="customer" isHorizontal="true">
-        <dc:Bounds x="150" y="80" width="910" height="390" />
+        <dc:Bounds x="150" y="110" width="900" height="290" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1gp3rqs_di" bpmnElement="_createCustomer">
         <dc:Bounds x="212" y="292" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="189" y="335" width="85" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1kh4ard_di" bpmnElement="customerAction">
-        <dc:Bounds x="570" y="285" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="551" y="333" width="87" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0gdbb8y_di" bpmnElement="Gateway_0gdbb8y" isMarkerVisible="true">
-        <dc:Bounds x="450" y="285" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_19ec3wu_di" bpmnElement="_billRequested">
-        <dc:Bounds x="457" y="212" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="449" y="188" width="72" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1slluw7_di" bpmnElement="_orderPlaced">
-        <dc:Bounds x="457" y="372" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="432" y="415" width="65" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0gi6rfx_di" bpmnElement="_billPaid">
-        <dc:Bounds x="577" y="132" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="575" y="108" width="41" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_09c711g_di" bpmnElement="_deleteCustomer">
@@ -215,49 +166,29 @@
         <dc:Bounds x="790" y="270" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0lwd94r_di" bpmnElement="Gateway_0gdbb8y">
+        <dc:Bounds x="575" y="285" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yalyes_di" bpmnElement="updateCustomerStatus">
+        <dc:Bounds x="582" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="555" y="142" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0i5wuoh_di" bpmnElement="Gateway_0i5wuoh" isMarkerVisible="true">
+        <dc:Bounds x="445" y="285" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0o8u116_di" bpmnElement="Flow_0o8u116">
         <di:waypoint x="248" y="310" />
         <di:waypoint x="300" y="310" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1vkwld7_di" bpmnElement="Flow_1vkwld7">
-        <di:waypoint x="500" y="310" />
-        <di:waypoint x="570" y="310" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1e44ior_di" bpmnElement="Flow_1e44ior">
-        <di:waypoint x="583" y="297" />
-        <di:waypoint x="525" y="230" />
-        <di:waypoint x="493" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1l7yuao_di" bpmnElement="Flow_1l7yuao">
-        <di:waypoint x="595" y="285" />
-        <di:waypoint x="595" y="168" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lksa3e_di" bpmnElement="Flow_0lksa3e">
-        <di:waypoint x="595" y="335" />
-        <di:waypoint x="595" y="390" />
-        <di:waypoint x="493" y="390" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0urxl1s_di" bpmnElement="Flow_0urxl1s">
-        <di:waypoint x="620" y="310" />
+        <di:waypoint x="625" y="310" />
         <di:waypoint x="687" y="310" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1czojh8_di" bpmnElement="Flow_1czojh8">
-        <di:waypoint x="475" y="372" />
-        <di:waypoint x="475" y="335" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09cpbj7_di" bpmnElement="Flow_09cpbj7">
-        <di:waypoint x="577" y="150" />
-        <di:waypoint x="475" y="150" />
-        <di:waypoint x="395" y="220" />
-        <di:waypoint x="463" y="297" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_053y7ec_di" bpmnElement="Flow_053y7ec">
-        <di:waypoint x="475" y="248" />
-        <di:waypoint x="475" y="285" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ixmq0c_di" bpmnElement="Flow_0ixmq0c">
         <di:waypoint x="400" y="310" />
-        <di:waypoint x="450" y="310" />
+        <di:waypoint x="445" y="310" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_051knyx_di" bpmnElement="Flow_051knyx">
         <di:waypoint x="723" y="310" />
@@ -266,6 +197,19 @@
       <bpmndi:BPMNEdge id="Flow_0o69cdr_di" bpmnElement="Flow_0o69cdr">
         <di:waypoint x="890" y="310" />
         <di:waypoint x="962" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10591jt_di" bpmnElement="Flow_10591jt">
+        <di:waypoint x="600" y="285" />
+        <di:waypoint x="600" y="208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17a4k2n_di" bpmnElement="Flow_17a4k2n">
+        <di:waypoint x="582" y="190" />
+        <di:waypoint x="470" y="190" />
+        <di:waypoint x="470" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uoedsj_di" bpmnElement="Flow_1uoedsj">
+        <di:waypoint x="495" y="310" />
+        <di:waypoint x="575" y="310" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

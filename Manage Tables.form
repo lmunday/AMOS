@@ -24,7 +24,10 @@
         "row": "Row_0b0ervt",
         "columns": null
       },
-      "id": "Field_0trayab"
+      "id": "Field_0trayab",
+      "conditional": {
+        "hide": "=close=true"
+      }
     },
     {
       "label": "Select",
@@ -75,6 +78,9 @@
       "key": "location",
       "validate": {
         "required": true
+      },
+      "conditional": {
+        "hide": "=close=true"
       }
     },
     {
@@ -93,6 +99,9 @@
         "required": true,
         "min": "1",
         "max": "12"
+      },
+      "conditional": {
+        "hide": "=close=true"
       }
     },
     {
@@ -116,25 +125,21 @@
       "key": "addTable",
       "validate": {
         "required": true
-      }
+      },
+      "conditional": {
+        "hide": "=close=true"
+      },
+      "defaultValue": "add"
     },
     {
-      "text": "Instructions\nOnly allow these tables to be removed.\nAvailable tables is needed by Restaurant.",
-      "type": "text",
+      "label": "Close The Restaurant",
+      "type": "checkbox",
       "layout": {
-        "row": "Row_12l0s4t",
+        "row": "Row_0o9y9vp",
         "columns": null
       },
-      "id": "Field_199u1ka"
-    },
-    {
-      "text": "=restaurant.tableList",
-      "type": "text",
-      "layout": {
-        "row": "Row_0zraulg",
-        "columns": null
-      },
-      "id": "Field_13abtke"
+      "id": "Field_1d9vlkp",
+      "key": "close"
     }
   ],
   "type": "default"

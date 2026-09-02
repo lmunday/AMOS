@@ -25,7 +25,7 @@
         "columns": 6
       },
       "id": "Field_13b6fkd",
-      "key": "tableUi.requestStatus",
+      "key": "requestStatus",
       "readonly": true
     },
     {
@@ -36,7 +36,7 @@
         "columns": null
       },
       "id": "Field_1n1lj0y",
-      "key": "tableUi.customerName",
+      "key": "customerName",
       "properties": {
         "tableId": "tableId"
       },
@@ -53,32 +53,75 @@
         "columns": 3
       },
       "id": "Field_0xgjtz6",
-      "key": "tableUi.location",
+      "key": "location",
       "readonly": true
     },
     {
       "label": "Receipt",
       "components": [
         {
-          "label": "Cost",
-          "type": "textfield",
+          "text": "Cost",
+          "type": "text",
           "layout": {
-            "row": "Row_0pulzvt",
+            "row": "Row_0zrxnih",
             "columns": null
           },
-          "id": "Field_159fbf9",
-          "key": "tableUi.billAmount",
-          "readonly": true
+          "id": "Field_1ln4npn"
         },
         {
-          "label": "Tax",
-          "type": "textfield",
+          "text": "Tax",
+          "type": "text",
+          "layout": {
+            "row": "Row_0zrxnih",
+            "columns": null
+          },
+          "id": "Field_0tolskr"
+        },
+        {
+          "text": "Total",
+          "type": "text",
+          "layout": {
+            "row": "Row_0zrxnih",
+            "columns": null
+          },
+          "id": "Field_0qu8rc6"
+        },
+        {
+          "text": "=billAmount",
+          "type": "text",
           "layout": {
             "row": "Row_0pulzvt",
             "columns": null
           },
-          "id": "Field_1ctf7g9",
-          "key": "tableUi.billTax",
+          "id": "Field_1v5qixv"
+        },
+        {
+          "text": "=billTax",
+          "type": "text",
+          "layout": {
+            "row": "Row_0pulzvt",
+            "columns": null
+          },
+          "id": "Field_0eefjs9"
+        },
+        {
+          "text": "=billAmount+billTax",
+          "type": "text",
+          "layout": {
+            "row": "Row_0pulzvt",
+            "columns": null
+          },
+          "id": "Field_09mf80g"
+        },
+        {
+          "label": "Amount Paid",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0m4weu7",
+            "columns": 5
+          },
+          "id": "Field_1bk9zpl",
+          "key": "amountPaid",
           "readonly": true
         },
         {
@@ -89,7 +132,7 @@
             "columns": null
           },
           "id": "Field_0daghhk",
-          "key": "tableUi.paymentMethod",
+          "key": "paymentMethod",
           "readonly": true
         }
       ],
@@ -99,7 +142,10 @@
         "row": "Row_1pxjhvf",
         "columns": null
       },
-      "id": "Field_0rxj7kq"
+      "id": "Field_0rxj7kq",
+      "conditional": {
+        "hide": "=available=true"
+      }
     },
     {
       "label": "Print",
@@ -148,7 +194,7 @@
         "columns": null
       },
       "id": "Field_1hiiemh",
-      "key": "textfield_465ik",
+      "key": "phoneNumber",
       "conditional": {
         "hide": "=text=false or available=true"
       }
@@ -161,7 +207,7 @@
         "columns": null
       },
       "id": "Field_1x3gmny",
-      "key": "textfield_728luf",
+      "key": "emailAddress",
       "conditional": {
         "hide": "=email=false or available=true"
       }

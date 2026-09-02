@@ -34,8 +34,8 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_displayOrderedFood" target="messageName" />
-          <zeebe:input source="=orderedFood.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;id&#34;:orderedFood.id, &#34;name&#34;:orderedFood.name, &#34;numberOrdered&#34;:orderedFood.numberOrdered, &#34;tableLocation&#34;:orderedFood.tableLocation, &#34;instructions&#34;:orderedFood.instructions&#10;}" target="variables" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;id&#34;:id, &#34;name&#34;:name, &#34;numberOrdered&#34;:numberOrdered, &#34;tableLocation&#34;:tableLocation, &#34;instructions&#34;:instructions&#10;}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -52,8 +52,8 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_returnOrderedFoodId" target="messageName" />
-          <zeebe:input source="=orderedFood.customerId" target="correlationKey" />
-          <zeebe:input source="={&#34;orderedFoodId&#34;:orderedFood.id}" target="variables" />
+          <zeebe:input source="=customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;orderedFoodId&#34;:id}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -69,14 +69,14 @@
       <bpmn:documentation>Need number ordered to create  a unique ID.</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=menuItemName" target="orderedFood.name" />
-          <zeebe:output source="=numberOrdered" target="orderedFood.numberOrdered" />
-          <zeebe:output source="=false" target="orderedFood.prepared" />
-          <zeebe:output source="=tableLocation" target="orderedFood.tableLocation" />
-          <zeebe:output source="=customerId+menuItemName+string(orderNumber)" target="orderedFood.id" />
-          <zeebe:output source="=customerId" target="orderedFood.customerId" />
-          <zeebe:output source="=instructions" target="orderedFood.instructions" />
-          <zeebe:output source="=restaurantId" target="orderedFood.restaurantId" />
+          <zeebe:output source="=menuItemName" target="name" />
+          <zeebe:output source="=numberOrdered" target="numberOrdered" />
+          <zeebe:output source="=false" target="prepared" />
+          <zeebe:output source="=tableLocation" target="tableLocation" />
+          <zeebe:output source="=customerId+menuItemName+string(orderNumber)" target="id" />
+          <zeebe:output source="=customerId" target="customerId" />
+          <zeebe:output source="=instructions" target="instructions" />
+          <zeebe:output source="=restaurantId" target="restaurantId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0d5gkyn</bpmn:outgoing>
@@ -85,7 +85,7 @@
     <bpmn:intermediateCatchEvent id="preparedOrderedFood" name="preparedOrderedFood">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=true" target="orderedFood.prepared" />
+          <zeebe:output source="=true" target="prepared" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_16h4jt0</bpmn:incoming>
@@ -97,8 +97,8 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_updateOrder" target="messageName" />
-          <zeebe:input source="=orderedFood.tableLocation" target="correlationKey" />
-          <zeebe:input source="={&#34;name&#34;:orderedFood.name, &#34;number&#34;:orderedFood.numberOrdered}" target="variables" />
+          <zeebe:input source="=tableLocation" target="correlationKey" />
+          <zeebe:input source="={&#34;name&#34;:name, &#34;number&#34;:numberOrdered}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -151,18 +151,18 @@
   </bpmn:message>
   <bpmn:message id="Message_3i2ommo" name="_preparedOrderedFood">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=orderedFood.id" />
+      <zeebe:subscription correlationKey="=id" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_17v6so0" name="_deleteOrderedFood">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=orderedFood.id" />
+      <zeebe:subscription correlationKey="=id" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1k4fnnm">
       <bpmndi:BPMNShape id="Participant_1qtphah_di" bpmnElement="orderedFood" isHorizontal="true">
-        <dc:Bounds x="170" y="40" width="990" height="350" />
+        <dc:Bounds x="170" y="40" width="990" height="280" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0fyk4ps_di" bpmnElement="sendOrderedFoodtoKitchen">
@@ -245,22 +245,6 @@
         <di:waypoint x="888" y="240" />
         <di:waypoint x="962" y="240" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1i2dums_di" bpmnElement="Association_1i2dums">
-        <di:waypoint x="574" y="140" />
-        <di:waypoint x="578" y="100" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0ba0c3h_di" bpmnElement="Association_0ba0c3h">
-        <di:waypoint x="413" y="140" />
-        <di:waypoint x="425" y="100" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0kcmk36_di" bpmnElement="Association_0kcmk36">
-        <di:waypoint x="261" y="162" />
-        <di:waypoint x="261" y="125" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1b2ch71_di" bpmnElement="Association_1b2ch71">
-        <di:waypoint x="1011" y="146" />
-        <di:waypoint x="962" y="113" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1rh09sb_di" bpmnElement="TextAnnotation_1rh09sb">
         <dc:Bounds x="380" y="70" width="100" height="30" />
         <bpmndi:BPMNLabel />
@@ -277,6 +261,22 @@
         <dc:Bounds x="211" y="70" width="130" height="55" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0ba0c3h_di" bpmnElement="Association_0ba0c3h">
+        <di:waypoint x="413" y="140" />
+        <di:waypoint x="425" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1i2dums_di" bpmnElement="Association_1i2dums">
+        <di:waypoint x="574" y="140" />
+        <di:waypoint x="578" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1b2ch71_di" bpmnElement="Association_1b2ch71">
+        <di:waypoint x="1011" y="146" />
+        <di:waypoint x="962" y="113" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0kcmk36_di" bpmnElement="Association_0kcmk36">
+        <di:waypoint x="261" y="162" />
+        <di:waypoint x="261" y="125" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

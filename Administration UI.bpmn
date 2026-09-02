@@ -17,9 +17,6 @@
       <bpmn:extensionElements>
         <zeebe:userTask />
         <zeebe:formDefinition formId="displayAssistanceRequest" />
-        <zeebe:ioMapping>
-          <zeebe:input source="=assistanceRequestUi.tableLocation" target="tableLocation" />
-        </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0y8s236</bpmn:incoming>
       <bpmn:outgoing>Flow_1lhajr2</bpmn:outgoing>
@@ -29,7 +26,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_deactivateCustomerRequest" target="messageName" />
-          <zeebe:input source="=assistanceRequestUi.tableLocation" target="correlationKey" />
+          <zeebe:input source="=tableLocation" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -41,16 +38,16 @@
       <bpmn:incoming>Flow_1lhajr2</bpmn:incoming>
       <bpmn:outgoing>Flow_0oxobmi</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:endEvent id="Event_1rafp20" name="endCustomerRequest">
+    <bpmn:endEvent id="endCustomerRequest" name="endCustomerRequest">
       <bpmn:incoming>Flow_0oxobmi</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0y8s236" sourceRef="_startCustomerRequest" targetRef="displayCustomerRequest" />
     <bpmn:sequenceFlow id="Flow_1lhajr2" sourceRef="displayCustomerRequest" targetRef="_deactivateCustomerRequest" />
-    <bpmn:sequenceFlow id="Flow_0oxobmi" sourceRef="_deactivateCustomerRequest" targetRef="Event_1rafp20" />
+    <bpmn:sequenceFlow id="Flow_0oxobmi" sourceRef="_deactivateCustomerRequest" targetRef="endCustomerRequest" />
     <bpmn:startEvent id="_startCustomerRequest" name="startCustomerRequest">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=tableLocation" target="assistanceRequestUi.tableLocation" />
+          <zeebe:output source="=tableLocation" target="tableLocation" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0y8s236</bpmn:outgoing>
@@ -92,7 +89,7 @@
         <dc:Bounds x="510" y="118" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1rafp20_di" bpmnElement="Event_1rafp20">
+      <bpmndi:BPMNShape id="Event_1rafp20_di" bpmnElement="endCustomerRequest">
         <dc:Bounds x="692" y="140" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="668" y="183" width="87" height="27" />
@@ -116,22 +113,22 @@
         <di:waypoint x="610" y="158" />
         <di:waypoint x="692" y="158" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0qczenh_di" bpmnElement="Association_0qczenh">
-        <di:waypoint x="270" y="105" />
-        <di:waypoint x="245" y="141" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="BPMNShape_0s8h7kj" bpmnElement="TextAnnotation_1lm531z">
         <dc:Bounds x="518" y="70" width="129" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1g5oges" bpmnElement="TextAnnotation_1a9xff4">
+        <dc:Bounds x="225" y="64" width="100" height="41" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_0yzu90x" bpmnElement="Association_1jb6jom">
         <di:waypoint x="565" y="118" />
         <di:waypoint x="568" y="100" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BPMNShape_1g5oges" bpmnElement="TextAnnotation_1a9xff4">
-        <dc:Bounds x="225" y="64" width="100" height="41" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0qczenh_di" bpmnElement="Association_0qczenh">
+        <di:waypoint x="270" y="105" />
+        <di:waypoint x="245" y="141" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

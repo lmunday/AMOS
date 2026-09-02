@@ -25,7 +25,7 @@
         "columns": null
       },
       "id": "Field_0bvg24d",
-      "key": "kitchenUi.restaurantId",
+      "key": "restaurantId",
       "readonly": true
     },
     {
@@ -36,43 +36,43 @@
           "value": "0"
         },
         {
-          "label": "{{kitchenUi.orderedItems[1].name}}",
+          "label": "{{orderedItems[1].name}}",
           "value": "1"
         },
         {
-          "label": "{{kitchenUi.orderedItems[2].name}}",
+          "label": "{{orderedItems[2].name}}",
           "value": "2"
         },
         {
-          "label": "{{kitchenUi.orderedItems[3].name}}",
+          "label": "{{orderedItems[3].name}}",
           "value": "3"
         },
         {
-          "label": "{{kitchenUi.orderedItems[4].name}}",
+          "label": "{{orderedItems[4].name}}",
           "value": "4"
         },
         {
-          "label": "{{kitchenUi.orderedItems[5].name}}",
+          "label": "{{orderedItems[5].name}}",
           "value": "5"
         },
         {
-          "label": "{{kitchenUi.orderedItems[6].name}}",
+          "label": "{{orderedItems[6].name}}",
           "value": "6"
         },
         {
-          "label": "{{kitchenUi.orderedItems[7].name}}",
+          "label": "{{orderedItems[7].name}}",
           "value": "7"
         },
         {
-          "label": "{{kitchenUi.orderedItems[8].name}}",
+          "label": "{{orderedItems[8].name}}",
           "value": "8"
         },
         {
-          "label": "{{kitchenUi.orderedItems[9].name}}",
+          "label": "{{orderedItems[9].name}}",
           "value": "9"
         },
         {
-          "label": "{{kitchenUi.orderedItems[10].name}}",
+          "label": "{{orderedItems[10].name}}",
           "value": "10"
         }
       ],
@@ -91,7 +91,7 @@
         "columns": 13
       },
       "label": "Table",
-      "dataSource": "=kitchenUi.orderedItems",
+      "dataSource": "=orderedItems",
       "rowCount": 10,
       "id": "Field_0e9wjlm",
       "columns": [

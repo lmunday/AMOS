@@ -36,8 +36,8 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_displayReceipt" target="messageName" />
-          <zeebe:input source="=receipt.tableLocation" target="correlationKey" />
-          <zeebe:input source="={&#34;cost&#34;:receipt.cost, &#34;tax&#34;:receipt.tax, &#34;paymentMethod&#34;:receipt.paymentMethod}" target="variables" />
+          <zeebe:input source="=tableLocation" target="correlationKey" />
+          <zeebe:input source="={&#34;cost&#34;:cost, &#34;tax&#34;:tax, &#34;amountPaid&#34;:amountPaid,&#34;paymentMethod&#34;:paymentMethod}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -52,11 +52,12 @@
     <bpmn:startEvent id="createReceipt" name="createReceipt">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=customerId" target="receipt.customerId" />
-          <zeebe:output source="=cost" target="receipt.cost" />
-          <zeebe:output source="=tableLocation" target="receipt.tableLocation" />
-          <zeebe:output source="=tax" target="receipt.tax" />
-          <zeebe:output source="=paymentMethod" target="receipt.paymentMethod" />
+          <zeebe:output source="=customerId" target="customerId" />
+          <zeebe:output source="=cost" target="cost" />
+          <zeebe:output source="=tableLocation" target="tableLocation" />
+          <zeebe:output source="=tax" target="tax" />
+          <zeebe:output source="=paymentMethod" target="paymentMethod" />
+          <zeebe:output source="=amountPaid" target="amountPaid" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0d5gkyn</bpmn:outgoing>
@@ -137,147 +138,147 @@
   </bpmn:process>
   <bpmn:message id="Message_2bf5d89" name="_emailReceipt">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=receipt.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_1uri8f5" name="_createReceipt" />
   <bpmn:message id="Message_006s9ak" name="_deleteReceipt">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=receipt.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_1q9uqgo" name="_textReceipt">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=receipt.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3b9ktsp" name="_printReceipt">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=receipt.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="receiptDiagram">
       <bpmndi:BPMNShape id="Participant_1qtphah_di" bpmnElement="receipt" isHorizontal="true">
-        <dc:Bounds x="130" y="30" width="1010" height="430" />
+        <dc:Bounds x="130" y="80" width="1010" height="430" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0phiw7m_di" bpmnElement="Gateway_0phiw7m" isMarkerVisible="true">
-        <dc:Bounds x="465" y="165" width="50" height="50" />
+        <dc:Bounds x="465" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1szqagw_di" bpmnElement="deleteReceipt">
-        <dc:Bounds x="972" y="172" width="36" height="36" />
+        <dc:Bounds x="972" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="946" y="153" width="69" height="14" />
+          <dc:Bounds x="946" y="203" width="69" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1x56nhb_di" bpmnElement="Gateway_01uimqs">
-        <dc:Bounds x="825" y="165" width="50" height="50" />
+        <dc:Bounds x="825" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_079bdvx_di" bpmnElement="textReceipt">
-        <dc:Bounds x="762" y="252" width="36" height="36" />
+        <dc:Bounds x="762" y="302" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="752" y="243" width="55" height="14" />
+          <dc:Bounds x="752" y="293" width="55" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_040uyke_di" bpmnElement="receiptDeleted">
-        <dc:Bounds x="1080" y="172" width="36" height="36" />
+        <dc:Bounds x="1080" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1081" y="215" width="37" height="14" />
+          <dc:Bounds x="1081" y="265" width="37" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1xwfabo_di" bpmnElement="displayReceipt">
-        <dc:Bounds x="310" y="150" width="100" height="80" />
+        <dc:Bounds x="310" y="200" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_046x4ca" bpmnElement="createReceipt">
-        <dc:Bounds x="212" y="172" width="36" height="36" />
+        <dc:Bounds x="212" y="222" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="201" y="215" width="69" height="14" />
+          <dc:Bounds x="201" y="265" width="69" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1rcy5ff_di" bpmnElement="printReceipt">
-        <dc:Bounds x="772" y="362" width="36" height="36" />
+        <dc:Bounds x="772" y="412" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="760" y="405" width="60" height="14" />
+          <dc:Bounds x="760" y="455" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_09lpz0g_di" bpmnElement="Activity_1tc4207">
-        <dc:Bounds x="590" y="340" width="100" height="80" />
+        <dc:Bounds x="590" y="390" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1x0htiq_di" bpmnElement="sendReceiptToPhone">
-        <dc:Bounds x="580" y="230" width="100" height="80" />
+        <dc:Bounds x="580" y="280" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08ziag4_di" bpmnElement="sendReceiptToEmail">
-        <dc:Bounds x="570" y="60" width="100" height="80" />
+        <dc:Bounds x="570" y="110" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_18g00jd_di" bpmnElement="emailReceipt">
-        <dc:Bounds x="762" y="82" width="36" height="36" />
+        <dc:Bounds x="762" y="132" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="749" y="125" width="65" height="14" />
+          <dc:Bounds x="749" y="175" width="65" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0pudlua_di" bpmnElement="Flow_0pudlua">
-        <di:waypoint x="580" y="270" />
-        <di:waypoint x="490" y="270" />
-        <di:waypoint x="490" y="215" />
+        <di:waypoint x="580" y="320" />
+        <di:waypoint x="490" y="320" />
+        <di:waypoint x="490" y="265" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1jjsvox_di" bpmnElement="Flow_1jjsvox">
-        <di:waypoint x="570" y="100" />
-        <di:waypoint x="490" y="100" />
-        <di:waypoint x="490" y="165" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ob8jqs_di" bpmnElement="Flow_0ob8jqs">
-        <di:waypoint x="410" y="190" />
-        <di:waypoint x="465" y="190" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0jr6pgs_di" bpmnElement="Flow_0jr6pgs">
-        <di:waypoint x="590" y="380" />
-        <di:waypoint x="490" y="380" />
+        <di:waypoint x="570" y="150" />
+        <di:waypoint x="490" y="150" />
         <di:waypoint x="490" y="215" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ob8jqs_di" bpmnElement="Flow_0ob8jqs">
+        <di:waypoint x="410" y="240" />
+        <di:waypoint x="465" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jr6pgs_di" bpmnElement="Flow_0jr6pgs">
+        <di:waypoint x="590" y="430" />
+        <di:waypoint x="490" y="430" />
+        <di:waypoint x="490" y="265" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0257ryr_di" bpmnElement="Flow_0257ryr">
-        <di:waypoint x="515" y="190" />
-        <di:waypoint x="825" y="190" />
+        <di:waypoint x="515" y="240" />
+        <di:waypoint x="825" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ty33f4_di" bpmnElement="Flow_1ty33f4">
-        <di:waypoint x="875" y="190" />
-        <di:waypoint x="972" y="190" />
+        <di:waypoint x="875" y="240" />
+        <di:waypoint x="972" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_046x77z_di" bpmnElement="Flow_046x77z">
-        <di:waypoint x="1008" y="190" />
-        <di:waypoint x="1080" y="190" />
+        <di:waypoint x="1008" y="240" />
+        <di:waypoint x="1080" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_01dgjml_di" bpmnElement="Flow_01dgjml">
-        <di:waypoint x="850" y="215" />
-        <di:waypoint x="850" y="270" />
-        <di:waypoint x="798" y="270" />
+        <di:waypoint x="850" y="265" />
+        <di:waypoint x="850" y="320" />
+        <di:waypoint x="798" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1gp8xny_di" bpmnElement="Flow_1gp8xny">
-        <di:waypoint x="850" y="165" />
-        <di:waypoint x="850" y="100" />
-        <di:waypoint x="798" y="100" />
+        <di:waypoint x="850" y="215" />
+        <di:waypoint x="850" y="150" />
+        <di:waypoint x="798" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1o083le_di" bpmnElement="Flow_1o083le">
-        <di:waypoint x="850" y="215" />
-        <di:waypoint x="850" y="380" />
-        <di:waypoint x="808" y="380" />
+        <di:waypoint x="850" y="265" />
+        <di:waypoint x="850" y="430" />
+        <di:waypoint x="808" y="430" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0qw1crm_di" bpmnElement="Flow_0qw1crm">
-        <di:waypoint x="762" y="270" />
-        <di:waypoint x="680" y="270" />
+        <di:waypoint x="762" y="320" />
+        <di:waypoint x="680" y="320" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_01rbrz7" bpmnElement="Flow_0d5gkyn">
-        <di:waypoint x="248" y="190" />
-        <di:waypoint x="310" y="190" />
+        <di:waypoint x="248" y="240" />
+        <di:waypoint x="310" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1wg68g6_di" bpmnElement="Flow_1wg68g6">
-        <di:waypoint x="772" y="380" />
-        <di:waypoint x="690" y="380" />
+        <di:waypoint x="772" y="430" />
+        <di:waypoint x="690" y="430" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_14ttts2_di" bpmnElement="Flow_14ttts2">
-        <di:waypoint x="762" y="100" />
-        <di:waypoint x="670" y="100" />
+        <di:waypoint x="762" y="150" />
+        <di:waypoint x="670" y="150" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

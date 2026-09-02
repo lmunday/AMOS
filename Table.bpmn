@@ -3,22 +3,22 @@
   <bpmn:message id="Message_2gfd5dl" name="_createTable" />
   <bpmn:message id="Message_37gjon8" name="_billPaid">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.location" />
+      <zeebe:subscription correlationKey="=location" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0va7a79" name="_deleteTable">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.location" />
+      <zeebe:subscription correlationKey="=location" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0ruu1iu" name="_makeTableAvailable">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.location" />
+      <zeebe:subscription correlationKey="=location" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0n0scru" name="_selectTable">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.location" />
+      <zeebe:subscription correlationKey="=location" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:collaboration id="Table">
@@ -31,42 +31,29 @@ table":{
 	"seatingAvailable": 2}
 }</bpmn:documentation>
     <bpmn:participant id="table" name="Table" processRef="tableProcess" />
+    <bpmn:textAnnotation id="TextAnnotation_1qbnaln">
+      <bpmn:text>Instead of setting status to deleted, the table reference should be deleted.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0h846g6" associationDirection="None" sourceRef="deleteTable" targetRef="TextAnnotation_1qbnaln" />
   </bpmn:collaboration>
   <bpmn:process id="tableProcess" name="Table Process" isExecutable="true">
     <bpmn:startEvent id="createTable" name="createTable">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=restaurantId" target="table.restaurantId" />
-          <zeebe:output source="=tableLocation" target="table.location" />
-          <zeebe:output source="=&#34;Initializing&#34;" target="table.status" />
-          <zeebe:output source="=seatingAvailable" target="table.seatingAvailable" />
-          <zeebe:output source="=&#34;&#34;" target="table.customerId" />
+          <zeebe:output source="=restaurantId" target="restaurantId" />
+          <zeebe:output source="=tableLocation" target="location" />
+          <zeebe:output source="=&#34;Initializing&#34;" target="status" />
+          <zeebe:output source="=seatingAvailable" target="seatingAvailable" />
+          <zeebe:output source="=&#34;&#34;" target="customerId" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0gwnzfc</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0de2s95" messageRef="Message_2gfd5dl" />
     </bpmn:startEvent>
-    <bpmn:sendTask id="turnOnTableUI" name="Turn On Table UI" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_turnOnTableUI" target="messageName" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0gwnzfc</bpmn:incoming>
-      <bpmn:outgoing>Flow_141lq0s</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:intermediateCatchEvent id="tableAvailable" name="tableAvailable">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Available&#34;" target="table.status" />
+          <zeebe:output source="=&#34;Available&#34;" target="status" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_141lq0s</bpmn:incoming>
@@ -78,52 +65,16 @@ table":{
       <bpmn:incoming>Flow_0ywuwdh</bpmn:incoming>
       <bpmn:outgoing>Flow_13a3i7u</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sendTask id="tableStatusAvailable" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_updateTableStatus" target="messageName" />
-          <zeebe:input source="=table.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#10; &#34;tableStatus&#34;:table.status, &#34;seatingAvailable&#34;:table.seatingAvailable}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_13a3i7u</bpmn:incoming>
-      <bpmn:outgoing>Flow_00jzym9</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:intermediateCatchEvent id="deleteTable" name="deleteTable">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Deleted&#34;" target="table.status" />
+          <zeebe:output source="=&#34;Deleted&#34;" target="status" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0ihpjq7</bpmn:incoming>
       <bpmn:outgoing>Flow_19cwsbg</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0r400iy" messageRef="Message_0va7a79" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="turnOffTableUi" name="Turn Off Table UI" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_turnOffTableUi" target="messageName" />
-          <zeebe:input source="=table.location" target="correlationKey" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_19cwsbg</bpmn:incoming>
-      <bpmn:outgoing>Flow_09uvbx7</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:eventBasedGateway id="Gateway_12oiwnu">
       <bpmn:incoming>Flow_00jzym9</bpmn:incoming>
       <bpmn:outgoing>Flow_0ihpjq7</bpmn:outgoing>
@@ -132,7 +83,7 @@ table":{
     <bpmn:intermediateCatchEvent id="waitForTableSelected" name="Wait For Table Selected">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Selected&#34;" target="table.status" />
+          <zeebe:output source="=&#34;Selected&#34;" target="status" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1s81z37</bpmn:incoming>
@@ -143,7 +94,7 @@ table":{
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:input source="_displayWelcomeScreen" target="messageName" />
-          <zeebe:input source="=table.location" target="correlationKey" />
+          <zeebe:input source="=location" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
@@ -159,32 +110,13 @@ table":{
     <bpmn:endEvent id="tableDeleted" name="Table Deleted">
       <bpmn:incoming>Flow_1a1hw09</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sendTask id="tableStatusDeleted" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_updateTableStatus" target="messageName" />
-          <zeebe:input source="=table.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#10; &#34;tableStatus&#34;:table.status, &#34;seatingAvailable&#34;:table.seatingAvailable}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_09uvbx7</bpmn:incoming>
-      <bpmn:outgoing>Flow_1a1hw09</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:sendTask id="tableStatusSelected" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_updateTableStatus" target="messageName" />
-          <zeebe:input source="=table.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#10; &#34;tableStatus&#34;:table.status, &#34;seatingAvailable&#34;:table.seatingAvailable}" target="variables" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#10; &#34;tableStatus&#34;:status, &#34;seatingAvailable&#34;:seatingAvailable}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
           <zeebe:input source="PT10S" target="correlationType.timeToLive" />
         </zeebe:ioMapping>
@@ -197,23 +129,12 @@ table":{
       <bpmn:incoming>Flow_0ij4se8</bpmn:incoming>
       <bpmn:outgoing>Flow_125k44d</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:intermediateCatchEvent id="assignCustomer" name="assignCustomer">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Occupied&#34;" target="table.status" />
-          <zeebe:output source="=customerId" target="table.customerId" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_125k44d</bpmn:incoming>
-      <bpmn:outgoing>Flow_04yit7m</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_11rb45u" messageRef="Message_0p4fhmk" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:sendTask id="createOrder" name="Create Order" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_createOrder" target="messageName" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#34;customerId&#34;:table.customerId,&#34;restaurantId&#34;:table.restaurantId}" target="variables" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#34;customerId&#34;:customerId,&#34;restaurantId&#34;:restaurantId}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -230,7 +151,7 @@ table":{
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_createMenu" target="messageName" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#34;customerId&#34;:table.customerId, &#34;restaurantId&#34;:table.restaurantId}" target="variables" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#34;customerId&#34;:customerId, &#34;restaurantId&#34;:restaurantId}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -247,7 +168,7 @@ table":{
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_createCustomer" target="messageName" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#34;customerId&#34;:table.customerId, &#34;restaurantId&#34;:table.restaurantId}" target="variables" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#34;customerId&#34;:customerId, &#34;restaurantId&#34;:restaurantId}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -259,88 +180,14 @@ table":{
       <bpmn:incoming>Flow_0h3wvox</bpmn:incoming>
       <bpmn:outgoing>Flow_1rak8mg</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sendTask id="tablestatusAssigned" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_updateTableStatus" target="messageName" />
-          <zeebe:input source="=table.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#10; &#34;tableStatus&#34;:table.status, &#34;seatingAvailable&#34;:table.seatingAvailable}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0t8a4eu</bpmn:incoming>
-      <bpmn:outgoing>Flow_0lr8qao</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:parallelGateway id="Gateway_0pdtka9">
-      <bpmn:incoming>Flow_0p2t17k</bpmn:incoming>
-      <bpmn:incoming>Flow_1l60fur</bpmn:incoming>
-      <bpmn:incoming>Flow_1rak8mg</bpmn:incoming>
-      <bpmn:outgoing>Flow_0t8a4eu</bpmn:outgoing>
-    </bpmn:parallelGateway>
     <bpmn:parallelGateway id="Gateway_1kvihhp">
       <bpmn:incoming>Flow_04yit7m</bpmn:incoming>
       <bpmn:outgoing>Flow_140cndg</bpmn:outgoing>
       <bpmn:outgoing>Flow_0g3tzgo</bpmn:outgoing>
       <bpmn:outgoing>Flow_0h3wvox</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:sendTask id="tableStatusPayingBill" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_updateTableStatus" target="messageName" />
-          <zeebe:input source="=table.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;tableLocation&#34;:table.location,&#10; &#34;tableStatus&#34;:table.status, &#34;seatingAvailable&#34;:table.seatingAvailable}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_02t0oho</bpmn:incoming>
-      <bpmn:outgoing>Flow_1yn9pn6</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:intermediateCatchEvent id="makeTableAvailable" name="makeTableAvailable">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Available&#34;" target="table.status" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1yn9pn6</bpmn:incoming>
-      <bpmn:outgoing>Flow_10ud2pc</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1hwti6t" messageRef="Message_0ruu1iu" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="billPaid" name="billPaid">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Bill Paid&#34;" target="table.status" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1q6gvs4</bpmn:incoming>
-      <bpmn:outgoing>Flow_02t0oho</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_10vn6eg" messageRef="Message_37gjon8" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="billRequested" name="billRequested">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=&#34;Bill Requested&#34;" target="table.status" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0lr8qao</bpmn:incoming>
-      <bpmn:outgoing>Flow_1o9gq3o</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1myd1fh" messageRef="Message_3sgaci8" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:parallelGateway id="Gateway_0wfob6t">
-      <bpmn:incoming>Flow_10ud2pc</bpmn:incoming>
+      <bpmn:incoming>Flow_0edu0r7</bpmn:incoming>
       <bpmn:outgoing>Flow_1qjjg5u</bpmn:outgoing>
       <bpmn:outgoing>Flow_1h5xhhf</bpmn:outgoing>
     </bpmn:parallelGateway>
@@ -349,7 +196,7 @@ table":{
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_deleteOrder" target="messageName" />
-          <zeebe:input source="=table.customerId" target="correlationKey" />
+          <zeebe:input source="=customerId" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -366,7 +213,7 @@ table":{
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_deleteCustomer" target="messageName" />
-          <zeebe:input source="=table.customerId" target="correlationKey" />
+          <zeebe:input source="=customerId" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -383,23 +230,6 @@ table":{
       <bpmn:incoming>Flow_0i0z8cy</bpmn:incoming>
       <bpmn:outgoing>Flow_0ywuwdh</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:sendTask id="deleteMenu" name="Delete Menu" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_deleteMenu" target="messageName" />
-          <zeebe:input source="=table.customerId" target="correlationKey" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1o9gq3o</bpmn:incoming>
-      <bpmn:outgoing>Flow_1q6gvs4</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_0gwnzfc" sourceRef="createTable" targetRef="turnOnTableUI" />
     <bpmn:sequenceFlow id="Flow_141lq0s" sourceRef="turnOnTableUI" targetRef="tableAvailable" />
     <bpmn:sequenceFlow id="Flow_1ehcn7h" sourceRef="tableAvailable" targetRef="Gateway_1j0i5n7" />
@@ -413,7 +243,7 @@ table":{
     <bpmn:sequenceFlow id="Flow_1gsh4gd" sourceRef="waitForTableSelected" targetRef="displayWelcomeScreen" />
     <bpmn:sequenceFlow id="Flow_0ij4se8" sourceRef="displayWelcomeScreen" targetRef="tableStatusSelected" />
     <bpmn:sequenceFlow id="Flow_1a1hw09" sourceRef="tableStatusDeleted" targetRef="tableDeleted" />
-    <bpmn:sequenceFlow id="Flow_125k44d" sourceRef="tableStatusSelected" targetRef="assignCustomer" />
+    <bpmn:sequenceFlow id="Flow_125k44d" sourceRef="tableStatusSelected" targetRef="Gateway_05vmcm3" />
     <bpmn:sequenceFlow id="Flow_04yit7m" sourceRef="assignCustomer" targetRef="Gateway_1kvihhp" />
     <bpmn:sequenceFlow id="Flow_140cndg" sourceRef="Gateway_1kvihhp" targetRef="createOrder" />
     <bpmn:sequenceFlow id="Flow_0p2t17k" sourceRef="createOrder" targetRef="Gateway_0pdtka9" />
@@ -421,31 +251,229 @@ table":{
     <bpmn:sequenceFlow id="Flow_1l60fur" sourceRef="createMenu" targetRef="Gateway_0pdtka9" />
     <bpmn:sequenceFlow id="Flow_0h3wvox" sourceRef="Gateway_1kvihhp" targetRef="createCustomer" />
     <bpmn:sequenceFlow id="Flow_1rak8mg" sourceRef="createCustomer" targetRef="Gateway_0pdtka9" />
-    <bpmn:sequenceFlow id="Flow_0t8a4eu" sourceRef="Gateway_0pdtka9" targetRef="tablestatusAssigned" />
-    <bpmn:sequenceFlow id="Flow_0lr8qao" sourceRef="tablestatusAssigned" targetRef="billRequested" />
-    <bpmn:sequenceFlow id="Flow_02t0oho" sourceRef="billPaid" targetRef="tableStatusPayingBill" />
-    <bpmn:sequenceFlow id="Flow_1yn9pn6" sourceRef="tableStatusPayingBill" targetRef="makeTableAvailable" />
-    <bpmn:sequenceFlow id="Flow_10ud2pc" sourceRef="makeTableAvailable" targetRef="Gateway_0wfob6t" />
-    <bpmn:sequenceFlow id="Flow_1q6gvs4" sourceRef="deleteMenu" targetRef="billPaid" />
-    <bpmn:sequenceFlow id="Flow_1o9gq3o" sourceRef="billRequested" targetRef="deleteMenu" />
     <bpmn:sequenceFlow id="Flow_1qjjg5u" sourceRef="Gateway_0wfob6t" targetRef="deleteOrder" />
     <bpmn:sequenceFlow id="Flow_1h5xhhf" sourceRef="Gateway_0wfob6t" targetRef="deleteCustomer" />
     <bpmn:sequenceFlow id="Flow_0i0z8cy" sourceRef="deleteOrder" targetRef="Gateway_1dnyyv6" />
     <bpmn:sequenceFlow id="Flow_1gct2nm" sourceRef="deleteCustomer" targetRef="Gateway_1dnyyv6" />
+    <bpmn:sendTask id="turnOnTableUI" name="Turn On Table UI" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_turnOnTableUI" target="messageName" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0gwnzfc</bpmn:incoming>
+      <bpmn:outgoing>Flow_141lq0s</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="tableStatusAvailable" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_updateTableStatus" target="messageName" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#10; &#34;tableStatus&#34;:status, &#34;seatingAvailable&#34;:seatingAvailable}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13a3i7u</bpmn:incoming>
+      <bpmn:outgoing>Flow_00jzym9</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="turnOffTableUi" name="Turn Off Table UI" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_turnOffTableUi" target="messageName" />
+          <zeebe:input source="=location" target="correlationKey" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19cwsbg</bpmn:incoming>
+      <bpmn:outgoing>Flow_09uvbx7</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="tableStatusDeleted" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_updateTableStatus" target="messageName" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#10; &#34;tableStatus&#34;:status, &#34;seatingAvailable&#34;:seatingAvailable}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_09uvbx7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1a1hw09</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:eventBasedGateway id="Gateway_05vmcm3">
+      <bpmn:incoming>Flow_125k44d</bpmn:incoming>
+      <bpmn:outgoing>Flow_1db2um4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1dx0m70</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:sequenceFlow id="Flow_1db2um4" sourceRef="Gateway_05vmcm3" targetRef="assignCustomer" />
+    <bpmn:intermediateCatchEvent id="assignCustomer" name="assignCustomer">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Occupied&#34;" target="status" />
+          <zeebe:output source="=customerId" target="customerId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1db2um4</bpmn:incoming>
+      <bpmn:outgoing>Flow_04yit7m</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_11rb45u" messageRef="Message_0p4fhmk" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_1dx0m70" sourceRef="Gateway_05vmcm3" targetRef="Event_0ixz1or" />
+    <bpmn:sequenceFlow id="Flow_0edu0r7" sourceRef="Gateway_1dxjirr" targetRef="Gateway_0wfob6t" />
+    <bpmn:sequenceFlow id="Flow_0uwj3fv" sourceRef="Event_0ixz1or" targetRef="Gateway_1dxjirr" />
+    <bpmn:parallelGateway id="Gateway_0pdtka9">
+      <bpmn:incoming>Flow_0p2t17k</bpmn:incoming>
+      <bpmn:incoming>Flow_1l60fur</bpmn:incoming>
+      <bpmn:incoming>Flow_1rak8mg</bpmn:incoming>
+      <bpmn:outgoing>Flow_0t8a4eu</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sendTask id="tableStatusPayingBill" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_updateTableStatus" target="messageName" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#10; &#34;tableStatus&#34;:status, &#34;seatingAvailable&#34;:seatingAvailable}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02t0oho</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yn9pn6</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="billPaid" name="billPaid">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Bill Paid&#34;" target="status" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1q6gvs4</bpmn:incoming>
+      <bpmn:outgoing>Flow_02t0oho</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_10vn6eg" messageRef="Message_37gjon8" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="billRequested" name="billRequested">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Bill Requested&#34;" target="status" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0lr8qao</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o9gq3o</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1myd1fh" messageRef="Message_3sgaci8" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sendTask id="deleteMenu" name="Delete Menu" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_deleteMenu" target="messageName" />
+          <zeebe:input source="=customerId" target="correlationKey" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1o9gq3o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1q6gvs4</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="tablestatusAssigned" name="Update Table Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_updateTableStatus" target="messageName" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;tableLocation&#34;:location,&#10; &#34;tableStatus&#34;:status, &#34;seatingAvailable&#34;:seatingAvailable}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+          <zeebe:input source="PT10S" target="correlationType.timeToLive" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0t8a4eu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lr8qao</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_0t8a4eu" sourceRef="Gateway_0pdtka9" targetRef="tablestatusAssigned" />
+    <bpmn:sequenceFlow id="Flow_02t0oho" sourceRef="billPaid" targetRef="tableStatusPayingBill" />
+    <bpmn:sequenceFlow id="Flow_1q6gvs4" sourceRef="deleteMenu" targetRef="billPaid" />
+    <bpmn:sequenceFlow id="Flow_0lr8qao" sourceRef="tablestatusAssigned" targetRef="billRequested" />
+    <bpmn:sequenceFlow id="Flow_1o9gq3o" sourceRef="billRequested" targetRef="deleteMenu" />
+    <bpmn:intermediateCatchEvent id="makeTableAvailable" name="makeTableAvailable">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Available&#34;" target="status" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1yn9pn6</bpmn:incoming>
+      <bpmn:outgoing>Flow_076hitd</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1hwti6t" messageRef="Message_0ruu1iu" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_076hitd" sourceRef="makeTableAvailable" targetRef="Gateway_1dxjirr" />
+    <bpmn:sequenceFlow id="Flow_1yn9pn6" sourceRef="tableStatusPayingBill" targetRef="makeTableAvailable" />
+    <bpmn:exclusiveGateway id="Gateway_1dxjirr">
+      <bpmn:incoming>Flow_0uwj3fv</bpmn:incoming>
+      <bpmn:incoming>Flow_076hitd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0edu0r7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_0ixz1or" name="makeTableAvailable">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Available&#34;" target="status" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1dx0m70</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uwj3fv</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1kz467w" messageRef="Message_0ruu1iu" />
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
   <bpmn:message id="Message_1kit3br" name="_tableAvailable">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.location" />
+      <zeebe:subscription correlationKey="=location" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0p4fhmk" name="_assignCustomer">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.location" />
+      <zeebe:subscription correlationKey="=location" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3sgaci8" name="_billRequested">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=table.location" />
+      <zeebe:subscription correlationKey="=location" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -460,10 +488,6 @@ table":{
           <dc:Bounds x="194" y="255" width="57" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ixxnpx_di" bpmnElement="turnOnTableUI">
-        <dc:Bounds x="309" y="190" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1v4yv0b_di" bpmnElement="tableAvailable">
         <dc:Bounds x="451" y="212" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -473,19 +497,11 @@ table":{
       <bpmndi:BPMNShape id="Gateway_1j0i5n7_di" bpmnElement="Gateway_1j0i5n7" isMarkerVisible="true">
         <dc:Bounds x="544" y="205" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1alp2bc_di" bpmnElement="tableStatusAvailable">
-        <dc:Bounds x="659" y="190" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0xmfmtt_di" bpmnElement="deleteTable">
         <dc:Bounds x="812" y="92" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="800" y="73" width="57" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1all0rj_di" bpmnElement="turnOffTableUi">
-        <dc:Bounds x="624" y="70" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1we4wd0_di" bpmnElement="Gateway_12oiwnu">
         <dc:Bounds x="805" y="205" width="50" height="50" />
@@ -506,18 +522,9 @@ table":{
           <dc:Bounds x="330" y="135" width="67" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1r6v0ds_di" bpmnElement="tableStatusDeleted">
-        <dc:Bounds x="460" y="70" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0m8cvdg_di" bpmnElement="tableStatusSelected">
         <dc:Bounds x="1184" y="190" width="100" height="80" />
         <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1hdg5t6_di" bpmnElement="assignCustomer">
-        <dc:Bounds x="1348" y="212" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1328" y="255" width="81" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0jr9d4b_di" bpmnElement="createOrder">
         <dc:Bounds x="1567" y="320" width="100" height="80" />
@@ -531,37 +538,8 @@ table":{
         <dc:Bounds x="1567" y="190" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_02gadlf_di" bpmnElement="tablestatusAssigned">
-        <dc:Bounds x="1857" y="190" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1u8ygij_di" bpmnElement="Gateway_0pdtka9">
-        <dc:Bounds x="1747" y="205" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0881j3f_di" bpmnElement="Gateway_1kvihhp">
         <dc:Bounds x="1452" y="205" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_00molcc_di" bpmnElement="tableStatusPayingBill">
-        <dc:Bounds x="2327" y="190" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0vqtrhr_di" bpmnElement="makeTableAvailable">
-        <dc:Bounds x="2359" y="342" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2405" y="346" width="90" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1s74ea4_di" bpmnElement="billPaid">
-        <dc:Bounds x="2249" y="212" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2254" y="255" width="36" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_13mqurd_di" bpmnElement="billRequested">
-        <dc:Bounds x="2009" y="212" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1994" y="255" width="67" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_06gyxac_di" bpmnElement="Gateway_0wfob6t">
         <dc:Bounds x="2122" y="335" width="50" height="50" />
@@ -576,19 +554,81 @@ table":{
       <bpmndi:BPMNShape id="Gateway_13gthgh_di" bpmnElement="Gateway_1dnyyv6">
         <dc:Bounds x="1790" y="445" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1u5zvxx_di" bpmnElement="deleteMenu">
-        <dc:Bounds x="2097" y="190" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0ixxnpx_di" bpmnElement="turnOnTableUI">
+        <dc:Bounds x="301" y="190" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1alp2bc_di" bpmnElement="tableStatusAvailable">
+        <dc:Bounds x="656" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1all0rj_di" bpmnElement="turnOffTableUi">
+        <dc:Bounds x="628" y="70" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r6v0ds_di" bpmnElement="tableStatusDeleted">
+        <dc:Bounds x="457" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1rocuea_di" bpmnElement="Gateway_05vmcm3">
+        <dc:Bounds x="1341" y="205" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hdg5t6_di" bpmnElement="assignCustomer">
+        <dc:Bounds x="1348" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1325" y="68" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1u8ygij_di" bpmnElement="Gateway_0pdtka9">
+        <dc:Bounds x="1747" y="155" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00molcc_di" bpmnElement="tableStatusPayingBill">
+        <dc:Bounds x="2327" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1s74ea4_di" bpmnElement="billPaid">
+        <dc:Bounds x="2249" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2254" y="205" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13mqurd_di" bpmnElement="billRequested">
+        <dc:Bounds x="2009" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1994" y="205" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1u5zvxx_di" bpmnElement="deleteMenu">
+        <dc:Bounds x="2097" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02gadlf_di" bpmnElement="tablestatusAssigned">
+        <dc:Bounds x="1856" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vqtrhr_di" bpmnElement="makeTableAvailable">
+        <dc:Bounds x="2382" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2325" y="326" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1dxjirr_di" bpmnElement="Gateway_1dxjirr" isMarkerVisible="true">
+        <dc:Bounds x="2262" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ixz1or_di" bpmnElement="Event_0ixz1or">
+        <dc:Bounds x="2196" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2169" y="315" width="90" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_023qcop_di" bpmnElement="Flow_0gwnzfc">
         <di:waypoint x="237" y="230" />
-        <di:waypoint x="309" y="230" />
+        <di:waypoint x="301" y="230" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="53" y="203" width="74" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_141lq0s_di" bpmnElement="Flow_141lq0s">
-        <di:waypoint x="409" y="230" />
+        <di:waypoint x="401" y="230" />
         <di:waypoint x="451" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1ehcn7h_di" bpmnElement="Flow_1ehcn7h">
@@ -602,10 +642,10 @@ table":{
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_13a3i7u_di" bpmnElement="Flow_13a3i7u">
         <di:waypoint x="594" y="230" />
-        <di:waypoint x="659" y="230" />
+        <di:waypoint x="656" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_00jzym9_di" bpmnElement="Flow_00jzym9">
-        <di:waypoint x="759" y="230" />
+        <di:waypoint x="756" y="230" />
         <di:waypoint x="805" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ihpjq7_di" bpmnElement="Flow_0ihpjq7">
@@ -614,11 +654,11 @@ table":{
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_19cwsbg_di" bpmnElement="Flow_19cwsbg">
         <di:waypoint x="812" y="110" />
-        <di:waypoint x="724" y="110" />
+        <di:waypoint x="728" y="110" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_09uvbx7_di" bpmnElement="Flow_09uvbx7">
-        <di:waypoint x="624" y="110" />
-        <di:waypoint x="560" y="110" />
+        <di:waypoint x="628" y="110" />
+        <di:waypoint x="557" y="110" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1s81z37_di" bpmnElement="Flow_1s81z37">
         <di:waypoint x="855" y="230" />
@@ -633,16 +673,17 @@ table":{
         <di:waypoint x="1184" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1a1hw09_di" bpmnElement="Flow_1a1hw09">
-        <di:waypoint x="460" y="110" />
+        <di:waypoint x="457" y="110" />
         <di:waypoint x="377" y="110" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_125k44d_di" bpmnElement="Flow_125k44d">
         <di:waypoint x="1284" y="230" />
-        <di:waypoint x="1348" y="230" />
+        <di:waypoint x="1341" y="230" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_04yit7m_di" bpmnElement="Flow_04yit7m">
-        <di:waypoint x="1384" y="230" />
-        <di:waypoint x="1452" y="230" />
+        <di:waypoint x="1384" y="110" />
+        <di:waypoint x="1477" y="110" />
+        <di:waypoint x="1477" y="205" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_140cndg_di" bpmnElement="Flow_140cndg">
         <di:waypoint x="1477" y="255" />
@@ -652,7 +693,7 @@ table":{
       <bpmndi:BPMNEdge id="Flow_0p2t17k_di" bpmnElement="Flow_0p2t17k">
         <di:waypoint x="1667" y="360" />
         <di:waypoint x="1772" y="360" />
-        <di:waypoint x="1772" y="255" />
+        <di:waypoint x="1772" y="205" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0g3tzgo_di" bpmnElement="Flow_0g3tzgo">
         <di:waypoint x="1477" y="205" />
@@ -662,7 +703,7 @@ table":{
       <bpmndi:BPMNEdge id="Flow_1l60fur_di" bpmnElement="Flow_1l60fur">
         <di:waypoint x="1667" y="110" />
         <di:waypoint x="1772" y="110" />
-        <di:waypoint x="1772" y="205" />
+        <di:waypoint x="1772" y="155" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0h3wvox_di" bpmnElement="Flow_0h3wvox">
         <di:waypoint x="1502" y="230" />
@@ -670,35 +711,13 @@ table":{
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1rak8mg_di" bpmnElement="Flow_1rak8mg">
         <di:waypoint x="1667" y="230" />
-        <di:waypoint x="1747" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0t8a4eu_di" bpmnElement="Flow_0t8a4eu">
-        <di:waypoint x="1797" y="230" />
-        <di:waypoint x="1857" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0lr8qao_di" bpmnElement="Flow_0lr8qao">
-        <di:waypoint x="1957" y="230" />
-        <di:waypoint x="2009" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_02t0oho_di" bpmnElement="Flow_02t0oho">
-        <di:waypoint x="2285" y="230" />
-        <di:waypoint x="2327" y="230" />
+        <di:waypoint x="1707" y="230" />
+        <di:waypoint x="1707" y="180" />
+        <di:waypoint x="1747" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1yn9pn6_di" bpmnElement="Flow_1yn9pn6">
-        <di:waypoint x="2377" y="270" />
-        <di:waypoint x="2377" y="342" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10ud2pc_di" bpmnElement="Flow_10ud2pc">
-        <di:waypoint x="2359" y="360" />
-        <di:waypoint x="2172" y="360" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1q6gvs4_di" bpmnElement="Flow_1q6gvs4">
-        <di:waypoint x="2197" y="230" />
-        <di:waypoint x="2249" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1o9gq3o_di" bpmnElement="Flow_1o9gq3o">
-        <di:waypoint x="2045" y="230" />
-        <di:waypoint x="2097" y="230" />
+        <di:waypoint x="2400" y="220" />
+        <di:waypoint x="2400" y="272" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qjjg5u_di" bpmnElement="Flow_1qjjg5u">
         <di:waypoint x="2122" y="360" />
@@ -717,6 +736,57 @@ table":{
       <bpmndi:BPMNEdge id="Flow_1gct2nm_di" bpmnElement="Flow_1gct2nm">
         <di:waypoint x="1927" y="470" />
         <di:waypoint x="1840" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1db2um4_di" bpmnElement="Flow_1db2um4">
+        <di:waypoint x="1366" y="205" />
+        <di:waypoint x="1366" y="128" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dx0m70_di" bpmnElement="Flow_1dx0m70">
+        <di:waypoint x="1366" y="255" />
+        <di:waypoint x="1366" y="290" />
+        <di:waypoint x="2196" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0edu0r7_di" bpmnElement="Flow_0edu0r7">
+        <di:waypoint x="2262" y="360" />
+        <di:waypoint x="2172" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uwj3fv_di" bpmnElement="Flow_0uwj3fv">
+        <di:waypoint x="2232" y="290" />
+        <di:waypoint x="2287" y="290" />
+        <di:waypoint x="2287" y="335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0t8a4eu_di" bpmnElement="Flow_0t8a4eu">
+        <di:waypoint x="1797" y="180" />
+        <di:waypoint x="1856" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02t0oho_di" bpmnElement="Flow_02t0oho">
+        <di:waypoint x="2285" y="180" />
+        <di:waypoint x="2327" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1q6gvs4_di" bpmnElement="Flow_1q6gvs4">
+        <di:waypoint x="2197" y="180" />
+        <di:waypoint x="2249" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lr8qao_di" bpmnElement="Flow_0lr8qao">
+        <di:waypoint x="1956" y="180" />
+        <di:waypoint x="2009" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o9gq3o_di" bpmnElement="Flow_1o9gq3o">
+        <di:waypoint x="2045" y="180" />
+        <di:waypoint x="2097" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_076hitd_di" bpmnElement="Flow_076hitd">
+        <di:waypoint x="2400" y="308" />
+        <di:waypoint x="2400" y="360" />
+        <di:waypoint x="2312" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1qbnaln_di" bpmnElement="TextAnnotation_1qbnaln">
+        <dc:Bounds x="920" y="75" width="170" height="55" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0h846g6_di" bpmnElement="Association_0h846g6">
+        <di:waypoint x="848" y="107" />
+        <di:waypoint x="920" y="97" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

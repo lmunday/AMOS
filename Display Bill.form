@@ -25,7 +25,7 @@
         "columns": 6
       },
       "id": "Field_0vik8xc",
-      "key": "tableUi.requestStatus",
+      "key": "requestStatus",
       "readonly": true
     },
     {
@@ -36,7 +36,7 @@
         "columns": null
       },
       "id": "Field_1b8m1rk",
-      "key": "tableUi.customerId",
+      "key": "customerId",
       "readonly": true
     },
     {
@@ -47,7 +47,7 @@
         "columns": 3
       },
       "id": "Field_1jt5bw4",
-      "key": "tableUi.location",
+      "key": "location",
       "readonly": true
     },
     {
@@ -61,7 +61,7 @@
             "columns": null
           },
           "id": "Field_1hz97me",
-          "key": "tableUi.billTax",
+          "key": "billTax",
           "readonly": true
         },
         {
@@ -72,19 +72,18 @@
             "columns": null
           },
           "id": "Field_1nhhrlr",
-          "key": "tableUi.billCost",
+          "key": "billCost",
           "readonly": true
         },
         {
           "label": "Amount Owed",
-          "type": "number",
+          "type": "textfield",
           "layout": {
             "row": "Row_0vfo522",
             "columns": null
           },
-          "id": "Field_08ustd9",
-          "key": "tableUi.billAmount",
-          "readonly": true
+          "id": "Field_1oh906m",
+          "key": "billAmount"
         },
         {
           "label": "Payment Method",

@@ -118,7 +118,8 @@
       "key": "addMenuItem",
       "validate": {
         "required": true
-      }
+      },
+      "defaultValue": "add"
     },
     {
       "text": "{{restaurant.Menu_Item_List}}",

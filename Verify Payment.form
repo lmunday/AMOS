@@ -30,7 +30,7 @@
       "label": "Customer name and pament information",
       "components": [
         {
-          "text": "{{payment.method}}",
+          "text": "{{method}}",
           "type": "text",
           "layout": {
             "row": "Row_1aujoan",
@@ -39,7 +39,7 @@
           "id": "Field_0cv1rq9"
         },
         {
-          "text": "{{payment.customerId}}",
+          "text": "{{customerId}}",
           "type": "text",
           "layout": {
             "row": "Row_1aujoan",
@@ -48,7 +48,7 @@
           "id": "Field_1qhj75c"
         },
         {
-          "text": "{{payment.amount}}",
+          "text": "{{amount}}",
           "type": "text",
           "layout": {
             "row": "Row_1n938az",
@@ -57,7 +57,7 @@
           "id": "Field_0neckus"
         },
         {
-          "text": "{{payment.information}}",
+          "text": "{{information}}",
           "type": "text",
           "layout": {
             "row": "Row_1n938az",

@@ -25,7 +25,7 @@
         "columns": 6
       },
       "id": "Field_188s9oz",
-      "key": "tableUi.requestStatus",
+      "key": "requestStatus",
       "readonly": true
     },
     {
@@ -36,7 +36,7 @@
         "columns": 13
       },
       "id": "Field_0sml2st",
-      "key": "tableUi.customerId",
+      "key": "customerId",
       "readonly": true
     },
     {
@@ -47,89 +47,101 @@
         "columns": 3
       },
       "id": "Field_08qz24x",
-      "key": "tableUi.location",
+      "key": "location",
       "readonly": true
     },
     {
-      "type": "table",
-      "layout": {
-        "row": "Row_1eir2lm",
-        "columns": null
-      },
-      "label": "Menu",
-      "dataSource": "=menuItems",
-      "id": "Field_1i3izp8",
-      "columns": [
-        {
-          "label": "Name",
-          "key": "name"
-        },
-        {
-          "label": "Description",
-          "key": "description"
-        },
-        {
-          "label": "Cost",
-          "key": "cost"
-        },
-        {
-          "label": "Category",
-          "key": "category"
-        },
-        {
-          "label": "# Selected",
-          "key": "numberOrdered"
-        }
-      ]
-    },
-    {
-      "label": "Select Items To Order",
+      "label": "My Order",
       "components": [
         {
-          "label": "Select Item To Order",
-          "type": "radio",
+          "type": "table",
           "layout": {
-            "row": "Row_0n5onqh",
-            "columns": 4
-          },
-          "id": "Field_1cxityb",
-          "key": "selectedItem",
-          "valuesKey": "displayedNames",
-          "validate": {
-            "required": false
-          },
-          "conditional": {
-            "hide": "=placeMyOrder=true or iWantMyBill=true\n"
-          }
-        },
-        {
-          "label": "Number To Order",
-          "type": "number",
-          "layout": {
-            "row": "Row_0n5onqh",
-            "columns": 3
-          },
-          "id": "Field_0pzyptl",
-          "key": "numberOrdered",
-          "defaultValue": 0,
-          "validate": {
-            "required": true,
-            "max": 99,
-            "min": "0"
-          },
-          "conditional": {
-            "hide": "=placeMyOrder=true or iWantMyBill=true"
-          }
-        },
-        {
-          "label": "Instructions For The Kitchen",
-          "type": "textfield",
-          "layout": {
-            "row": "Row_0n5onqh",
+            "row": "Row_1m6oosm",
             "columns": null
           },
-          "id": "Field_1h5szu4",
-          "key": "instructions",
+          "label": "Menu",
+          "dataSource": "=menuItems",
+          "id": "Field_1i3izp8",
+          "columns": [
+            {
+              "label": "Name",
+              "key": "name"
+            },
+            {
+              "label": "Description",
+              "key": "description"
+            },
+            {
+              "label": "Cost",
+              "key": "cost"
+            },
+            {
+              "label": "Category",
+              "key": "category"
+            },
+            {
+              "label": "# Selected",
+              "key": "numberOrdered"
+            }
+          ],
+          "conditional": {
+            "hide": "=iWantMyBill=true"
+          }
+        },
+        {
+          "label": "Select Items To Order",
+          "components": [
+            {
+              "label": "Select Item To Order",
+              "type": "radio",
+              "layout": {
+                "row": "Row_0n5onqh",
+                "columns": 4
+              },
+              "id": "Field_1cxityb",
+              "key": "selectedItem",
+              "valuesKey": "displayedNames",
+              "validate": {
+                "required": false
+              },
+              "conditional": {
+                "hide": "=\n"
+              }
+            },
+            {
+              "label": "Number To Order",
+              "type": "number",
+              "layout": {
+                "row": "Row_0n5onqh",
+                "columns": 3
+              },
+              "id": "Field_0pzyptl",
+              "key": "numberOrdered",
+              "defaultValue": 0,
+              "validate": {
+                "required": true,
+                "max": 99,
+                "min": "0"
+              }
+            },
+            {
+              "label": "Instructions For The Kitchen",
+              "type": "textfield",
+              "layout": {
+                "row": "Row_0n5onqh",
+                "columns": null
+              },
+              "id": "Field_1h5szu4",
+              "key": "instructions"
+            }
+          ],
+          "showOutline": true,
+          "type": "group",
+          "layout": {
+            "row": "Row_0usvizl",
+            "columns": null
+          },
+          "id": "Field_1pj6ze8",
           "conditional": {
             "hide": "=placeMyOrder=true or iWantMyBill=true"
           }
@@ -138,17 +150,20 @@
           "label": "Place My Order",
           "type": "checkbox",
           "layout": {
-            "row": "Row_1onuhrd",
+            "row": "Row_1qqg0p4",
             "columns": null
           },
           "id": "Field_0x4w11b",
-          "key": "placeMyOrder"
+          "key": "placeMyOrder",
+          "conditional": {
+            "hide": "=iWantMyBill=true"
+          }
         },
         {
           "label": "Total Cost",
           "type": "textfield",
           "layout": {
-            "row": "Row_1onuhrd",
+            "row": "Row_1qqg0p4",
             "columns": null
           },
           "id": "Field_1pg5vlc",
@@ -163,46 +178,28 @@
           "label": "I Want My Bill",
           "type": "checkbox",
           "layout": {
-            "row": "Row_1onuhrd",
+            "row": "Row_1qqg0p4",
             "columns": null
           },
           "id": "Field_06zsevb",
-          "key": "iWantMyBill"
+          "key": "iWantMyBill",
+          "conditional": {
+            "hide": "=placeMyOrder=true"
+          }
         }
       ],
       "showOutline": true,
       "type": "group",
       "layout": {
-        "row": "Row_14qmxxr",
+        "row": "Row_15gbc20",
         "columns": null
       },
-      "id": "Field_1pj6ze8"
+      "id": "Field_0mjcky8"
     },
     {
       "type": "table",
       "layout": {
         "row": "Row_1b2dofd",
-        "columns": null
-      },
-      "label": "Prepared Items",
-      "dataSource": "=preparedItems",
-      "rowCount": 10,
-      "id": "Field_02q4jq3",
-      "columns": [
-        {
-          "label": "Name",
-          "key": "name"
-        },
-        {
-          "label": "Number Prepared",
-          "key": "number"
-        }
-      ]
-    },
-    {
-      "type": "table",
-      "layout": {
-        "row": "Row_1cvggma",
         "columns": null
       },
       "label": "Ordered Items",
@@ -217,6 +214,27 @@
         {
           "label": "Number Ordered",
           "key": "numberOrdered"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "layout": {
+        "row": "Row_1o4hd10",
+        "columns": null
+      },
+      "label": "Prepared Items",
+      "dataSource": "=preparedItems",
+      "rowCount": 10,
+      "id": "Field_02q4jq3",
+      "columns": [
+        {
+          "label": "Name",
+          "key": "name"
+        },
+        {
+          "label": "Number Prepared",
+          "key": "number"
         }
       ]
     },

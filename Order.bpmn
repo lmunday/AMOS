@@ -2,23 +2,23 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1y2kcjw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
   <bpmn:message id="Message_2bf5d89" name="_returnOrderedFoodId">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=order.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3pku2u9" name="_createOrder" />
   <bpmn:message id="Message_3gldt2s" name="_requestBill">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=order.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_30d41qv" name="_placeOrder">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=order.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3k4mlv3" name="_deleteOrder">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=order.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:collaboration id="orderDiagram">
@@ -50,8 +50,8 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_createBill" target="messageName" />
-          <zeebe:input source="=order.customerId" target="correlationKey" />
-          <zeebe:input source="={&#34;customerId&#34;:order.customerId, &#34;cost&#34;:order.cost, &#34;tableLocation&#34;:order.tableLocation, &#34;orderedFoodList&#34;:order.allOrderedItems}" target="variables" />
+          <zeebe:input source="=customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;customerId&#34;:customerId, &#34;cost&#34;:cost, &#34;tableLocation&#34;:tableLocation, &#34;orderedFoodList&#34;:allOrderedItems}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -68,24 +68,6 @@
       <bpmn:outgoing>Flow_0swxrhh</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0x9sa9r" messageRef="Message_3k4mlv3" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="customerStatusBillRequested" name="Update Customer Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_updatecustomerStatus" target="messageName" />
-          <zeebe:input source="=order.customerId" target="correlationKey" />
-          <zeebe:input source="={&#34;customerStatus&#34;:&#34;Bill Requested&#34;}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1v0x7zw</bpmn:incoming>
-      <bpmn:outgoing>Flow_0jt01bd</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:exclusiveGateway id="Gateway_0iffr9v">
       <bpmn:incoming>Flow_0d5gkyn</bpmn:incoming>
       <bpmn:incoming>Flow_1sypaqa</bpmn:incoming>
@@ -94,16 +76,16 @@
     <bpmn:startEvent id="createOrder" name="createOrder">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=customerId" target="order.customerId" />
-          <zeebe:output source="=tableLocation" target="order.tableLocation" />
-          <zeebe:output source="=[]" target="order.orderedItemIds" />
-          <zeebe:output source="=0" target="order.cost" />
-          <zeebe:output source="=[]" target="order.orderedItems" />
-          <zeebe:output source="=restaurantId" target="order.restaurantId" />
-          <zeebe:output source="=0" target="order.orderNumber" />
+          <zeebe:output source="=customerId" target="customerId" />
+          <zeebe:output source="=tableLocation" target="tableLocation" />
+          <zeebe:output source="=[]" target="orderedItemIds" />
+          <zeebe:output source="=0" target="cost" />
+          <zeebe:output source="=[]" target="orderedItems" />
+          <zeebe:output source="=restaurantId" target="restaurantId" />
+          <zeebe:output source="=0" target="orderNumber" />
         </zeebe:ioMapping>
         <zeebe:properties>
-          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#34;order.customerId&#34;:&#34;Les&#34;,&#10;&#34;order.tableLocation&#34;:&#34;FL&#34;,&#10;&#34;order.allOrderedItems&#34;:[],&#10;&#34;order.cost&#34;:0}" />
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#34;customerId&#34;:&#34;Les&#34;,&#10;&#34;tableLocation&#34;:&#34;FL&#34;,&#10;&#34;allOrderedItems&#34;:[],&#10;&#34;cost&#34;:0}" />
         </zeebe:properties>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0d5gkyn</bpmn:outgoing>
@@ -114,11 +96,6 @@
       <bpmn:outgoing>Flow_1b8fljt</bpmn:outgoing>
       <bpmn:outgoing>Flow_07o0pp3</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="requestBill" name="requestBill">
-      <bpmn:incoming>Flow_1b8fljt</bpmn:incoming>
-      <bpmn:outgoing>Flow_1thyqp6</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1tmjwp5" messageRef="Message_3gldt2s" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:intermediateCatchEvent id="placeOrder" name="placeOrder">
       <bpmn:documentation>Receives
 "orderedItems": [
@@ -137,9 +114,9 @@
   ]</bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=orderedItems" target="order.orderedItems" />
-          <zeebe:output source="=order.orderNumber+1" target="order.orderNumber" />
-          <zeebe:output source="=orderCost" target="order.cost" />
+          <zeebe:output source="=orderedItems" target="orderedItems" />
+          <zeebe:output source="=orderNumber+1" target="orderNumber" />
+          <zeebe:output source="=orderCost" target="cost" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_07o0pp3</bpmn:incoming>
@@ -154,7 +131,7 @@
           <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
           <zeebe:ioMapping>
             <zeebe:input source="_createOrderedFood" target="messageName" />
-            <zeebe:input source="={&#34;menuItemName&#34;:menuItemName,&#10;&#34;numberOrdered&#34;:numberOrdered,&#10;&#34;tableLocation&#34;:order.tableLocation,&#10;&#34;customerId&#34;:order.customerId,&#10;&#34;orderNumber&#34;:orderNumber,&#10;&#34;restaurantId&#34;:order.restaurantId,&#10;&#34;instructions&#34;:instructions}" target="variables" />
+            <zeebe:input source="={&#34;menuItemName&#34;:menuItemName,&#10;&#34;numberOrdered&#34;:numberOrdered,&#10;&#34;tableLocation&#34;:tableLocation,&#10;&#34;customerId&#34;:customerId,&#10;&#34;orderNumber&#34;:orderNumber,&#10;&#34;restaurantId&#34;:restaurantId,&#10;&#34;instructions&#34;:instructions}" target="variables" />
             <zeebe:input source="publish" target="correlationType.type" />
           </zeebe:ioMapping>
           <zeebe:taskHeaders>
@@ -177,19 +154,18 @@
         <bpmn:outgoing>Flow_17o65rv</bpmn:outgoing>
         <bpmn:outgoing>Flow_0e59ury</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_17o65rv" name="No" sourceRef="Gateway_1ycjqhd" targetRef="Event_0vhjowc">
+      <bpmn:sequenceFlow id="Flow_17o65rv" name="no" sourceRef="Gateway_1ycjqhd" targetRef="Event_0vhjowc">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=menuItemName=null</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_0vhjowc" name="end">
         <bpmn:incoming>Flow_17o65rv</bpmn:incoming>
       </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_0e59ury" name="Yes" sourceRef="Gateway_1ycjqhd" targetRef="createOrderedFood">
+      <bpmn:sequenceFlow id="Flow_0e59ury" name="yes" sourceRef="Gateway_1ycjqhd" targetRef="createOrderedFood">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=menuItemName!=null</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:startEvent id="startOrder" name="start">
         <bpmn:extensionElements>
           <zeebe:ioMapping>
-            <zeebe:output source="=order.orderedItems" target="orderedItems" />
             <zeebe:output source="=1" target="index" />
             <zeebe:output source="=0" target="orderNumber" />
           </zeebe:ioMapping>
@@ -216,8 +192,8 @@
       <bpmn:intermediateCatchEvent id="returnOrderedFoodId" name="returnOrderedFoodId">
         <bpmn:extensionElements>
           <zeebe:ioMapping>
-            <zeebe:output source="=concatenate(order.orderedItemIds,orderedFoodId)" target="order.orderedItemIds" />
-            <zeebe:output source="=order.customerId+menuItemName" target="customerMenuItemId" />
+            <zeebe:output source="=concatenate(orderedItemIds,orderedFoodId)" target="orderedItemIds" />
+            <zeebe:output source="=customerId+menuItemName" target="customerMenuItemId" />
           </zeebe:ioMapping>
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_1qtuehy</bpmn:incoming>
@@ -248,7 +224,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_billRequested" target="messageName" />
-          <zeebe:input source="=order.tableLocation" target="correlationKey" />
+          <zeebe:input source="=tableLocation" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -257,7 +233,7 @@
           <zeebe:header key="retryBackoff" value="PT0S" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0jt01bd</bpmn:incoming>
+      <bpmn:incoming>Flow_0jwo74r</bpmn:incoming>
       <bpmn:outgoing>Flow_1qtxtdd</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:subProcess id="deleteOrderedFood" name="Delete Ordered Food">
@@ -267,7 +243,6 @@
         <bpmn:extensionElements>
           <zeebe:ioMapping>
             <zeebe:output source="=1" target="index" />
-            <zeebe:output source="=order.orderedItemIds" target="orderedItemIds" />
           </zeebe:ioMapping>
         </bpmn:extensionElements>
         <bpmn:outgoing>Flow_16cpdr1</bpmn:outgoing>
@@ -333,7 +308,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_deleteBill" target="messageName" />
-          <zeebe:input source="=order.customerId" target="correlationKey" />
+          <zeebe:input source="=customerId" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -346,10 +321,9 @@
       <bpmn:outgoing>Flow_0j6bfuc</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:sequenceFlow id="Flow_1thyqp6" sourceRef="requestBill" targetRef="createBill" />
-    <bpmn:sequenceFlow id="Flow_1v0x7zw" sourceRef="createBill" targetRef="customerStatusBillRequested" />
+    <bpmn:sequenceFlow id="Flow_1v0x7zw" sourceRef="createBill" targetRef="customerStatusBillRequested1" />
     <bpmn:sequenceFlow id="Flow_1qtxtdd" sourceRef="sendBillRequested" targetRef="deleteOrder" />
     <bpmn:sequenceFlow id="Flow_0swxrhh" sourceRef="deleteOrder" targetRef="deleteOrderedFood" />
-    <bpmn:sequenceFlow id="Flow_0jt01bd" sourceRef="customerStatusBillRequested" targetRef="sendBillRequested" />
     <bpmn:sequenceFlow id="Flow_0d5gkyn" sourceRef="createOrder" targetRef="Gateway_0iffr9v" />
     <bpmn:sequenceFlow id="Flow_1sypaqa" sourceRef="orderMenuItems" targetRef="Gateway_0iffr9v" />
     <bpmn:sequenceFlow id="Flow_1nbdykj" sourceRef="Gateway_0iffr9v" targetRef="Gateway_1i1rtf8" />
@@ -364,7 +338,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_updateCustomerStatus" target="messageName" />
-          <zeebe:input source="=order.customerId" target="correlationKey" />
+          <zeebe:input source="=customerId" target="correlationKey" />
           <zeebe:input source="={&#34;customerStatus&#34;:&#34;Ordered&#34;}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
@@ -377,16 +351,40 @@
       <bpmn:incoming>Flow_1u8kh0f</bpmn:incoming>
       <bpmn:outgoing>Flow_0knggwh</bpmn:outgoing>
     </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="requestBill" name="requestBill">
+      <bpmn:incoming>Flow_1b8fljt</bpmn:incoming>
+      <bpmn:outgoing>Flow_1thyqp6</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1tmjwp5" messageRef="Message_3gldt2s" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0jwo74r" sourceRef="customerStatusBillRequested1" targetRef="sendBillRequested" />
+    <bpmn:sendTask id="customerStatusBillRequested1" name="Update Customer Status" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_updateCustomerStatus" target="messageName" />
+          <zeebe:input source="=customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;customerStatus&#34;:&#34;Bill Requested&#34;}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1v0x7zw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jwo74r</bpmn:outgoing>
+    </bpmn:sendTask>
   </bpmn:process>
-  <bpmn:message id="Message_1r9gegk" name="_returnCustomerMenuItemCost">
+  <bpmn:message id="Message_1r9gegk">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=order.customerId" />
+      <zeebe:subscription correlationKey="=customerId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="orderDiagram">
       <bpmndi:BPMNShape id="Participant_1qtphah_di" bpmnElement="order" isHorizontal="true">
-        <dc:Bounds x="160" y="90" width="1780" height="390" />
+        <dc:Bounds x="160" y="90" width="1690" height="390" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0699r2p_di" bpmnElement="createBill">
@@ -397,10 +395,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1350" y="228" width="59" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_05hgugf_di" bpmnElement="customerStatusBillRequested">
-        <dc:Bounds x="1067" y="230" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0iffr9v_di" bpmnElement="Gateway_0iffr9v" isMarkerVisible="true">
         <dc:Bounds x="304" y="245" width="50" height="50" />
@@ -413,12 +407,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_16q17gp_di" bpmnElement="Gateway_1i1rtf8">
         <dc:Bounds x="393" y="245" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1uhzd27_di" bpmnElement="requestBill">
-        <dc:Bounds x="527" y="332" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="513" y="373" width="52" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0726d0x_di" bpmnElement="placeOrder">
         <dc:Bounds x="511" y="252" width="36" height="36" />
@@ -450,6 +438,16 @@
         <dc:Bounds x="610" y="230" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1uhzd27_di" bpmnElement="requestBill">
+        <dc:Bounds x="527" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="513" y="373" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_196dypw_di" bpmnElement="customerStatusBillRequested1">
+        <dc:Bounds x="1058" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1thyqp6_di" bpmnElement="Flow_1thyqp6">
         <di:waypoint x="563" y="350" />
         <di:waypoint x="957" y="350" />
@@ -457,7 +455,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1v0x7zw_di" bpmnElement="Flow_1v0x7zw">
         <di:waypoint x="1007" y="270" />
-        <di:waypoint x="1067" y="270" />
+        <di:waypoint x="1058" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qtxtdd_di" bpmnElement="Flow_1qtxtdd">
         <di:waypoint x="1306" y="270" />
@@ -466,10 +464,6 @@
       <bpmndi:BPMNEdge id="Flow_0swxrhh_di" bpmnElement="Flow_0swxrhh">
         <di:waypoint x="1396" y="270" />
         <di:waypoint x="1448" y="270" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0jt01bd_di" bpmnElement="Flow_0jt01bd">
-        <di:waypoint x="1167" y="270" />
-        <di:waypoint x="1206" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_01rbrz7" bpmnElement="Flow_0d5gkyn">
         <di:waypoint x="247" y="270" />
@@ -509,6 +503,10 @@
       <bpmndi:BPMNEdge id="Flow_0j6bfuc_di" bpmnElement="Flow_0j6bfuc">
         <di:waypoint x="1700" y="270" />
         <di:waypoint x="1762" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jwo74r_di" bpmnElement="Flow_0jwo74r">
+        <di:waypoint x="1158" y="270" />
+        <di:waypoint x="1206" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1dj9jrl_di" bpmnElement="TextAnnotation_1dj9jrl">
         <dc:Bounds x="490" y="100" width="210" height="70" />
@@ -582,14 +580,14 @@
         <di:waypoint x="940" y="110" />
         <di:waypoint x="940" y="182" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="582" y="92" width="15" height="14" />
+          <dc:Bounds x="583" y="92" width="13" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0e59ury_di" bpmnElement="Flow_0e59ury">
         <di:waypoint x="592" y="200" />
         <di:waypoint x="662" y="200" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="623" y="173" width="18" height="14" />
+          <dc:Bounds x="624" y="173" width="17" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0d35nsp_di" bpmnElement="Flow_0d35nsp">

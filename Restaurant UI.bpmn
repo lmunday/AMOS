@@ -5,36 +5,36 @@
   </bpmn:collaboration>
   <bpmn:process id="restaurantUIProces" name="Restaurant UI Process" isExecutable="true">
     <bpmn:laneSet id="LaneSet_12qkn7d">
+      <bpmn:lane id="tables" name="Tables">
+        <bpmn:flowNodeRef>displayUpdateTables</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_01qca6m</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_14kfwqh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>updateTables</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>manageTables</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="menu" name="Menu">
+        <bpmn:flowNodeRef>displayUpdateMenu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_079o79s</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>manageMenu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>updateMenu</bpmn:flowNodeRef>
+      </bpmn:lane>
       <bpmn:lane id="restaurant" name="Restuarant">
         <bpmn:flowNodeRef>openRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>turnOnKitchenUi</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>deleteRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>deleteKitchenUI</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>allTablesDeleted</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>closeRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>informSelectedTable</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>selectATable</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_14kfwqh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>updateAvailableTableSeating</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_0p2iry0</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>updateAvailableTables</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>restaurantTurnedOn</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>initializeRestaurant</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0uriigm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>updateTableStatus</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>restaurantClosed</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="menu" name="Menu">
-        <bpmn:flowNodeRef>manageMenu</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>displayUpdateMenu</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_079o79s</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>updateMenu</bpmn:flowNodeRef>
-      </bpmn:lane>
-      <bpmn:lane id="tables" name="Tables">
-        <bpmn:flowNodeRef>manageTables</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>updateTables</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>displayUpdateTables</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Gateway_01qca6m</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>closeRestaurant</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>updateTableStatus</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0p2iry0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>updateAvailableTables</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sendTask id="openRestaurant" name="Open Restaurant" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
@@ -42,7 +42,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_openRestaurant" target="messageName" />
-          <zeebe:input source="={&#34;restaurantId&#34;:restaurantUi.restaurantId}" target="variables" />
+          <zeebe:input source="={&#34;restaurantId&#34;:restaurantId}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -59,7 +59,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_createKitchen" target="messageName" />
-          <zeebe:input source="={&#34;restaurantId&#34;:restaurantUi.restaurantId}" target="variables" />
+          <zeebe:input source="={&#34;restaurantId&#34;:restaurantId}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -71,29 +71,12 @@
       <bpmn:incoming>Flow_0pzl09v</bpmn:incoming>
       <bpmn:outgoing>Flow_00sdjbq</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:sequenceFlow id="Flow_00sdjbq" sourceRef="turnOnKitchenUi" targetRef="openRestaurant" />
-    <bpmn:sequenceFlow id="Flow_1t8x4xv" sourceRef="openRestaurant" targetRef="Gateway_0p2iry0" />
-    <bpmn:sequenceFlow id="Flow_0ciwabh" sourceRef="informSelectedTable" targetRef="Gateway_0p2iry0" />
-    <bpmn:sequenceFlow id="Flow_1aga161" sourceRef="Gateway_0p2iry0" targetRef="selectATable" />
-    <bpmn:sequenceFlow id="Flow_16m1nqv" sourceRef="selectATable" targetRef="Gateway_14kfwqh" />
-    <bpmn:sequenceFlow id="Flow_14nec9f" name="yes" sourceRef="Gateway_14kfwqh" targetRef="closeRestaurant">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=restaurantUi.close=true</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_008wcor" sourceRef="closeRestaurant" targetRef="allTablesDeleted" />
-    <bpmn:sequenceFlow id="Flow_1cc7pcd" sourceRef="restaurantTurnedOn" targetRef="initializeRestaurant" />
-    <bpmn:sequenceFlow id="Flow_0p0cweo" sourceRef="initializeRestaurant" targetRef="Gateway_0uriigm" />
-    <bpmn:sequenceFlow id="Flow_1r7ukfw" sourceRef="deleteRestaurant" targetRef="restaurantClosed" />
-    <bpmn:sequenceFlow id="Flow_0cwaodt" sourceRef="allTablesDeleted" targetRef="deleteKitchenUI" />
-    <bpmn:sequenceFlow id="Flow_18jhuky" sourceRef="deleteKitchenUI" targetRef="deleteRestaurant" />
-    <bpmn:sequenceFlow id="Flow_1wv27au" name="no" sourceRef="Gateway_14kfwqh" targetRef="informSelectedTable">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=restaurantUi.close=false</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:sendTask id="deleteRestaurant" name="Delete Restaurant" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_deleteRestaurant" target="messageName" />
-          <zeebe:input source="=restaurantUi.restaurantId" target="correlationKey" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -110,7 +93,7 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_deleteKitchenUi" target="messageName" />
-          <zeebe:input source="=restaurantUi.restaurantId" target="correlationKey" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -127,24 +110,6 @@
       <bpmn:outgoing>Flow_0cwaodt</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1twx3zt" messageRef="Message_3i3fthf" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="closeRestaurant" name="Close Restaurant" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_closingTime" target="messageName" />
-          <zeebe:input source="=restaurantUi.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;availableTables&#34;:restaurantUi.availableTables}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_14nec9f</bpmn:incoming>
-      <bpmn:outgoing>Flow_008wcor</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:sendTask id="informSelectedTable" name="Inform Selected Table" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
@@ -159,7 +124,7 @@
           <zeebe:header key="retryBackoff" value="PT0S" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1wv27au</bpmn:incoming>
+      <bpmn:incoming>Flow_16m1nqv</bpmn:incoming>
       <bpmn:outgoing>Flow_0ciwabh</bpmn:outgoing>
     </bpmn:sendTask>
     <bpmn:userTask id="selectATable" name="Select A Table">
@@ -167,19 +132,127 @@
         <zeebe:userTask />
         <zeebe:formDefinition formId="RestaurantScreen" />
         <zeebe:ioMapping>
-          <zeebe:input source="=restaurantUi.availableTables" target="tableList" />
+          <zeebe:input source="=availableTables" target="tableList" />
           <zeebe:output source="=selectedTable" target="tableLocation" />
-          <zeebe:output source="=close" target="restaurantUi.close" />
+          <zeebe:output source="=close" target="close" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1aga161</bpmn:incoming>
       <bpmn:outgoing>Flow_16m1nqv</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="Gateway_14kfwqh" name="Close Restaurant?">
-      <bpmn:incoming>Flow_16m1nqv</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wv27au</bpmn:outgoing>
-      <bpmn:outgoing>Flow_14nec9f</bpmn:outgoing>
+    <bpmn:scriptTask id="updateAvailableTableSeating" name="Update Available Table Seating">
+      <bpmn:documentation>Update the array that displays the status of tables.
+If the table exists, update tableStatus, else add the table to the list of tables.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if count(tableSeating[name = tableLocation]) = 1&#10;then for table in tableSeating return if table.name = tableLocation then {&#34;name&#34;:tableLocation,&#34;seating&#34;:seatingAvailable,&#34;status&#34;:tableStatus} else table &#10;else append(tableSeating, {&#34;name&#34;:tableLocation,&#34;seating&#34;:seatingAvailable,&#34;status&#34;:tableStatus})" resultVariable="tableSeating" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=tableSeating" target="tableSeating" />
+          <zeebe:input source="=tableLocation" target="tableLocation" />
+          <zeebe:input source="=tableStatus" target="tableStatus" />
+          <zeebe:output source="=tableSeating" target="tableSeating" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0xokp3b</bpmn:incoming>
+      <bpmn:outgoing>Flow_08uft46</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:startEvent id="restaurantTurnedOn" name="Restaurant Turned On">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=[]" target="availableTables" />
+          <zeebe:output source="=&#34;&#34;" target="restaurantId" />
+          <zeebe:output source="=false" target="close" />
+          <zeebe:output source="=[{&#34;name&#34;:&#34;Location&#34;,&#34;seating&#34;:0,&#34;status&#34;:&#34;Not Available&#34;}]" target="tableSeating" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1cc7pcd</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="initializeRestaurant" name="Initialize Restaurant">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="OpenRestaurant" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=restaurantId" target="restaurantId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1cc7pcd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p0cweo</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:parallelGateway id="Gateway_0uriigm">
+      <bpmn:incoming>Flow_0p0cweo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pzl09v</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0m1uqpx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_080uo10</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:intermediateCatchEvent id="displayUpdateTables" name="Display Update Tables">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1bbndxg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xwkk9f</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0q5l3te" messageRef="Message_13jr2fv" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_01qca6m">
+      <bpmn:incoming>Flow_0m1uqpx</bpmn:incoming>
+      <bpmn:incoming>Flow_06etstm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bbndxg</bpmn:outgoing>
     </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="restaurantClosed" name="Restaurant Closed">
+      <bpmn:incoming>Flow_1r7ukfw</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0xl12ka" />
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_14kfwqh" name="Close Restaurant?" default="Flow_1wzytb3">
+      <bpmn:incoming>Flow_0mh08pt</bpmn:incoming>
+      <bpmn:outgoing>Flow_14nec9f</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1wzytb3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="updateTables" name="Update Tables" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_updateTables" target="messageName" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;location&#34;:location, &#34;seatingAvailable&#34;:seatingAvailable, &#34;addTable&#34;:addTable}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1wzytb3</bpmn:incoming>
+      <bpmn:outgoing>Flow_06etstm</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:userTask id="manageTables" name="Manage Tables">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="manageTables" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=location" target="location" />
+          <zeebe:output source="=addTable" target="addTable" />
+          <zeebe:output source="=seatingAvailable" target="seatingAvailable" />
+          <zeebe:output source="=close" target="close" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xwkk9f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mh08pt</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sendTask id="closeRestaurant" name="Close Restaurant" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_closingTime" target="messageName" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
+          <zeebe:input source="={&#34;availableTables&#34;:availableTables}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_14nec9f</bpmn:incoming>
+      <bpmn:outgoing>Flow_008wcor</bpmn:outgoing>
+    </bpmn:sendTask>
     <bpmn:boundaryEvent id="updateTableStatus" name="updateTableStatus" attachedToRef="selectATable">
       <bpmn:documentation>If the table status is available, add it to the available tables list.  Otherwise remove it from the available tables list.</bpmn:documentation>
       <bpmn:extensionElements>
@@ -192,120 +265,40 @@
       <bpmn:outgoing>Flow_0xokp3b</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_09d09y5" messageRef="Message_3v2o974" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_08uft46" sourceRef="updateAvailableTableSeating" targetRef="updateAvailableTables" />
-    <bpmn:scriptTask id="updateAvailableTableSeating" name="Update Available Table Seating">
-      <bpmn:extensionElements>
-        <zeebe:script expression="=if count(tableSeating[name = tableLocation]) = 1&#10;then for table in tableSeating return if table.name = tableLocation then {&#34;name&#34;:tableLocation,&#34;seating&#34;:seatingAvailable,&#34;status&#34;:tableStatus} else table &#10;else append(tableSeating, {&#34;name&#34;:tableLocation,&#34;seating&#34;:seatingAvailable,&#34;status&#34;:tableStatus})" resultVariable="tableSeating" />
-        <zeebe:ioMapping>
-          <zeebe:input source="=restaurantUi.tableSeating" target="tableSeating" />
-          <zeebe:input source="=tableLocation" target="tableLocation" />
-          <zeebe:input source="=tableStatus" target="tableStatus" />
-          <zeebe:output source="=tableSeating" target="restaurantUi.tableSeating" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0xokp3b</bpmn:incoming>
-      <bpmn:outgoing>Flow_08uft46</bpmn:outgoing>
-    </bpmn:scriptTask>
-    <bpmn:exclusiveGateway id="Gateway_0p2iry0">
-      <bpmn:incoming>Flow_0ciwabh</bpmn:incoming>
-      <bpmn:incoming>Flow_1t8x4xv</bpmn:incoming>
-      <bpmn:incoming>Flow_1r3etzn</bpmn:incoming>
-      <bpmn:outgoing>Flow_1aga161</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:scriptTask id="updateAvailableTables" name="Update Available Tables">
-      <bpmn:documentation>If the table status is available add it to the availableTableList
-Otherwise remove it from the availableTableList, if there.</bpmn:documentation>
-      <bpmn:extensionElements>
-        <zeebe:script expression="=if tableStatus = &#34;Available&#34; then&#10;if list contains(availableTables, tableLocation)&#10;then availableTables&#10;else append(availableTables, tableLocation)&#10;else availableTables[item != tableLocation]" resultVariable="availableTables" />
-        <zeebe:ioMapping>
-          <zeebe:input source="=tableStatus" target="tableStatus" />
-          <zeebe:input source="=restaurantUi.availableTables" target="availableTables" />
-          <zeebe:input source="=tableLocation" target="tableLocation" />
-          <zeebe:output source="=availableTables" target="restaurantUi.availableTables" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_08uft46</bpmn:incoming>
-      <bpmn:outgoing>Flow_1r3etzn</bpmn:outgoing>
-    </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="Flow_1r3etzn" sourceRef="updateAvailableTables" targetRef="Gateway_0p2iry0" />
-    <bpmn:sequenceFlow id="Flow_0xokp3b" sourceRef="updateTableStatus" targetRef="updateAvailableTableSeating" />
-    <bpmn:startEvent id="restaurantTurnedOn" name="Restaurant Turned On">
-      <bpmn:extensionElements>
-        <zeebe:ioMapping>
-          <zeebe:output source="=[]" target="restaurantUi.availableTables" />
-          <zeebe:output source="=&#34;&#34;" target="restaurantUi.restaurantId" />
-          <zeebe:output source="=false" target="restaurantUi.close" />
-          <zeebe:output source="=[{&#34;name&#34;:&#34;Location&#34;,&#34;seating&#34;:0,&#34;status&#34;:&#34;Not Available&#34;}]" target="restaurantUi.tableSeating" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:outgoing>Flow_1cc7pcd</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:userTask id="initializeRestaurant" name="Initialize Restaurant">
-      <bpmn:extensionElements>
-        <zeebe:userTask />
-        <zeebe:formDefinition formId="OpenRestaurant" />
-        <zeebe:ioMapping>
-          <zeebe:output source="=restaurantId" target="restaurantUi.restaurantId" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1cc7pcd</bpmn:incoming>
-      <bpmn:outgoing>Flow_0p0cweo</bpmn:outgoing>
-    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_00sdjbq" sourceRef="turnOnKitchenUi" targetRef="openRestaurant" />
+    <bpmn:sequenceFlow id="Flow_1t8x4xv" sourceRef="openRestaurant" targetRef="Gateway_0p2iry0" />
     <bpmn:sequenceFlow id="Flow_0pzl09v" sourceRef="Gateway_0uriigm" targetRef="turnOnKitchenUi" />
-    <bpmn:parallelGateway id="Gateway_0uriigm">
-      <bpmn:incoming>Flow_0p0cweo</bpmn:incoming>
-      <bpmn:outgoing>Flow_0pzl09v</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0m1uqpx</bpmn:outgoing>
-      <bpmn:outgoing>Flow_080uo10</bpmn:outgoing>
-    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_18jhuky" sourceRef="deleteKitchenUI" targetRef="deleteRestaurant" />
+    <bpmn:sequenceFlow id="Flow_1r7ukfw" sourceRef="deleteRestaurant" targetRef="restaurantClosed" />
+    <bpmn:sequenceFlow id="Flow_0cwaodt" sourceRef="allTablesDeleted" targetRef="deleteKitchenUI" />
+    <bpmn:sequenceFlow id="Flow_008wcor" sourceRef="closeRestaurant" targetRef="allTablesDeleted" />
+    <bpmn:sequenceFlow id="Flow_16m1nqv" sourceRef="selectATable" targetRef="informSelectedTable" />
+    <bpmn:sequenceFlow id="Flow_0ciwabh" sourceRef="informSelectedTable" targetRef="Gateway_0p2iry0" />
+    <bpmn:sequenceFlow id="Flow_1aga161" sourceRef="Gateway_0p2iry0" targetRef="selectATable" />
+    <bpmn:sequenceFlow id="Flow_0xokp3b" sourceRef="updateTableStatus" targetRef="updateAvailableTableSeating" />
+    <bpmn:sequenceFlow id="Flow_08uft46" sourceRef="updateAvailableTableSeating" targetRef="updateAvailableTables" />
+    <bpmn:sequenceFlow id="Flow_1cc7pcd" sourceRef="restaurantTurnedOn" targetRef="initializeRestaurant" />
+    <bpmn:sequenceFlow id="Flow_0p0cweo" sourceRef="initializeRestaurant" targetRef="Gateway_0uriigm" />
     <bpmn:sequenceFlow id="Flow_0m1uqpx" sourceRef="Gateway_0uriigm" targetRef="Gateway_01qca6m" />
     <bpmn:sequenceFlow id="Flow_080uo10" sourceRef="Gateway_0uriigm" targetRef="Gateway_079o79s" />
-    <bpmn:userTask id="manageTables" name="Manage Tables">
-      <bpmn:extensionElements>
-        <zeebe:userTask />
-        <zeebe:formDefinition formId="manageTables" />
-        <zeebe:ioMapping>
-          <zeebe:output source="=location" target="location" />
-          <zeebe:output source="=addTable" target="addTable" />
-          <zeebe:output source="=seatingAvailable" target="seatingAvailable" />
-        </zeebe:ioMapping>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1xwkk9f</bpmn:incoming>
-      <bpmn:outgoing>Flow_1p4afc6</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sendTask id="updateTables" name="Update Tables" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_updateTables" target="messageName" />
-          <zeebe:input source="=restaurantUi.restaurantId" target="correlationKey" />
-          <zeebe:input source="={&#34;location&#34;:location, &#34;seatingAvailable&#34;:seatingAvailable, &#34;addTable&#34;:addTable}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1p4afc6</bpmn:incoming>
-      <bpmn:outgoing>Flow_1dzs73l</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:intermediateCatchEvent id="displayUpdateTables" name="Display Update Tables">
-      <bpmn:extensionElements />
-      <bpmn:incoming>Flow_1bbndxg</bpmn:incoming>
-      <bpmn:outgoing>Flow_1xwkk9f</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0q5l3te" messageRef="Message_13jr2fv" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_1xwkk9f" sourceRef="displayUpdateTables" targetRef="manageTables" />
-    <bpmn:sequenceFlow id="Flow_1p4afc6" sourceRef="manageTables" targetRef="updateTables" />
-    <bpmn:exclusiveGateway id="Gateway_01qca6m">
-      <bpmn:incoming>Flow_0m1uqpx</bpmn:incoming>
-      <bpmn:incoming>Flow_1dzs73l</bpmn:incoming>
-      <bpmn:outgoing>Flow_1bbndxg</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1bbndxg" sourceRef="Gateway_01qca6m" targetRef="displayUpdateTables" />
-    <bpmn:sequenceFlow id="Flow_1dzs73l" sourceRef="updateTables" targetRef="Gateway_01qca6m" />
+    <bpmn:sequenceFlow id="Flow_1xwkk9f" sourceRef="displayUpdateTables" targetRef="manageTables" />
+    <bpmn:sequenceFlow id="Flow_06etstm" sourceRef="updateTables" targetRef="Gateway_01qca6m" />
+    <bpmn:sequenceFlow id="Flow_0mh08pt" sourceRef="manageTables" targetRef="Gateway_14kfwqh" />
+    <bpmn:sequenceFlow id="Flow_14nec9f" name="yes" sourceRef="Gateway_14kfwqh" targetRef="closeRestaurant">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=close=true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1wzytb3" name="no" sourceRef="Gateway_14kfwqh" targetRef="updateTables" />
+    <bpmn:intermediateCatchEvent id="displayUpdateMenu" name="Display Update Menu">
+      <bpmn:incoming>Flow_0qwztvc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0s06bxb</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1o9qjaq" messageRef="Message_1vcvmda" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_079o79s">
+      <bpmn:incoming>Flow_080uo10</bpmn:incoming>
+      <bpmn:incoming>Flow_0s9e67x</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qwztvc</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
     <bpmn:userTask id="manageMenu" name="Manage Menu">
       <bpmn:extensionElements>
         <zeebe:userTask />
@@ -321,26 +314,12 @@ Otherwise remove it from the availableTableList, if there.</bpmn:documentation>
       <bpmn:incoming>Flow_0s06bxb</bpmn:incoming>
       <bpmn:outgoing>Flow_1l5fg7m</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:intermediateCatchEvent id="displayUpdateMenu" name="Display Update Menu">
-      <bpmn:incoming>Flow_0qwztvc</bpmn:incoming>
-      <bpmn:outgoing>Flow_0s06bxb</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1o9qjaq" messageRef="Message_1vcvmda" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="Flow_0s06bxb" sourceRef="displayUpdateMenu" targetRef="manageMenu" />
-    <bpmn:sequenceFlow id="Flow_1l5fg7m" sourceRef="manageMenu" targetRef="updateMenu" />
-    <bpmn:exclusiveGateway id="Gateway_079o79s">
-      <bpmn:incoming>Flow_080uo10</bpmn:incoming>
-      <bpmn:incoming>Flow_0s9e67x</bpmn:incoming>
-      <bpmn:outgoing>Flow_0qwztvc</bpmn:outgoing>
-    </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0qwztvc" sourceRef="Gateway_079o79s" targetRef="displayUpdateMenu" />
-    <bpmn:sequenceFlow id="Flow_0s9e67x" sourceRef="updateMenu" targetRef="Gateway_079o79s" />
     <bpmn:sendTask id="updateMenu" name="Update Menu" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_updateMenu" target="messageName" />
-          <zeebe:input source="=restaurantUi.restaurantId" target="correlationKey" />
+          <zeebe:input source="=restaurantId" target="correlationKey" />
           <zeebe:input source="={&#34;name&#34;:menuItemName, &#34;cost&#34;:menuItemCost, &#34;category&#34;:menuItemCategory, &#34;description&#34;:menuItemDescription, &#34;addMenuItem&#34;: addMenuItem}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
@@ -353,278 +332,298 @@ Otherwise remove it from the availableTableList, if there.</bpmn:documentation>
       <bpmn:incoming>Flow_1l5fg7m</bpmn:incoming>
       <bpmn:outgoing>Flow_0s9e67x</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:endEvent id="restaurantClosed" name="Restaurant Closed">
-      <bpmn:incoming>Flow_1r7ukfw</bpmn:incoming>
-      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0xl12ka" />
-    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0qwztvc" sourceRef="Gateway_079o79s" targetRef="displayUpdateMenu" />
+    <bpmn:sequenceFlow id="Flow_0s06bxb" sourceRef="displayUpdateMenu" targetRef="manageMenu" />
+    <bpmn:sequenceFlow id="Flow_0s9e67x" sourceRef="updateMenu" targetRef="Gateway_079o79s" />
+    <bpmn:sequenceFlow id="Flow_1l5fg7m" sourceRef="manageMenu" targetRef="updateMenu" />
+    <bpmn:exclusiveGateway id="Gateway_0p2iry0">
+      <bpmn:incoming>Flow_0ciwabh</bpmn:incoming>
+      <bpmn:incoming>Flow_1t8x4xv</bpmn:incoming>
+      <bpmn:incoming>Flow_1r3etzn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1aga161</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:scriptTask id="updateAvailableTables" name="Update Available Tables">
+      <bpmn:documentation>If the table status is available add it to the availableTableList
+Otherwise remove it from the availableTableList, if there.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:script expression="=if tableStatus = &#34;Available&#34; then&#10;if list contains(availableTables, tableLocation)&#10;then availableTables&#10;else append(availableTables, tableLocation)&#10;else availableTables[item != tableLocation]" resultVariable="availableTables" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=tableStatus" target="tableStatus" />
+          <zeebe:input source="=availableTables" target="availableTables" />
+          <zeebe:input source="=tableLocation" target="tableLocation" />
+          <zeebe:output source="=availableTables" target="availableTables" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08uft46</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r3etzn</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_1r3etzn" sourceRef="updateAvailableTables" targetRef="Gateway_0p2iry0" />
   </bpmn:process>
   <bpmn:signal id="Signal_1utck8k" name="_openingTime" />
   <bpmn:message id="Message_3v2o974" name="_updateTableStatus">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantUi.restaurantId" />
+      <zeebe:subscription correlationKey="=restaurantId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:signal id="Signal_29no56f" name="_closingTime" />
   <bpmn:message id="Message_16nev38" name="_createRestaurantUI" />
   <bpmn:message id="Message_3i3fthf" name="_allTablesDeleted">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantUi.restaurantId" />
+      <zeebe:subscription correlationKey="=restaurantId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_13jr2fv" name="_displayUpdateTables">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantUi.restaurantId" />
+      <zeebe:subscription correlationKey="=restaurantId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_1vcvmda" name="_displayUpdateMenu">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=restaurantUi.restaurantId" />
+      <zeebe:subscription correlationKey="=restaurantId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="RestaurantUI">
       <bpmndi:BPMNShape id="Participant_0n0u0ln_di" bpmnElement="restaurantUI" isHorizontal="true">
-        <dc:Bounds x="90" y="-50" width="1730" height="830" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1hkf86q_di" bpmnElement="tables" isHorizontal="true">
-        <dc:Bounds x="120" y="-50" width="1700" height="163" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0bjhs6i_di" bpmnElement="menu" isHorizontal="true">
-        <dc:Bounds x="120" y="625" width="1700" height="155" />
+        <dc:Bounds x="160" y="80" width="1730" height="770" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1q1jj88_di" bpmnElement="restaurant" isHorizontal="true">
-        <dc:Bounds x="120" y="113" width="1700" height="512" />
+        <dc:Bounds x="190" y="243" width="1700" height="407" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0bjhs6i_di" bpmnElement="menu" isHorizontal="true">
+        <dc:Bounds x="190" y="650" width="1700" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1hkf86q_di" bpmnElement="tables" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1700" height="163" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ej22iv_di" bpmnElement="openRestaurant">
-        <dc:Bounds x="662" y="383" width="100" height="80" />
+        <dc:Bounds x="732" y="513" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j0xq01_di" bpmnElement="turnOnKitchenUi">
-        <dc:Bounds x="500" y="383" width="100" height="80" />
+        <dc:Bounds x="570" y="513" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0xzqrbh_di" bpmnElement="deleteRestaurant">
-        <dc:Bounds x="1520" y="220" width="100" height="80" />
+        <dc:Bounds x="1590" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1s84f33_di" bpmnElement="deleteKitchenUI">
-        <dc:Bounds x="1520" y="383" width="100" height="80" />
+        <dc:Bounds x="1590" y="513" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1m2usju_di" bpmnElement="allTablesDeleted">
-        <dc:Bounds x="1432" y="405" width="36" height="36" />
+        <dc:Bounds x="1502" y="535" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1410" y="448" width="81" height="14" />
+          <dc:Bounds x="1480" y="578" width="81" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0d33302_di" bpmnElement="closeRestaurant">
-        <dc:Bounds x="1290" y="383" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_01al89h_di" bpmnElement="informSelectedTable">
-        <dc:Bounds x="1339" y="220" width="100" height="80" />
+        <dc:Bounds x="1409" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1t6c2yi_di" bpmnElement="selectATable">
-        <dc:Bounds x="1023" y="220" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_14kfwqh_di" bpmnElement="Gateway_14kfwqh" isMarkerVisible="true">
-        <dc:Bounds x="1194" y="235" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1189" y="205" width="61" height="27" />
-        </bpmndi:BPMNLabel>
+        <dc:Bounds x="1093" y="350" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qn7ti0_di" bpmnElement="updateAvailableTableSeating">
-        <dc:Bounds x="1020" y="383" width="100" height="80" />
+        <dc:Bounds x="1090" y="513" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0p2iry0_di" bpmnElement="Gateway_0p2iry0" isMarkerVisible="true">
-        <dc:Bounds x="842" y="235" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0u3emra_di" bpmnElement="updateAvailableTables">
-        <dc:Bounds x="817" y="383" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1oczs62_di" bpmnElement="restaurantTurnedOn">
-        <dc:Bounds x="172" y="405" width="36" height="36" />
+        <dc:Bounds x="242" y="535" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="165" y="448" width="55" height="27" />
+          <dc:Bounds x="235" y="578" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0wfzf9k_di" bpmnElement="initializeRestaurant">
-        <dc:Bounds x="270" y="383" width="100" height="80" />
+        <dc:Bounds x="340" y="513" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_05wdjni_di" bpmnElement="Gateway_0uriigm">
-        <dc:Bounds x="405" y="398" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0hzu2np_di" bpmnElement="manageTables">
-        <dc:Bounds x="630" y="20" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1sonw47_di" bpmnElement="updateTables">
-        <dc:Bounds x="790" y="20" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+        <dc:Bounds x="475" y="528" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0nu4750_di" bpmnElement="displayUpdateTables">
-        <dc:Bounds x="542" y="42" width="36" height="36" />
+        <dc:Bounds x="612" y="172" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="524" y="12" width="75" height="27" />
+          <dc:Bounds x="594" y="142" width="75" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_01qca6m_di" bpmnElement="Gateway_01qca6m" isMarkerVisible="true">
-        <dc:Bounds x="405" y="35" width="50" height="50" />
+        <dc:Bounds x="475" y="165" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1d6fzy5_di" bpmnElement="manageMenu">
-        <dc:Bounds x="600" y="650" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_0wgenib_di" bpmnElement="restaurantClosed">
+        <dc:Bounds x="1752" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1753" y="410" width="55" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_14kfwqh_di" bpmnElement="Gateway_14kfwqh" isMarkerVisible="true">
+        <dc:Bounds x="1245" y="165" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1305" y="177" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sonw47_di" bpmnElement="updateTables">
+        <dc:Bounds x="938" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hzu2np_di" bpmnElement="manageTables">
+        <dc:Bounds x="702" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d33302_di" bpmnElement="closeRestaurant">
+        <dc:Bounds x="1353" y="513" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1jf07pw_di" bpmnElement="displayUpdateMenu">
-        <dc:Bounds x="512" y="672" width="36" height="36" />
+        <dc:Bounds x="582" y="718" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="494" y="715" width="75" height="27" />
+          <dc:Bounds x="564" y="761" width="75" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0mejy70_di" bpmnElement="updateMenu">
-        <dc:Bounds x="760" y="650" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_079o79s_di" bpmnElement="Gateway_079o79s" isMarkerVisible="true">
-        <dc:Bounds x="405" y="665" width="50" height="50" />
+        <dc:Bounds x="475" y="711" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0wgenib_di" bpmnElement="restaurantClosed">
-        <dc:Bounds x="1682" y="242" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1683" y="280" width="55" height="27" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_1d6fzy5_di" bpmnElement="manageMenu">
+        <dc:Bounds x="678" y="696" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mejy70_di" bpmnElement="updateMenu">
+        <dc:Bounds x="842" y="696" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0p2iry0_di" bpmnElement="Gateway_0p2iry0" isMarkerVisible="true">
+        <dc:Bounds x="917" y="365" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0u3emra_di" bpmnElement="updateAvailableTables">
+        <dc:Bounds x="892" y="513" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1koyi72_di" bpmnElement="updateTableStatus">
-        <dc:Bounds x="1052" y="282" width="36" height="36" />
+        <dc:Bounds x="1122" y="412" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1001" y="316" width="86" height="27" />
+          <dc:Bounds x="1071" y="446" width="86" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_00sdjbq_di" bpmnElement="Flow_00sdjbq">
-        <di:waypoint x="600" y="423" />
-        <di:waypoint x="662" y="423" />
+        <di:waypoint x="670" y="553" />
+        <di:waypoint x="732" y="553" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1t8x4xv_di" bpmnElement="Flow_1t8x4xv">
-        <di:waypoint x="732" y="383" />
-        <di:waypoint x="732" y="260" />
-        <di:waypoint x="842" y="260" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ciwabh_di" bpmnElement="Flow_0ciwabh">
-        <di:waypoint x="1389" y="220" />
-        <di:waypoint x="1389" y="156" />
-        <di:waypoint x="867" y="156" />
-        <di:waypoint x="867" y="235" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1aga161_di" bpmnElement="Flow_1aga161">
-        <di:waypoint x="892" y="260" />
-        <di:waypoint x="1023" y="260" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_16m1nqv_di" bpmnElement="Flow_16m1nqv">
-        <di:waypoint x="1123" y="260" />
-        <di:waypoint x="1194" y="260" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_14nec9f_di" bpmnElement="Flow_14nec9f">
-        <di:waypoint x="1219" y="285" />
-        <di:waypoint x="1219" y="342" />
-        <di:waypoint x="1220" y="342" />
-        <di:waypoint x="1220" y="423" />
-        <di:waypoint x="1290" y="423" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1231" y="303" width="17" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_008wcor_di" bpmnElement="Flow_008wcor">
-        <di:waypoint x="1390" y="423" />
-        <di:waypoint x="1432" y="423" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1cc7pcd_di" bpmnElement="Flow_1cc7pcd">
-        <di:waypoint x="208" y="423" />
-        <di:waypoint x="270" y="423" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0p0cweo_di" bpmnElement="Flow_0p0cweo">
-        <di:waypoint x="370" y="423" />
-        <di:waypoint x="405" y="423" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1r7ukfw_di" bpmnElement="Flow_1r7ukfw">
-        <di:waypoint x="1620" y="260" />
-        <di:waypoint x="1682" y="260" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0cwaodt_di" bpmnElement="Flow_0cwaodt">
-        <di:waypoint x="1468" y="423" />
-        <di:waypoint x="1520" y="423" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_18jhuky_di" bpmnElement="Flow_18jhuky">
-        <di:waypoint x="1570" y="383" />
-        <di:waypoint x="1570" y="300" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1wv27au_di" bpmnElement="Flow_1wv27au">
-        <di:waypoint x="1244" y="260" />
-        <di:waypoint x="1339" y="260" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1285" y="242" width="13" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_08uft46_di" bpmnElement="Flow_08uft46">
-        <di:waypoint x="1020" y="423" />
-        <di:waypoint x="917" y="423" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1r3etzn_di" bpmnElement="Flow_1r3etzn">
-        <di:waypoint x="867" y="383" />
-        <di:waypoint x="867" y="285" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0xokp3b_di" bpmnElement="Flow_0xokp3b">
-        <di:waypoint x="1070" y="318" />
-        <di:waypoint x="1070" y="383" />
+        <di:waypoint x="802" y="513" />
+        <di:waypoint x="802" y="390" />
+        <di:waypoint x="917" y="390" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0pzl09v_di" bpmnElement="Flow_0pzl09v">
-        <di:waypoint x="455" y="423" />
-        <di:waypoint x="500" y="423" />
+        <di:waypoint x="525" y="553" />
+        <di:waypoint x="570" y="553" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18jhuky_di" bpmnElement="Flow_18jhuky">
+        <di:waypoint x="1640" y="513" />
+        <di:waypoint x="1640" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r7ukfw_di" bpmnElement="Flow_1r7ukfw">
+        <di:waypoint x="1690" y="390" />
+        <di:waypoint x="1752" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cwaodt_di" bpmnElement="Flow_0cwaodt">
+        <di:waypoint x="1538" y="553" />
+        <di:waypoint x="1590" y="553" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_008wcor_di" bpmnElement="Flow_008wcor">
+        <di:waypoint x="1453" y="553" />
+        <di:waypoint x="1502" y="553" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16m1nqv_di" bpmnElement="Flow_16m1nqv">
+        <di:waypoint x="1193" y="390" />
+        <di:waypoint x="1409" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ciwabh_di" bpmnElement="Flow_0ciwabh">
+        <di:waypoint x="1459" y="350" />
+        <di:waypoint x="1459" y="286" />
+        <di:waypoint x="942" y="286" />
+        <di:waypoint x="942" y="365" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1aga161_di" bpmnElement="Flow_1aga161">
+        <di:waypoint x="967" y="390" />
+        <di:waypoint x="1093" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xokp3b_di" bpmnElement="Flow_0xokp3b">
+        <di:waypoint x="1140" y="448" />
+        <di:waypoint x="1140" y="513" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08uft46_di" bpmnElement="Flow_08uft46">
+        <di:waypoint x="1090" y="553" />
+        <di:waypoint x="992" y="553" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cc7pcd_di" bpmnElement="Flow_1cc7pcd">
+        <di:waypoint x="278" y="553" />
+        <di:waypoint x="340" y="553" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p0cweo_di" bpmnElement="Flow_0p0cweo">
+        <di:waypoint x="440" y="553" />
+        <di:waypoint x="475" y="553" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0m1uqpx_di" bpmnElement="Flow_0m1uqpx">
-        <di:waypoint x="430" y="398" />
-        <di:waypoint x="430" y="85" />
+        <di:waypoint x="500" y="528" />
+        <di:waypoint x="500" y="215" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_080uo10_di" bpmnElement="Flow_080uo10">
-        <di:waypoint x="430" y="448" />
-        <di:waypoint x="430" y="665" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1xwkk9f_di" bpmnElement="Flow_1xwkk9f">
-        <di:waypoint x="578" y="60" />
-        <di:waypoint x="630" y="60" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1p4afc6_di" bpmnElement="Flow_1p4afc6">
-        <di:waypoint x="730" y="60" />
-        <di:waypoint x="790" y="60" />
+        <di:waypoint x="500" y="578" />
+        <di:waypoint x="500" y="711" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1bbndxg_di" bpmnElement="Flow_1bbndxg">
-        <di:waypoint x="455" y="60" />
-        <di:waypoint x="542" y="60" />
+        <di:waypoint x="525" y="190" />
+        <di:waypoint x="612" y="190" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1dzs73l_di" bpmnElement="Flow_1dzs73l">
-        <di:waypoint x="840" y="20" />
-        <di:waypoint x="840" y="-20" />
-        <di:waypoint x="430" y="-20" />
-        <di:waypoint x="430" y="35" />
+      <bpmndi:BPMNEdge id="Flow_1xwkk9f_di" bpmnElement="Flow_1xwkk9f">
+        <di:waypoint x="648" y="190" />
+        <di:waypoint x="702" y="190" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0s06bxb_di" bpmnElement="Flow_0s06bxb">
-        <di:waypoint x="548" y="690" />
-        <di:waypoint x="600" y="690" />
+      <bpmndi:BPMNEdge id="Flow_06etstm_di" bpmnElement="Flow_06etstm">
+        <di:waypoint x="938" y="130" />
+        <di:waypoint x="500" y="130" />
+        <di:waypoint x="500" y="165" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1l5fg7m_di" bpmnElement="Flow_1l5fg7m">
-        <di:waypoint x="700" y="690" />
-        <di:waypoint x="760" y="690" />
+      <bpmndi:BPMNEdge id="Flow_0mh08pt_di" bpmnElement="Flow_0mh08pt">
+        <di:waypoint x="802" y="190" />
+        <di:waypoint x="1245" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14nec9f_di" bpmnElement="Flow_14nec9f">
+        <di:waypoint x="1270" y="215" />
+        <di:waypoint x="1270" y="553" />
+        <di:waypoint x="1353" y="553" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1282" y="360" width="17" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wzytb3_di" bpmnElement="Flow_1wzytb3">
+        <di:waypoint x="1270" y="165" />
+        <di:waypoint x="1270" y="130" />
+        <di:waypoint x="1038" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1252" y="141" width="13" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0qwztvc_di" bpmnElement="Flow_0qwztvc">
-        <di:waypoint x="455" y="690" />
-        <di:waypoint x="512" y="690" />
+        <di:waypoint x="525" y="736" />
+        <di:waypoint x="582" y="736" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s06bxb_di" bpmnElement="Flow_0s06bxb">
+        <di:waypoint x="618" y="736" />
+        <di:waypoint x="678" y="736" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0s9e67x_di" bpmnElement="Flow_0s9e67x">
-        <di:waypoint x="810" y="730" />
-        <di:waypoint x="810" y="770" />
-        <di:waypoint x="430" y="770" />
-        <di:waypoint x="430" y="715" />
+        <di:waypoint x="892" y="776" />
+        <di:waypoint x="892" y="816" />
+        <di:waypoint x="500" y="816" />
+        <di:waypoint x="500" y="761" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l5fg7m_di" bpmnElement="Flow_1l5fg7m">
+        <di:waypoint x="778" y="736" />
+        <di:waypoint x="842" y="736" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r3etzn_di" bpmnElement="Flow_1r3etzn">
+        <di:waypoint x="942" y="513" />
+        <di:waypoint x="942" y="415" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

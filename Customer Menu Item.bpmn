@@ -3,7 +3,7 @@
   <bpmn:message id="Message_26dc6hd" name="_createCustomerMenuItem" />
   <bpmn:message id="Message_3ku7p2f" name="_returnMenuItem">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerMenuItem.id" />
+      <zeebe:subscription correlationKey="=id" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:collaboration id="CustomerMenuItem" name="Customer Menu Item">
@@ -36,20 +36,19 @@
     <bpmn:textAnnotation id="TextAnnotation_1qhh7in">
       <bpmn:text>Displayed to the table</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_1g1whlf" associationDirection="None" sourceRef="displayMenuItem" targetRef="TextAnnotation_1qhh7in" />
   </bpmn:collaboration>
   <bpmn:process id="customerMenuItemProcess" name="Customer Menu Item Process" isExecutable="true">
     <bpmn:sequenceFlow id="Flow_0dvb71p" sourceRef="createCustomerMenuItem" targetRef="getMenuItem" />
     <bpmn:startEvent id="createCustomerMenuItem" name="createCustomerMenuItem">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=customerId" target="customerMenuItem.customerId" />
-          <zeebe:output source="=menuItemName" target="customerMenuItem.name" />
-          <zeebe:output source="=restaurantId" target="customerMenuItem.restaurantId" />
-          <zeebe:output source="=customerId+menuItemName" target="customerMenuItem.id" />
-          <zeebe:output source="=&#34;&#34;" target="customerMenuItem.description" />
-          <zeebe:output source="=0" target="customerMenuItem.cost" />
-          <zeebe:output source="=&#34;&#34;" target="customerMenuItem.category" />
+          <zeebe:output source="=customerId" target="customerId" />
+          <zeebe:output source="=menuItemName" target="name" />
+          <zeebe:output source="=restaurantId" target="restaurantId" />
+          <zeebe:output source="=customerId+menuItemName" target="id" />
+          <zeebe:output source="=&#34;&#34;" target="description" />
+          <zeebe:output source="=0" target="cost" />
+          <zeebe:output source="=&#34;&#34;" target="category" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0dvb71p</bpmn:outgoing>
@@ -67,8 +66,8 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_returnCustomerMenuItemCost" target="messageName" />
-          <zeebe:input source="=customerMenuItem.customerId" target="correlationKey" />
-          <zeebe:input source="={&#34;cost&#34;:customerMenuItem.cost}" target="variables" />
+          <zeebe:input source="=customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;cost&#34;:cost}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -101,31 +100,13 @@
       <bpmn:incoming>Flow_1ejbqj4</bpmn:incoming>
       <bpmn:outgoing>Flow_1u7qdk1</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sendTask id="displayMenuItem" name="Display Menu Item" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
-        <zeebe:ioMapping>
-          <zeebe:input source="_displayMenuItem" target="messageName" />
-          <zeebe:input source="=customerMenuItem.customerId" target="correlationKey" />
-          <zeebe:input source="={&#34;menuItemName&#34;:customerMenuItem.name, &#34;menuItemDescription&#34;:customerMenuItem.description, &#34;menuItemCost&#34;:customerMenuItem.cost, &#34;menuItemCategory&#34;:customerMenuItem.category}" target="variables" />
-          <zeebe:input source="publish" target="correlationType.type" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="elementTemplateVersion" value="0" />
-          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
-          <zeebe:header key="retryBackoff" value="PT0S" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_10egkvc</bpmn:incoming>
-      <bpmn:outgoing>Flow_100a9bc</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:sendTask id="getMenuItem" name="Get Menu Item" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_getMenuItem" target="messageName" />
-          <zeebe:input source="=customerMenuItem.name" target="correlationKey" />
-          <zeebe:input source="={&#34;customerMenuItemId&#34;:customerMenuItem.id}" target="variables" />
+          <zeebe:input source="=name" target="correlationKey" />
+          <zeebe:input source="={&#34;customerMenuItemId&#34;:id}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -142,8 +123,8 @@
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
           <zeebe:input source="_returnCustomerMenuItem" target="messageName" />
-          <zeebe:input source="=customerMenuItem.customerId" target="correlationKey" />
-          <zeebe:input source="={&#34;customerMenuItemId&#34;:customerMenuItem.id}" target="variables" />
+          <zeebe:input source="=customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;customerMenuItemId&#34;:id}" target="variables" />
           <zeebe:input source="publish" target="correlationType.type" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
@@ -159,9 +140,9 @@
     <bpmn:intermediateCatchEvent id="returnMenuItem" name="returnMenuItem">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=menuItemDescription" target="customerMenuItem.description" />
-          <zeebe:output source="=menuItemCost" target="customerMenuItem.cost" />
-          <zeebe:output source="=menuItemCategory" target="customerMenuItem.category" />
+          <zeebe:output source="=menuItemDescription" target="description" />
+          <zeebe:output source="=menuItemCost" target="cost" />
+          <zeebe:output source="=menuItemCategory" target="category" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1w6d8ix</bpmn:incoming>
@@ -173,15 +154,34 @@
     <bpmn:endEvent id="customerMenuItemDeleted" name="Customer Menu Item Deleted">
       <bpmn:incoming>Flow_17w36t4</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:sendTask id="displayMenuItem" name="Display Menu Item" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="_displayMenuItem" target="messageName" />
+          <zeebe:input source="=customerId" target="correlationKey" />
+          <zeebe:input source="={&#34;menuItemName&#34;:name, &#34;menuItemDescription&#34;:description, &#34;menuItemCost&#34;:cost, &#34;menuItemCategory&#34;:category}" target="variables" />
+          <zeebe:input source="publish" target="correlationType.type" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="0" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.message.v1" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10egkvc</bpmn:incoming>
+      <bpmn:outgoing>Flow_100a9bc</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:association id="Association_1g1whlf" associationDirection="None" sourceRef="displayMenuItem" targetRef="TextAnnotation_1qhh7in" />
   </bpmn:process>
   <bpmn:message id="Message_1p89o4r" name="_deleteCustomerMenuItem">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerMenuItem.id" />
+      <zeebe:subscription correlationKey="=id" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_3c1alcn" name="_getCost">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=customerMenuItem.id" />
+      <zeebe:subscription correlationKey="=id" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -218,9 +218,6 @@
       <bpmndi:BPMNShape id="Gateway_1c3twaq_di" bpmnElement="Gateway_1c3twaq" isMarkerVisible="true">
         <dc:Bounds x="915" y="215" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1qeh8te_di" bpmnElement="displayMenuItem">
-        <dc:Bounds x="769" y="200" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0dxh8ow_di" bpmnElement="getMenuItem">
         <dc:Bounds x="310" y="200" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -240,6 +237,13 @@
           <dc:Bounds x="1249" y="265" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qeh8te_di" bpmnElement="displayMenuItem">
+        <dc:Bounds x="759" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1g1whlf_di" bpmnElement="Association_1g1whlf">
+        <di:waypoint x="809" y="200" />
+        <di:waypoint x="810" y="166" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0dvb71p_di" bpmnElement="Flow_0dvb71p">
         <di:waypoint x="248" y="240" />
         <di:waypoint x="310" y="240" />
@@ -269,12 +273,12 @@
         <di:waypoint x="1265" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_100a9bc_di" bpmnElement="Flow_100a9bc">
-        <di:waypoint x="869" y="240" />
+        <di:waypoint x="859" y="240" />
         <di:waypoint x="915" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_10egkvc_di" bpmnElement="Flow_10egkvc">
         <di:waypoint x="690" y="240" />
-        <di:waypoint x="769" y="240" />
+        <di:waypoint x="759" y="240" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0bd19ou_di" bpmnElement="Flow_0bd19ou">
         <di:waypoint x="508" y="240" />
@@ -284,38 +288,6 @@
         <di:waypoint x="410" y="240" />
         <di:waypoint x="472" y="240" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_0ifjaob_di" bpmnElement="Association_0ifjaob">
-        <di:waypoint x="1087" y="112" />
-        <di:waypoint x="1089" y="90" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1g1whlf_di" bpmnElement="Association_1g1whlf">
-        <di:waypoint x="815" y="200" />
-        <di:waypoint x="812" y="166" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_15qso6s_di" bpmnElement="Association_15qso6s">
-        <di:waypoint x="626" y="200" />
-        <di:waypoint x="614" y="170" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1czdpur_di" bpmnElement="Association_1czdpur">
-        <di:waypoint x="360" y="200" />
-        <di:waypoint x="360" y="160" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_1yjgk9f_di" bpmnElement="TextAnnotation_1yjgk9f">
-        <dc:Bounds x="440" y="124" width="100" height="41" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0cb78ch_di" bpmnElement="Association_0cb78ch">
-        <di:waypoint x="490" y="222" />
-        <di:waypoint x="490" y="165" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_02zhcej_di" bpmnElement="TextAnnotation_02zhcej">
-        <dc:Bounds x="1040" y="60" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1qhh7in_di" bpmnElement="TextAnnotation_1qhh7in">
-        <dc:Bounds x="760" y="125" width="100" height="40.99609375" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0pzaq4z_di" bpmnElement="TextAnnotation_0pzaq4z">
         <dc:Bounds x="555" y="120" width="170" height="50" />
         <bpmndi:BPMNLabel />
@@ -324,6 +296,34 @@
         <dc:Bounds x="310" y="130" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1yjgk9f_di" bpmnElement="TextAnnotation_1yjgk9f">
+        <dc:Bounds x="440" y="124" width="100" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_02zhcej_di" bpmnElement="TextAnnotation_02zhcej">
+        <dc:Bounds x="1040" y="60" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1qhh7in_di" bpmnElement="TextAnnotation_1qhh7in">
+        <dc:Bounds x="760" y="125" width="100" height="40.99609375" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_15qso6s_di" bpmnElement="Association_15qso6s">
+        <di:waypoint x="626" y="200" />
+        <di:waypoint x="614" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1czdpur_di" bpmnElement="Association_1czdpur">
+        <di:waypoint x="360" y="200" />
+        <di:waypoint x="360" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0cb78ch_di" bpmnElement="Association_0cb78ch">
+        <di:waypoint x="490" y="222" />
+        <di:waypoint x="490" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0ifjaob_di" bpmnElement="Association_0ifjaob">
+        <di:waypoint x="1087" y="112" />
+        <di:waypoint x="1089" y="90" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

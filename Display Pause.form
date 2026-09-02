@@ -9,7 +9,7 @@
   "id": "waitABit",
   "components": [
     {
-      "text": "# Pause",
+      "text": "# Kitchen Display",
       "type": "text",
       "layout": {
         "row": "Row_04dncvv",

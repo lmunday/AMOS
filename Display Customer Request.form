@@ -36,7 +36,7 @@
       "id": "Field_01ee87k"
     },
     {
-      "text": "{\"tableUi\":{\"Location\":\"FL\"}}",
+      "text": "{\"Location\":\"FL\"}",
       "type": "text",
       "layout": {
         "row": "Row_1pogvgk",

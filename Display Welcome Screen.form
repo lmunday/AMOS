@@ -1,0 +1,78 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "69d2c1a"
+  },
+  "schemaVersion": 19,
+  "id": "WelcomeScreen",
+  "components": [
+    {
+      "text": "# Table Display",
+      "type": "text",
+      "layout": {
+        "row": "Row_19gdzlg",
+        "columns": null
+      },
+      "id": "Field_1nfy2e1"
+    },
+    {
+      "text": "Welcome Screen",
+      "type": "text",
+      "layout": {
+        "row": "Row_0jms2ka",
+        "columns": null
+      },
+      "id": "Field_05oswdd"
+    },
+    {
+      "label": "Table",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0jms2ka",
+        "columns": null
+      },
+      "id": "Field_1vm4vnd",
+      "key": "location",
+      "readonly": true
+    },
+    {
+      "label": "Customer Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0qkfaho",
+        "columns": null
+      },
+      "id": "Field_0xp43qn",
+      "key": "customerName",
+      "conditional": {
+        "hide": "=available=true"
+      }
+    },
+    {
+      "label": "Customer Information",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_16hnrte",
+        "columns": null
+      },
+      "id": "Field_0tfislt",
+      "key": "customerInfo",
+      "conditional": {
+        "hide": "=available=true"
+      }
+    },
+    {
+      "label": "Make Table Available",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_17rda2s",
+        "columns": null
+      },
+      "id": "Field_169nagf",
+      "key": "available"
+    }
+  ],
+  "type": "default"
+}
