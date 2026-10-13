@@ -3,7 +3,7 @@
   "executionPlatformVersion": "8.8.0",
   "exporter": {
     "name": "Camunda Web Modeler",
-    "version": "69d2c1a"
+    "version": "64d4476"
   },
   "schemaVersion": 19,
   "id": "DisplayReceipt",

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="69d2c1a" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="64d4476" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
   <bpmn:collaboration id="kitchenUI">
     <bpmn:participant id="kitchenUi" name="Kitchen UI" processRef="kitchenUiProcess" />
     <bpmn:textAnnotation id="TextAnnotation_0szd8d0">
@@ -157,7 +157,7 @@ Find the ordered food ID at the location given by the value of that index, in th
     </bpmn:scriptTask>
     <bpmn:sequenceFlow id="Flow_1kawcdk" sourceRef="createPreparedItemIndex" targetRef="getThePreparedOrderedFoodId" />
     <bpmn:sequenceFlow id="Flow_1nfin3w" sourceRef="removeFromPreparedItems" targetRef="Gateway_1ud2r0d" />
-    <bpmn:sendTask id="preparedOrderedFood" name="Prepared Ordered Food" zeebe:modelerTemplate="Template_2terfy1" zeebe:modelerTemplateVersion="1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
+    <bpmn:sendTask id="preparedOrderedFood" name="Prepared Ordered Food" zeebe:modelerTemplate="io.camunda.connectors.message.sendtask.v1" zeebe:modelerTemplateVersion="0" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZwogICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHdpZHRoPSIyMDAwIgogICBoZWlnaHQ9IjIwMDAiCiAgIHZpZXdCb3g9IjAgMCAyMDAwIDIwMDAiCiAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICA8cGF0aAogICAgIHN0eWxlPSJjb2xvcjojMDAwMDAwIgogICAgIGQ9Im0gMCwyODQgMjAwMCwwIC0xMDAwLDU1NCB6Ii8+CiAgPHBhdGgKICAgICBzdHlsZT0iY29sb3I6IzAwMDAwMCIKICAgICBkPSJtIDAsNDUyIDEwMDAsNTQ4IDEwMDAsLTU0OCAwLDEwOTYgLTIwMDAsMCB6Ii8+Cjwvc3ZnPgo=">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendMessage:1" retries="3" />
         <zeebe:ioMapping>
@@ -412,10 +412,6 @@ Find the ordered food ID at the location given by the value of that index, in th
         <di:waypoint x="1036" y="200" />
         <di:waypoint x="1036" y="247" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1wpse66_di" bpmnElement="Association_1wpse66">
-        <di:waypoint x="1390" y="470" />
-        <di:waypoint x="1395" y="454" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_0szd8d0_di" bpmnElement="TextAnnotation_0szd8d0">
         <dc:Bounds x="717" y="140" width="190" height="55" />
         <bpmndi:BPMNLabel />
@@ -426,6 +422,10 @@ Find the ordered food ID at the location given by the value of that index, in th
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0oeiobw_di" bpmnElement="TextAnnotation_0oeiobw">
         <dc:Bounds x="1060" y="467" width="150" height="46" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0n4ksz1_di" bpmnElement="TextAnnotation_0n4ksz1">
+        <dc:Bounds x="1370" y="370" width="100" height="84" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_15epopx_di" bpmnElement="TextAnnotation_15epopx">
@@ -444,6 +444,10 @@ Find the ordered food ID at the location given by the value of that index, in th
         <di:waypoint x="1130" y="467" />
         <di:waypoint x="1121" y="432" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1wpse66_di" bpmnElement="Association_1wpse66">
+        <di:waypoint x="1390" y="470" />
+        <di:waypoint x="1395" y="454" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_1v3alwi_di" bpmnElement="Association_1v3alwi">
         <di:waypoint x="941" y="232" />
         <di:waypoint x="975" y="175" />
@@ -452,10 +456,6 @@ Find the ordered food ID at the location given by the value of that index, in th
         <di:waypoint x="1044" y="175" />
         <di:waypoint x="1137" y="232" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_0n4ksz1_di" bpmnElement="TextAnnotation_0n4ksz1">
-        <dc:Bounds x="1370" y="370" width="100" height="84" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

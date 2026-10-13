@@ -3,7 +3,7 @@
   "executionPlatformVersion": "8.9.0",
   "exporter": {
     "name": "Camunda Web Modeler",
-    "version": "69d2c1a"
+    "version": "64d4476"
   },
   "schemaVersion": 19,
   "id": "DisplayBill",
@@ -155,6 +155,18 @@
         "columns": null
       },
       "id": "Field_1bfjoap"
+    },
+    {
+      "text": "Payment could not be processed. ",
+      "type": "text",
+      "layout": {
+        "row": "Row_0ra49hv",
+        "columns": null
+      },
+      "id": "Field_1ono6g5",
+      "conditional": {
+        "hide": "=paymentAccepted=true"
+      }
     }
   ],
   "type": "default"
